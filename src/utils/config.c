@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/config.h"
+#include "../include/logger.h"
 
 int load_config(const char *filename, Proxy_Config *config) {
     FILE *file = fopen(filename,"r");
@@ -39,9 +40,11 @@ int load_config(const char *filename, Proxy_Config *config) {
 
     if (has_error) {
         printf("Load config failed!\n");
+        log_message("ERROR", "Load config failed!");
         return -1;
     }
 
     printf("Load config succeeded!\n");
+    log_message("INFO", "Load config succeeded!");
     return 0;
 }
