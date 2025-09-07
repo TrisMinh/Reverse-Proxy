@@ -1,15 +1,17 @@
 CC = gcc
-CFLAGS = -Wall -Werror -I../include
-LDFLAGS = -L../lib
-LIBS = -lpthread -lssl -lcrypto
-SRC = main.c config.c server.c logger.c
-OBJ = $(SRC:.c=.o)
+CFLAGS = -Wall -Werror -Iinclude
+SRC = src/main.c src/config.c
+OBJ = $(patsubst src/%.c,build/%.o,$(SRC))
 OUT = main
 
 all: $(OUT)
+	@cd tests && $(OUT).exe
 
 $(OUT): $(OBJ)
-    $(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
+	$(CC) -o tests\$(OUT).exe $^
 
-%.o: %.c
-    $(CC) $(CFLAGS) -c $< -o $@
+build/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	del build\*.o tests\$(OUT).exe
