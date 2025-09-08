@@ -38,5 +38,3 @@ int connect_to_backend(const char *host, int port, SOCKET *out_sock) {
     return 0;
 }
 
-
-
