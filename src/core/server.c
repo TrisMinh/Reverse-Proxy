@@ -1,11 +1,17 @@
 #include "../include/server.h"
 #include "../include/client.h"
+#include "../include/proxy.h"
 #include "../include/config.h"
 #include <stdio.h>
 #include <string.h>
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0600
+#endif
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#ifdef _MSC_VER
 #pragma comment(lib, "ws2_32.lib")
+#endif
 
 int server_init(const char *listen_host, int port, SOCKET *server_fd) {
     WSADATA wsa;
@@ -33,12 +39,14 @@ int server_init(const char *listen_host, int port, SOCKET *server_fd) {
     if (strcmp(listen_host, "0.0.0.0") == 0) {
         server_addr.sin_addr.s_addr = INADDR_ANY; // nhan tat ca ket noi
     } else {
-        if (inet_pton(AF_INET, listen_host, &server_addr.sin_addr) <= 0) {
+        unsigned long addr = inet_addr(listen_host);
+        if (addr == INADDR_NONE) {
             printf("Invalid listen host: %s\n", listen_host);
             closesocket(*server_fd);
             WSACleanup();
             return -1;
         }
+        server_addr.sin_addr.s_addr = addr;
     }
     
     server_addr.sin_port = htons(port); //Host TO Network Short để chuyển thành network byte order
