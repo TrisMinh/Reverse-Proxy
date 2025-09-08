@@ -10,13 +10,13 @@
 int server_init(const char *listen_host, int port, SOCKET *server_fd) {
     WSADATA wsa;
     struct sockaddr_in server_addr;
-
+    // khoi tao winsock de su dung socket
     if (WSAStartup(MAKEWORD(2,2), &wsa) != 0) {
         printf("WSA loi\n");
         return -1;
     }
 
-    *server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    *server_fd = socket(AF_INET, SOCK_STREAM, 0); // tao socket tcp/ipv4
     if (*server_fd == INVALID_SOCKET) {
         printf("Socket loi\n");
         WSACleanup();
@@ -31,7 +31,7 @@ int server_init(const char *listen_host, int port, SOCKET *server_fd) {
     
     // Parse listen host
     if (strcmp(listen_host, "0.0.0.0") == 0) {
-        server_addr.sin_addr.s_addr = INADDR_ANY;
+        server_addr.sin_addr.s_addr = INADDR_ANY; // nhan tat ca ket noi
     } else {
         if (inet_pton(AF_INET, listen_host, &server_addr.sin_addr) <= 0) {
             printf("Invalid listen host: %s\n", listen_host);
@@ -41,7 +41,7 @@ int server_init(const char *listen_host, int port, SOCKET *server_fd) {
         }
     }
     
-    server_addr.sin_port = htons(port);
+    server_addr.sin_port = htons(port); //Host TO Network Short để chuyển thành network byte order
 
     if (bind(*server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == SOCKET_ERROR) {
         printf("Bind loi\n");
