@@ -12,7 +12,10 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    start_server(&config);
+
 
     close_log();
+    
     return EXIT_SUCCESS;
 }
