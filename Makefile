@@ -1,17 +1,45 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Iinclude
-SRC = src/main.c src/config.c
-OBJ = $(patsubst src/%.c,build/%.o,$(SRC))
+LDFLAGS = -lws2_32
+SRC = src/main.c src/utils/config.c src/utils/logger.c src/core/proxy.c src/core/server.c src/core/client.c src/http/http_processor.c
+OBJ = build/main.o build/utils/config.o build/utils/logger.o build/core/proxy.o build/core/server.o build/core/client.o build/http/http_processor.o
 OUT = main
 
 all: $(OUT)
-	@cd tests && $(OUT).exe
+	@cd build && $(OUT).exe
+
 
 $(OUT): $(OBJ)
-	$(CC) -o tests\$(OUT).exe $^
+	@if not exist tests mkdir tests
+	$(CC) -o build\$(OUT).exe $^ $(LDFLAGS)
 
-build/%.o: src/%.c
+build/main.o: src/main.c
+	@if not exist build mkdir build
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build/utils/config.o: src/utils/config.c
+	@if not exist build\utils mkdir build\utils
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/utils/logger.o: src/utils/logger.c
+	@if not exist build\utils mkdir build\utils
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/core/proxy.o: src/core/proxy.c
+	@if not exist build\core mkdir build\core
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/core/server.o: src/core/server.c
+	@if not exist build\core mkdir build\core
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/core/client.o: src/core/client.c
+	@if not exist build\core mkdir build\core
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/http/http_processor.o: src/http/http_processor.c
+	@if not exist build\http mkdir build\http
+	$(CC) $(CFLAGS) -c $< -o $@	
+
 clean:
-	del build\*.o tests\$(OUT).exe
+	del build\main.o build\utils\config.o build\utils\logger.o build\core\proxy.o build\core\server.o build\core\client.o build\http\http_processor.o build\$(OUT).exe

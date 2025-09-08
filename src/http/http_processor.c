@@ -5,6 +5,7 @@
 int validate_http_request(const char *request) {
     if (!request || strlen(request) < 10) return 0;
     if (!strstr(request, " HTTP/1.")) return 0;
+    // Kiểm tra request có hợp lệ không (basic validation)
     if (strncmp(request, "GET ", 4) == 0 ||
         strncmp(request, "POST ", 5) == 0 ||
         strncmp(request, "PUT ", 4) == 0 ||
