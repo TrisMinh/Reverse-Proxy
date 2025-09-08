@@ -37,6 +37,7 @@ int modify_request_headers(const char *original_req, char *modified_req, int max
             int written = snprintf(modified_req, max_len, 
                 "%.*s"                              // Phần trước Host header
                 "Host: %s:%d\r\n"                  // Host header mới
+                "Connection: close\r\n"            // Đảm bảo backend đóng kết nối
                 "X-Forwarded-For: %s\r\n"         // IP client thực
                 "%.*s",                            // Phần sau Host header
                 before_host, original_req,
@@ -52,6 +53,7 @@ int modify_request_headers(const char *original_req, char *modified_req, int max
     int written = snprintf(modified_req, max_len, 
         "%.*s"
         "Host: %s:%d\r\n"
+        "Connection: close\r\n"
         "X-Forwarded-For: %s\r\n"
         "\r\n%s",
         (int)(header_end - original_req + 2), original_req,
