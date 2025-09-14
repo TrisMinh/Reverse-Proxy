@@ -1,0 +1,8 @@
+14/9
+- Phân vân không biết hàng đợi nên dùng linkedlist hay array?
+    + linkedlist thì có vẻ tận dụng được khoảng trống nhiều hơn khi giải phóng thì 2 node kia nối lại với nhau và ta tiếp tục thêm task mới cho đến khi max
+    + array thì cảm giác ko tận dụng được khoảng trống khi phải phụ thuộc vào 2 con trỏ head và tail vì các task không hoàn thành lần lượt mà có taassk nhanh hơn thì 
+    phần ở giữa xong sớm và trống nhưng nó chỉ được sử dụng lại khi con trỏ tới vị trí đó và thêm task vào.
+- Về tối ưu bộ nhớ
+    + Vẫn thấy linkedlist có vẻ ok hơn nhưng lại tốn thêm con trỏ
+    + array thì có 2 con trỏ chạy thôi

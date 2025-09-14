@@ -2,5 +2,6 @@
     "files.associations": {
         "config.h": "c"
     },
-    "makefile.configureOnOpen": true
+    "makefile.configureOnOpen": true,
+    "CodeGPT.apiKey": "OpenAI"
 }

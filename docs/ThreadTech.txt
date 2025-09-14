@@ -1,0 +1,50 @@
+CÁC KỸ THUẬT THREADING CHO PROXY SERVER TRÊN WINDOWS
+=====================================================
+
+1. Thread per client (mỗi client 1 thread)
+------------------------------------------
+- Ý tưởng: Mỗi khi có client kết nối, server tạo 1 thread riêng xử lý client đó.
+- Ưu điểm:
+  + Dễ lập trình, dễ hiểu.
+  + Xử lý của các client tách biệt, không ảnh hưởng nhau.
+- Nhược điểm:
+  + Tốn tài nguyên khi có nhiều client (hàng nghìn thread).
+  + Context switch giữa nhiều thread làm chậm hệ thống.
+- API thường dùng: CreateThread, _beginthreadex.
+
+2. Thread pool (bể thread cố định)
+-----------------------------------
+- Ý tưởng: Tạo sẵn một số thread (ví dụ 4, 8, 16). Các thread này nằm chờ công việc.
+- Khi có request từ client, công việc được đưa vào queue, thread rảnh sẽ xử lý.
+- Ưu điểm:
+  + Giới hạn số thread, tiết kiệm tài nguyên.
+  + Giảm overhead tạo/hủy thread liên tục.
+  + Phù hợp server nhiều client vừa phải.
+- Nhược điểm:
+  + Cần xây dựng cơ chế queue để phân phối công việc.
+  + Phức tạp hơn thread-per-client.
+- API: Windows Thread Pool API, hoặc tự viết queue + worker thread.
+
+3. I/O Completion Port (IOCP)
+------------------------------
+- Ý tưởng: Kỹ thuật mạnh mẽ nhất của Windows, cho phép xử lý hàng nghìn socket
+  với số lượng thread nhỏ.
+- Cách làm: Đăng ký socket với IOCP, khi có sự kiện I/O thì hệ thống báo cho IOCP,
+  thread pool xử lý event đó.
+- Ưu điểm:
+  + Hiệu năng cao, scale tới hàng chục nghìn client.
+  + Windows tối ưu mạnh cho IOCP.
+- Nhược điểm:
+  + Code phức tạp, khó học.
+  + Quản lý tài nguyên khó.
+- Phù hợp cho server cần high-performance.
+
+4. Async / Overlapped I/O
+--------------------------
+- Ý tưởng: Sử dụng các hàm async như WSARecv, WSASend với overlapped I/O.
+- Ưu điểm:
+  + Tiết kiệm thread, giảm blocking.
+- Nhược điểm:
+  + Quản lý callback/event phức tạp.
+  + Không mạnh bằng IOCP khi server cực lớn.
+- Thường dùng cho ứng dụng cần async đơn giản.
