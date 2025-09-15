@@ -2,6 +2,7 @@
 #include "../include/client.h"
 #include "../include/proxy.h"
 #include "../include/config.h"
+#include "../include/threadpool.h"
 #include <stdio.h>
 #include <string.h>
 #ifndef _WIN32_WINNT
@@ -68,10 +69,12 @@ int server_init(const char *listen_host, int port, SOCKET *server_fd) {
     return 0;
 }
 
-void start_server(const Proxy_Config *config) {
+void start_server() {
     SOCKET server_fd, client_fd;
     struct sockaddr_in client_addr;
     int addrlen = sizeof(client_addr);
+
+    Proxy_Config *config = get_config();
 
     // Khởi tạo server socket
     if (server_init(config->listen_host, config->listen_port, &server_fd) < 0) {
@@ -92,8 +95,7 @@ void start_server(const Proxy_Config *config) {
             continue;
         }
 
-        // Handle client connection với config
-        handle_client(client_fd, config);
+        enqueue_task(handle_client_task, (void *)(intptr_t)client_fd);
     }
 
     server_cleanup(server_fd);
@@ -102,4 +104,11 @@ void start_server(const Proxy_Config *config) {
 void server_cleanup(SOCKET server_fd) {
     closesocket(server_fd);
     WSACleanup();
+}
+
+void handle_client_task(void *arg) {
+    SOCKET client_fd = (SOCKET)arg;
+
+    // Handle client connection với config
+    handle_client(client_fd, get_config());
 }

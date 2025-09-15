@@ -3,6 +3,7 @@
 #include "../include/config.h"
 #include "../include/server.h"
 #include "../include/logger.h"
+#include "../include/threadpool.h"
 
 int main() {
     create_log("../logs/proxy.log");
@@ -12,6 +13,8 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    int max_threads = 8; // Giới hạn số lượng thread
+    init_thread_pool(max_threads);
     start_server(&config);
 
 

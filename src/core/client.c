@@ -15,7 +15,7 @@
 #endif
 
 #define BUFFER_SIZE 8192
-
+// client này là của proxy đóng vai trò là client kết nối đến backend
 int connect_to_backend(const char *host, int port, SOCKET *out_sock) {
     struct addrinfo hints, *res, *p;
     char port_str[16];

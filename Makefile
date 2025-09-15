@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Iinclude
 LDFLAGS = -lws2_32
-SRC = src/main.c src/utils/config.c src/utils/logger.c src/core/proxy.c src/core/server.c src/core/client.c src/http/http_processor.c
-OBJ = build/main.o build/utils/config.o build/utils/logger.o build/core/proxy.o build/core/server.o build/core/client.o build/http/http_processor.o
+SRC = src/main.c src/utils/config.c src/utils/logger.c src/core/proxy.c src/core/server.c src/core/client.c src/http/http_processor.c src/core/threadpool.c
+OBJ = build/main.o build/utils/config.o build/utils/logger.o build/core/proxy.o build/core/server.o build/core/client.o build/http/http_processor.o build/core/threadpool.o
 OUT = main
 
 all: $(OUT)
@@ -29,6 +29,10 @@ build/core/proxy.o: src/core/proxy.c
 	@if not exist build\core mkdir build\core
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build/core/threadpool.o: src/core/threadpool.c
+	@if not exist build\core mkdir build\core
+	$(CC) $(CFLAGS) -c $< -o $@
+
 build/core/server.o: src/core/server.c
 	@if not exist build\core mkdir build\core
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -42,4 +46,4 @@ build/http/http_processor.o: src/http/http_processor.c
 	$(CC) $(CFLAGS) -c $< -o $@	
 
 clean:
-	del build\main.o build\utils\config.o build\utils\logger.o build\core\proxy.o build\core\server.o build\core\client.o build\http\http_processor.o build\$(OUT).exe
+	del build\main.o build\utils\config.o build\utils\logger.o build\core\proxy.o build\core\server.o build\core\threadpool.o build\core\client.o build\http\http_processor.o build\$(OUT).exe
