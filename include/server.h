@@ -5,7 +5,8 @@
 #include "config.h"
 
 int server_init(const char *listen_host, int port, SOCKET *server_fd);
-void start_server(const Proxy_Config *config);
+void start_server();
 void server_cleanup(SOCKET server_fd);
 
+void handle_client_task(void *arg);
 #endif

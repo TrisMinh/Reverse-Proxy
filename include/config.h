@@ -14,6 +14,7 @@ typedef struct {
     char log_level[16];
 } Proxy_Config;
 
-int load_config(const char *filename, Proxy_Config *config);
+int load_config();
+Proxy_Config *get_config();
 
 #endif
