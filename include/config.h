@@ -1,20 +1,22 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#define MAX_HOST_LEN 64
+
 typedef struct {
-    char listen_host[16]; // chon 16 vi 255.255.255.255 max la 15 them \n la 16
+    char listen_host[MAX_HOST_LEN];
     int listen_port;
-    char backend_host[16];
+    char backend_host[MAX_HOST_LEN];
     int backend_port;
     int max_connection;
     int timeout;
     int keep_alive;
     int connection_retries;
-    char log_file[256];
-    char log_level[16];
+    char log_file[MAX_HOST_LEN];
+    char log_level[MAX_HOST_LEN];
 } Proxy_Config;
 
 int load_config();
-Proxy_Config *get_config();
+Proxy_Config* get_config();
 
 #endif
