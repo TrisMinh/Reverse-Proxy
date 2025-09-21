@@ -1,114 +1,61 @@
-#include "../include/server.h"
-#include "../include/client.h"
-#include "../include/proxy.h"
-#include "../include/config.h"
-#include "../include/threadpool.h"
-#include <stdio.h>
-#include <string.h>
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0600
-#endif
+#include "server.h"
+#include "proxy.h"
+#include "config.h"
+#include "threadpool.h"
 #include <winsock2.h>
-#include <ws2tcpip.h>
-#ifdef _MSC_VER
-#pragma comment(lib, "ws2_32.lib")
-#endif
+#include <stdio.h>
+#include <stdlib.h>
 
-int server_init(const char *listen_host, int port, SOCKET *server_fd) {
+extern ThreadPool pool;
+
+int server_init(const char *listen_host,int port,SOCKET *server_fd){
     WSADATA wsa;
-    struct sockaddr_in server_addr;
-    // khoi tao winsock de su dung socket
-    if (WSAStartup(MAKEWORD(2,2), &wsa) != 0) {
-        printf("WSA loi\n");
-        return -1;
-    }
+    if(WSAStartup(MAKEWORD(2,2),&wsa)!=0) return -1;
 
-    *server_fd = socket(AF_INET, SOCK_STREAM, 0); // tao socket tcp/ipv4
-    if (*server_fd == INVALID_SOCKET) {
-        printf("Socket loi\n");
-        WSACleanup();
-        return -1;
-    }
+    *server_fd = socket(AF_INET,SOCK_STREAM,0);
+    if(*server_fd==INVALID_SOCKET) return -1;
 
-    // Cho phép reuse address
-    int opt = 1;
-    setsockopt(*server_fd, SOL_SOCKET, SO_REUSEADDR, (char*)&opt, sizeof(opt));
+    struct sockaddr_in addr;
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(port);
+    addr.sin_addr.s_addr = strcmp(listen_host,"0.0.0.0")==0?INADDR_ANY:inet_addr(listen_host);
 
-    server_addr.sin_family = AF_INET;
-    
-    // Parse listen host
-    if (strcmp(listen_host, "0.0.0.0") == 0) {
-        server_addr.sin_addr.s_addr = INADDR_ANY; // nhan tat ca ket noi
-    } else {
-        unsigned long addr = inet_addr(listen_host);
-        if (addr == INADDR_NONE) {
-            printf("Invalid listen host: %s\n", listen_host);
-            closesocket(*server_fd);
-            WSACleanup();
-            return -1;
-        }
-        server_addr.sin_addr.s_addr = addr;
-    }
-    
-    server_addr.sin_port = htons(port); //Host TO Network Short để chuyển thành network byte order
+    int opt=1;
+    setsockopt(*server_fd,SOL_SOCKET,SO_REUSEADDR,(char*)&opt,sizeof(opt));
 
-    if (bind(*server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == SOCKET_ERROR) {
-        printf("Bind loi\n");
-        closesocket(*server_fd);
-        WSACleanup();
-        return -1;
-    }
-
-    if (listen(*server_fd, 5) == SOCKET_ERROR) {
-        printf("Listen loi\n");
-        closesocket(*server_fd);
-        WSACleanup();
-        return -1;
-    }
-
+    if(bind(*server_fd,(struct sockaddr*)&addr,sizeof(addr))==SOCKET_ERROR) return -1;
+    if(listen(*server_fd,5)==SOCKET_ERROR) return -1;
     return 0;
 }
 
-void start_server() {
-    SOCKET server_fd, client_fd;
-    struct sockaddr_in client_addr;
-    int addrlen = sizeof(client_addr);
-
+void start_server(){
+    SOCKET server_fd;
     Proxy_Config *config = get_config();
+    if(server_init(config->listen_host,config->listen_port,&server_fd)<0) return;
 
-    // Khởi tạo server socket
-    if (server_init(config->listen_host, config->listen_port, &server_fd) < 0) {
-        return;
-    }
+    printf("Proxy running %s:%d -> %s:%d\n",config->listen_host,config->listen_port,config->backend_host,config->backend_port);
 
-    printf("Proxy server dang chay %s:%d -> %s:%d\n", 
-           config->listen_host, config->listen_port, 
-           config->backend_host, config->backend_port);
-    
-    printf("Max connections: %d, Timeout: %d, Keep-alive: %d\n",
-           config->max_connection, config->timeout, config->keep_alive);
+    while(1){
+        struct sockaddr_in client_addr;
+        int len = sizeof(client_addr);
+        SOCKET client_fd = accept(server_fd,(struct sockaddr*)&client_addr,&len);
+        if(client_fd==INVALID_SOCKET) continue;
 
-    // Main loop - accept và handle connections
-    while (1) {
-        client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &addrlen);
-        if (client_fd == INVALID_SOCKET) {
-            continue;
-        }
-
-        enqueue_task(handle_client_task, (void *)(intptr_t)client_fd);
+        SOCKET *arg = malloc(sizeof(SOCKET));
+        *arg = client_fd;
+        enqueueThreadPool(&pool,handle_client_task,arg);
     }
 
     server_cleanup(server_fd);
 }
 
-void server_cleanup(SOCKET server_fd) {
+void server_cleanup(SOCKET server_fd){
     closesocket(server_fd);
     WSACleanup();
 }
 
-void handle_client_task(void *arg) {
-    SOCKET client_fd = (SOCKET)arg;
-
-    // Handle client connection với config
-    handle_client(client_fd, get_config());
+void handle_client_task(void *arg){
+    SOCKET client_fd = *(SOCKET*)arg;
+    free(arg);
+    handle_client(client_fd,get_config());
 }
