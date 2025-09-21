@@ -5,7 +5,6 @@
 int validate_http_request(const char *request) {
     if (!request || strlen(request) < 10) return 0;
     if (!strstr(request, " HTTP/1.")) return 0;
-    // Kiểm tra request có hợp lệ không (basic validation)
     if (strncmp(request, "GET ", 4) == 0 ||
         strncmp(request, "POST ", 5) == 0 ||
         strncmp(request, "PUT ", 4) == 0 ||
@@ -62,13 +61,14 @@ int modify_request_headers(const char *original_req, char *modified_req, int max
             
             int written = snprintf(modified_req, max_len, 
                 "%.*s"
-                "Host: %s:%d\r\n"
+                "Host: %s\r\n"
                 "X-Forwarded-For: %s\r\n"
                 "X-Forwarded-Host: %s\r\n"
                 "X-Forwarded-Proto: http\r\n"
+                "Accept-Encoding: identity\r\n"
                 "%.*s",
                 before_host, original_req,
-                backend_host, backend_port,
+                original_host,
                 client_ip,
                 original_host,
                 total_len - after_host_start, original_req + after_host_start);
@@ -82,59 +82,152 @@ int modify_request_headers(const char *original_req, char *modified_req, int max
 }
 
 // Xử lý response từ backend trước khi gửi về client
-void modify_response_headers(const char *original_resp, char *modified_resp, int max_len, const char *backend_host, int backend_port, const char *proxy_host, int proxy_port) {
-    
-    strcpy(modified_resp, original_resp);
-    
-    char *location = strstr(modified_resp, "Location: http://");
-    if (!location) {
-        location = strstr(modified_resp, "location: http://");
-    }
-    
-    if (!location) {
-        return;
-    }
-    
-    char *location_end = strstr(location, "\r\n");
-    if (!location_end) {
-        return;
-    }
-    
-    char *location_value = location + 9;
-    while (*location_value == ' ') location_value++;
-    
-    char backend_url_with_port[128];
-    char backend_url_no_port[128];
-    snprintf(backend_url_with_port, sizeof(backend_url_with_port), "http://%s:%d", backend_host, backend_port);
-    snprintf(backend_url_no_port, sizeof(backend_url_no_port), "http://%s", backend_host);
-    
-    int need_fix = 0;
-    char *path_to_keep = NULL;
-    
-    if (strncmp(location_value, backend_url_with_port, strlen(backend_url_with_port)) == 0) {
-        need_fix = 1;
-        path_to_keep = location_value + strlen(backend_url_with_port);
-    }
-    else if (strncmp(location_value, backend_url_no_port, strlen(backend_url_no_port)) == 0) {
-        need_fix = 1;
-        path_to_keep = location_value + strlen(backend_url_no_port);
-    }
-    
-    if (need_fix) {
-        char proxy_url[128];
-        snprintf(proxy_url, sizeof(proxy_url), "http://%s:%d", proxy_host, proxy_port);
-        
-        char new_response[8192];
-        int before_len = location_value - modified_resp;
-        int after_start = location_end - modified_resp;
-        
-        snprintf(new_response, sizeof(new_response), "%.*s%s%s%s",
-                before_len, modified_resp,
-                proxy_url, path_to_keep,
-                modified_resp + after_start);
-        
-        if (strlen(new_response) < max_len) {
-            strcpy(modified_resp, new_response);
+int modify_response_headers(const char *original_resp, int original_len, char *modified_resp, int max_len, const char *backend_host, int backend_port, const char *proxy_host, int proxy_port) {
+    // Tìm vị trí kết thúc header
+    const char *header_end = NULL;
+    for (int i = 0; i < original_len - 3; i++) {
+        if (original_resp[i] == '\r' && original_resp[i+1] == '\n' &&
+            original_resp[i+2] == '\r' && original_resp[i+3] == '\n') {
+            header_end = original_resp + i + 4;
+            break;
         }
     }
+
+    if (!header_end) {
+        if (original_len > max_len) return -1;
+        memcpy(modified_resp, original_resp, original_len);
+        return original_len;
+    }
+
+    int header_len = header_end - original_resp;
+    int body_len   = original_len - header_len;
+
+    // copy header để sửa
+    char header_buf[8192];
+    if (header_len >= (int)sizeof(header_buf)) {
+        // header quá dài
+        if (original_len > max_len) return -1;
+        memcpy(modified_resp, original_resp, original_len);
+        return original_len;
+    }
+    memcpy(header_buf, original_resp, header_len);
+    header_buf[header_len] = '\0';
+
+    //Đổi Server header
+    char *server_hdr = strstr(header_buf, "Server:");
+    if (!server_hdr) server_hdr = strstr(header_buf, "server:");
+    if (server_hdr) {
+        char *line_end = strstr(server_hdr, "\r\n");
+        if (line_end) {
+            char temp[8192];
+            snprintf(temp, sizeof(temp),
+                     "%.*sServer: PBL\r\n%s",
+                     (int)(server_hdr - header_buf), header_buf,
+                     line_end + 2);
+            if (strlen(temp) < sizeof(header_buf)) {
+                strncpy(header_buf, temp, sizeof(header_buf)-1);
+                header_buf[sizeof(header_buf)-1] = '\0';
+            }
+        }
+    } else {
+        // thêm mới nếu không có
+        char *end_status = strstr(header_buf, "\r\n");
+        if (end_status) {
+            char temp[8192];
+            snprintf(temp, sizeof(temp),
+                     "%.*s\r\nServer: PBL\r\n%s",
+                     (int)(end_status - header_buf), header_buf,
+                     end_status + 2);
+            if (strlen(temp) < sizeof(header_buf)) {
+                strncpy(header_buf, temp, sizeof(header_buf)-1);
+                header_buf[sizeof(header_buf)-1] = '\0';
+            }
+        }
+    }
+
+    //Sửa Location header
+    char *location = strstr(header_buf, "Location: http://");
+    if (!location) location = strstr(header_buf, "location: http://");
+    if (location) {
+        char *location_end = strstr(location, "\r\n");
+        if (location_end) {
+            char *location_value = location + 9;
+            while (*location_value == ' ') location_value++;
+
+            char backend_url_with_port[128];
+            char backend_url_no_port[128];
+            snprintf(backend_url_with_port, sizeof(backend_url_with_port), "http://%s:%d", backend_host, backend_port);
+            snprintf(backend_url_no_port, sizeof(backend_url_no_port), "http://%s", backend_host);
+
+            int need_fix = 0;
+            char *path_to_keep = NULL;
+
+            if (strncmp(location_value, backend_url_with_port, strlen(backend_url_with_port)) == 0) {
+                need_fix = 1;
+                path_to_keep = location_value + strlen(backend_url_with_port);
+            } else if (strncmp(location_value, backend_url_no_port, strlen(backend_url_no_port)) == 0) {
+                need_fix = 1;
+                path_to_keep = location_value + strlen(backend_url_no_port);
+            }
+
+            if (need_fix) {
+                char proxy_url[128];
+                snprintf(proxy_url, sizeof(proxy_url), "http://%s:%d", proxy_host, proxy_port);
+
+                char fixed_resp[8192];
+                int before_len = location_value - header_buf;
+                int after_start = location_end - header_buf;
+
+                snprintf(fixed_resp, sizeof(fixed_resp), "%.*s%s%s%s", before_len, header_buf, proxy_url, path_to_keep, header_buf + after_start);
+
+                if (strlen(fixed_resp) < sizeof(header_buf)) {
+                    strncpy(header_buf, fixed_resp, sizeof(header_buf)-1);
+                    header_buf[sizeof(header_buf)-1] = '\0';
+                }
+            }
+        }
+    }
+
+    //Ghép header + body
+    int new_header_len = (int)strlen(header_buf);
+    int total_len = new_header_len + body_len;
+    if (total_len > max_len) return -1;
+
+    memcpy(modified_resp, header_buf, new_header_len);
+    memcpy(modified_resp + new_header_len, original_resp + header_len, body_len);
+
+    return total_len;
+}
+
+char* extract_host_from_request(const char *request, char *host_buffer, int buffer_size) {
+    if (!request || !host_buffer || buffer_size <= 0) return NULL;
+    
+    char *header_end = strstr(request, "\r\n\r\n");
+    if (!header_end) return NULL;
+    
+    char *host_start = strstr(request, "Host:");
+    if (!host_start) {
+        host_start = strstr(request, "host:");
+    }
+    if (!host_start || host_start >= header_end) return NULL;
+    
+    host_start += 5; // Skip
+    while (*host_start == ' ' || *host_start == '\t') host_start++;
+    
+    char *host_line_end = strstr(host_start, "\r\n");
+    if (!host_line_end) return NULL;
+    
+    int host_len = host_line_end - host_start;
+    if (host_len <= 0 || host_len >= buffer_size) return NULL;
+    
+    strncpy(host_buffer, host_start, host_len);
+    host_buffer[host_len] = '\0';
+    
+    // Loại bỏ port nếu có
+    char *port_pos = strchr(host_buffer, ':');
+    if (port_pos) {
+        *port_pos = '\0';
+    }
+    
+    return host_buffer;
 }

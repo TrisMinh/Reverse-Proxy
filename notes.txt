@@ -6,3 +6,27 @@
 - Về tối ưu bộ nhớ
     + Vẫn thấy linkedlist có vẻ ok hơn nhưng lại tốn thêm con trỏ
     + array thì có 2 con trỏ chạy thôi
+
+- Mới bổ sung thêm xử lý https đến backend, còn https từ user tới thì đang nghiên cứu
+- Cài thêm thư viện Openssl để build, chạy code, có này mới chạy đc https
+- Ở windows có sẵn một thư viện là Schannel cũng tương tự openssl nhưng mà khó hiểu gấp vài lần openssl 
+
+- Hiện tại code chỉ kết nối được đến backend sài port 80/443, có gì từ từ bổ sung thêm các cổng còn lại
+
+- Mà hiện tại code chạy vẫn chậm, hình như k pải do thread, đang tìm hiểu tại sao
+
+- Với code hiện tại t k bt build sao, t build thủ công bằng lệnh:
+
+gcc -Wall -Werror -Iinclude -c src/main.c -o build/main.o
+gcc -Wall -Werror -Iinclude -c src/utils/config.c -o build/utils/config.o
+gcc -Wall -Werror -Iinclude -c src/utils/logger.c -o build/utils/logger.o
+gcc -Wall -Werror -Iinclude -c src/utils/proxy_routes.c -o build/utils/proxy_routes.o
+gcc -Wall -Werror -Iinclude -c src/utils/ssl_utils.c -o build/utils/ssl_utils.o
+gcc -Wall -Werror -Iinclude -c src/core/threadpool.c -o build/core/threadpool.o
+gcc -Wall -Werror -Iinclude -c src/core/proxy.c -o build/core/proxy.o
+gcc -Wall -Werror -Iinclude -c src/core/server.c -o build/core/server.o
+gcc -Wall -Werror -Iinclude -c src/core/client.c -o build/core/client.o
+gcc -Wall -Werror -Iinclude -c src/http/http_processor.c -o build/http/http_processor.o
+
+
+gcc -o build/main.exe build/main.o build/utils/config.o build/utils/logger.o build/utils/proxy_routes.o build/utils/ssl_utils.o build/core/threadpool.o build/core/proxy.o build/core/server.o build/core/client.o build/http/http_processor.o -lws2_32 -lssl -lcrypto
