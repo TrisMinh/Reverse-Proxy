@@ -14,6 +14,8 @@ typedef struct {
     int connection_retries;
     char log_file[MAX_HOST_LEN];
     char log_level[MAX_HOST_LEN];
+    char acme_webroot[260];
+    char cert_dir[512];
 } Proxy_Config;
 
 int load_config();

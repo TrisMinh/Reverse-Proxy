@@ -1,12 +1,16 @@
 #include "server.h"
 #include "proxy.h"
 #include "config.h"
+#include "../include/client.h"
 #include "threadpool.h"
 #include <winsock2.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <openssl/ssl.h>
 
 extern ThreadPool pool;
+
+extern SSL_CTX *global_ssl_server_ctx;
 
 int server_init(const char *listen_host,int port,SOCKET *server_fd){
     WSADATA wsa;
@@ -57,5 +61,63 @@ void server_cleanup(SOCKET server_fd){
 void handle_client_task(void *arg){
     SOCKET client_fd = *(SOCKET*)arg;
     free(arg);
-    handle_client(client_fd,get_config());
+    handle_client(client_fd, NULL, get_config());
+}
+
+void start_https_server() {
+    SOCKET server_fd;
+    if (server_init("0.0.0.0", 443, &server_fd) < 0) {
+        printf("HTTPS server init failed\n");
+        return;
+    }
+    printf("HTTPS server listening on port 443\n");
+
+    while (1) {
+        struct sockaddr_in client_addr;
+        int len = sizeof(client_addr);
+        SOCKET client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &len);
+        if (client_fd == INVALID_SOCKET)
+            continue;
+
+        SSL *ssl = SSL_new(global_ssl_server_ctx);
+        if (!ssl) {
+            closesocket(client_fd);
+            continue;
+        }
+        SSL_set_fd(ssl, (int)client_fd);
+
+        typedef struct {
+            SOCKET client_fd;
+            SSL *ssl;
+        } SSLClientArg;
+
+        SSLClientArg *arg = malloc(sizeof(SSLClientArg));
+        arg->client_fd = client_fd;
+        arg->ssl = ssl;
+
+        enqueueThreadPool(&pool, handle_https_client_task, arg);
+    }
+
+    server_cleanup(server_fd);
+}
+
+void handle_https_client_task(void *arg) {
+    typedef struct {
+        SOCKET client_fd;
+        SSL *ssl;
+    } SSLClientArg;
+
+    SSLClientArg *c = (SSLClientArg *)arg;
+
+    SOCKET client_fd = c->client_fd;
+    SSL *ssl = c->ssl;
+    free(c);
+
+    if (SSL_accept(ssl) <= 0) {
+        SSL_free(ssl);
+        closesocket(client_fd);
+        return;
+    }
+
+    handle_client(client_fd, ssl, get_config());
 }

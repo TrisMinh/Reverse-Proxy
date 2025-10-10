@@ -9,4 +9,7 @@ void start_server();
 void server_cleanup(SOCKET server_fd);
 void handle_client_task(void *arg);
 
+void start_https_server();
+void handle_https_client_task(void *arg);
+
 #endif

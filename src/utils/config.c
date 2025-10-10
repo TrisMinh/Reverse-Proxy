@@ -35,6 +35,9 @@ int load_config() {
         if (sscanf(line, "connection_retries = %d", &global_config.connection_retries) == 1) continue;
         if (sscanf(line, "log_file = %255s", global_config.log_file) == 1) continue;
         if (sscanf(line, "log_level = %15s", global_config.log_level) == 1) continue;
+        if (sscanf(line, "acme_webroot = %259[^\n]", global_config.acme_webroot) == 1) continue;
+        if (sscanf(line, "cert_dir = %511[^\n]", global_config.cert_dir) == 1) continue;
+
         
         // Nếu đến đây nghĩa là dòng không match với field nào
         has_error = 1;
