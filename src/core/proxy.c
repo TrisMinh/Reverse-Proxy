@@ -205,6 +205,10 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     int buffered = 0;
     char header_buf[HEADER_BUFFER_SIZE];
 
+    long long content_length = -1;
+    int is_chunked = 0;
+    long long bytes_sent_body = 0;
+
     while (1) {
         FD_ZERO(&fds);
         FD_SET(client_fd, &fds);
@@ -228,6 +232,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                 ? SSL_read(backend_ssl, recv_buffer, sizeof(recv_buffer))
                 : recv(backend_fd, recv_buffer, sizeof(recv_buffer), 0);
             if (n <= 0) break;
+            recv_buffer[n] = '\0';
 
             if (!header_done) {
                 if (buffered + n > HEADER_BUFFER_SIZE) {
@@ -237,11 +242,22 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                 }
                 memcpy(header_buf + buffered, recv_buffer, n);
                 buffered += n;
+                header_buf[buffered] = '\0';
 
                 char *hdr_end = strstr(header_buf, "\r\n\r\n");
                 if (hdr_end) {
                     int header_len = (int)(hdr_end - header_buf) + 4;
                     int body_len   = buffered - header_len;
+
+                    char *cl = strstr(header_buf, "Content-Length:");
+                    if (!cl) cl = strstr(header_buf, "content-length:");
+                    if (cl && cl < hdr_end)
+                        content_length = atoll(cl + 15);
+
+                    char *te = strstr(header_buf, "Transfer-Encoding:");
+                    if (!te) te = strstr(header_buf, "transfer-encoding:");
+                    if (te && te < hdr_end && strstr(te, "chunked"))
+                        is_chunked = 1;
 
                     char modified[HEADER_BUFFER_SIZE];
                     int new_len = modify_response_headers(header_buf, header_len, modified, sizeof(modified), target_backend_host, target_backend_port, config->listen_host, config->listen_port);
@@ -255,9 +271,24 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
 
                     header_done = 1;
                     buffered = 0;
+
+                    bytes_sent_body = body_len;
                 }
             } else {
-                if (send_all(client_fd, recv_buffer, n, ssl) != 0) break;
+                if (send_all(client_fd, recv_buffer, n, ssl) != 0)
+                    break;
+
+                bytes_sent_body += n;
+
+                if (content_length >= 0) {
+                    if (bytes_sent_body >= content_length) {
+                        break;
+                    }
+                } else if (is_chunked) {
+                    if (strstr(recv_buffer, "\r\n0\r\n\r\n")) {
+                        break;
+                    }
+                }
             }
         }
     }

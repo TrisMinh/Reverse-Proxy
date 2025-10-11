@@ -552,3 +552,166 @@ INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
 INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
 INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
 INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Loaded 3 proxy routes from ../config/proxy_routes.conf
+INFO: Load config succeeded!
+INFO: SSL server context initialized (default cert)
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Domain routing: mycompany.local -> 127.0.0.1:7272
+INFO: Loaded 3 proxy routes from ../config/proxy_routes.conf
+INFO: Load config succeeded!
+INFO: SSL server context initialized (default cert)
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+ERROR: Failed to receive data from client
+ERROR: Failed to receive data from client
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+ERROR: Failed to receive data from client
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Domain routing: localhost -> 127.0.0.1:7272
+INFO: Loaded 3 proxy routes from ../config/proxy_routes.conf
+INFO: Load config succeeded!
+INFO: SSL server context initialized (default cert)
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+WARN: No valid certificate pair found for farm.plista.com - using default
+INFO: Loaded 3 proxy routes from ../config/proxy_routes.conf
+INFO: Load config succeeded!
+INFO: SSL server context initialized (default cert)
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+ERROR: Failed to receive data from client
+ERROR: Failed to receive data from client
+INFO: Loaded 3 proxy routes from ../config/proxy_routes.conf
+INFO: Load config succeeded!
+INFO: SSL server context initialized (default cert)
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443
+INFO: Domain routing: ngosing.online -> 185.199.108.153:443

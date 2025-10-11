@@ -67,24 +67,6 @@ static int build_path(const char *webroot, const char *token, char *out, size_t 
     return ((size_t)n < outsz) ? 0 : -1;
 }
 
-int acme_webroot_write_token_file(const char *webroot, const char *token, const char *thumbprint) {
-    if (!webroot || !token || !thumbprint) return -1;
-    if (!token_valid(token)) return -1;
-
-    char dir1[1024], dir2[1024];
-    snprintf(dir1, sizeof(dir1), "%s\\.well-known", webroot); _mkdir(dir1);
-    snprintf(dir2, sizeof(dir2), "%s\\.well-known\\acme-challenge", webroot); _mkdir(dir2);
-
-    char full[1024];
-    if (build_path(webroot, token, full, sizeof(full)) != 0) return -1;
-
-    FILE *f = fopen(full, "wb");
-    if (!f) return -1;
-    int w = fprintf(f, "%s.%s", token, thumbprint);
-    fclose(f);
-    return (w > 0) ? 0 : -1;
-}
-
 int acme_try_handle_with_root(SOCKET client_fd, const char *method, const char *request_path, const char *webroot) {
     (void)method;
 
