@@ -18,7 +18,7 @@ typedef struct {
     char cert_dir[512];
 } Proxy_Config;
 
-int load_config();
+int load_config(const char* filename);
 Proxy_Config* get_config();
 
 #endif

@@ -3,7 +3,9 @@
 #include "logger.h"
 #include "threadpool.h"
 #include "../include/ssl_utils.h"
+#include "../include/filter_chain.h"
 #include "../include/proxy_routes.h"
+#include "../include/rate_limit.h"
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,20 +23,14 @@ unsigned __stdcall https_thread(void *arg) {
 }
 
 int main(){
-    create_log("proxy.log");
+    create_log("../logs/proxy.log");
     load_proxy_routes("../config/proxy_routes.conf");
 
 
-    Proxy_Config config;
-    if(load_config()!=0){
-        printf("Load config failed, fallback default\n");
-        snprintf(config.listen_host,sizeof(config.listen_host),"0.0.0.0");
-        config.listen_port=4445;
-        snprintf(config.backend_host,sizeof(config.backend_host),"example.com");
-        config.backend_port=80;
-        config.max_connection=100;
-        config.timeout=30;
-        config.keep_alive=1;
+    int config_rs = load_config("../config/proxy.conf");
+    if (config_rs != 0) {
+        fprintf(stderr, "Failed to load config\n");
+        return 1;
     }
 
     // OpenSSL client-side context (backend HTTPS)
@@ -51,6 +47,11 @@ int main(){
         return 1;
     }
 
+    // Khởi tạo filter chain (danh sách filter trống ban đầu)
+    init_filter_chain();
+    rate_limit_init();
+    register_filter(rate_limit_filter);
+
     initThreadPool(&pool,MAX_THREADS);
     _beginthreadex(NULL, 0, https_thread, NULL, 0, NULL);
     start_server();
@@ -59,6 +60,8 @@ int main(){
     free_ssl_cert_cache();
     cleanup_ssl_ctx(global_ssl_server_ctx);
     cleanup_ssl_ctx(global_ssl_ctx);
+    rate_limit_shutdown();
+    shutdown_filter_chain();
     close_log();
     return 0;
 }

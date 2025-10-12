@@ -7,6 +7,7 @@
 #include "../include/ssl_utils.h"
 #include "../include/acme_webroot.h"
 #include <openssl/ssl.h>
+#include <ws2tcpip.h>
 
 #define CLIENT_READ(buf, len)   ((ssl) ? SSL_read(ssl, buf, len) : recv(client_fd, buf, len, 0))
 #define CLIENT_WRITE(buf, len)  ((ssl) ? SSL_write(ssl, buf, len) : send(client_fd, buf, len, 0))
@@ -177,6 +178,43 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         log_message("INFO", log_buf);
     }
     
+    // Trước khi kết nối backend: chạy filter-chain (nếu có)
+    {
+        FilterContext fctx;
+        memset(&fctx, 0, sizeof(fctx));
+        fctx.client_fd = client_fd;
+        fctx.ssl = ssl;
+        fctx.request = recv_buffer;
+        fctx.request_len = total;
+        fctx.route = rec;
+        fctx.config = config;
+
+        // Lấy IP client
+        char cip[64] = {0};
+        struct sockaddr_storage ss; int slen = sizeof(ss);
+        if (getpeername(client_fd, (struct sockaddr*)&ss, &slen) == 0) {
+            void *addr_ptr = NULL; int family = ((struct sockaddr*)&ss)->sa_family;
+            if (family == AF_INET) {
+                addr_ptr = &((struct sockaddr_in*)&ss)->sin_addr;
+            } else if (family == AF_INET6) {
+                addr_ptr = &((struct sockaddr_in6*)&ss)->sin6_addr;
+            }
+            if (addr_ptr) {
+                inet_ntop(family, addr_ptr, cip, sizeof(cip));
+            }
+        }
+        if (cip[0] == '\0') {
+            strncpy(cip, "0.0.0.0", sizeof(cip)-1);
+        }
+        strncpy(fctx.client_ip, cip, sizeof(fctx.client_ip)-1);
+
+        FilterResult fr = run_filters(&fctx);
+        if (fr != FILTER_OK) {
+            send_quick_error(client_fd, ssl, "429 Too Many Requests");
+            goto cleanup;
+        }
+    }
+
     // Modify request
     if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, host_from_request) != 0) {
         log_message("WARN", "Failed to modify HTTP headers, forwarding original request");
