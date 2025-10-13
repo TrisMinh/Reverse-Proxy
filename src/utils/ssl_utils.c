@@ -54,12 +54,10 @@ int test_https_handshake(SSL_CTX *ctx, const char *host, int port) {
     if (s == INVALID_SOCKET) return 0;
 
     struct sockaddr_in addr;
-    memset(&addr, 0, sizeof(addr));  // zero tránh rác
+    memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_port   = htons(port);
     addr.sin_addr.s_addr = inet_addr(host);
-
-    // Lưu ý: inet_addr() chỉ nhận chuỗi IP. Nếu hostname thì sẽ fail (đây là hạn chế đã biết).
 
     if (connect(s, (struct sockaddr*)&addr, sizeof(addr)) != 0) {
         closesocket(s);
@@ -67,7 +65,6 @@ int test_https_handshake(SSL_CTX *ctx, const char *host, int port) {
     }
 
     SSL *ssl = SSL_new(ctx);
-    // gắn ssl vào socket tcp s
     SSL_set_fd(ssl, (int)s);
 
     int result = SSL_connect(ssl);
@@ -78,7 +75,6 @@ int test_https_handshake(SSL_CTX *ctx, const char *host, int port) {
     return (result == 1) ? 1 : 0;
 }
 
-// cache chứng chỉ đã load
 typedef struct CertCache {
     char domain[256];
     SSL_CTX *ctx;
@@ -106,7 +102,6 @@ static SSL_CTX *create_ctx_from_cert(const char *domain) {
     snprintf(path_chain, sizeof(path_chain), "%s/%s/%s-chain.pem", certdir, domain, domain);
     snprintf(path_chain_only, sizeof(path_chain_only), "%s/%s/%s-chain-only.pem", certdir, domain, domain);
 
-    // kiểm tra cặp crt/key có tồn tại k
     f = fopen(path_crt, "r");
     if (f) { fclose(f);
         f = fopen(path_key, "r");
@@ -116,7 +111,6 @@ static SSL_CTX *create_ctx_from_cert(const char *domain) {
         }
     }
 
-    // nếu chưa có, thử cặp chain/key
     if (!crt_path) {
         f = fopen(path_chain, "r");
         if (f) { fclose(f);
@@ -128,7 +122,6 @@ static SSL_CTX *create_ctx_from_cert(const char *domain) {
         }
     }
 
-    // nếu vẫn chưa có, thử chain-only/key
     if (!crt_path) {
         f = fopen(path_chain_only, "r");
         if (f) { fclose(f);
@@ -174,7 +167,6 @@ static SSL_CTX *create_ctx_from_cert(const char *domain) {
     return ctx;
 }
 
-// Trả về SSL_CTX của domain (load nếu chưa có)
 static SSL_CTX *get_ctx_for_domain(const char *domain) {
     for (CertCache *c = cert_list; c; c = c->next)
         if (strcmp(c->domain, domain) == 0)
@@ -189,11 +181,9 @@ static SSL_CTX *get_ctx_for_domain(const char *domain) {
     node->next = cert_list;
     cert_list = node;
 
-    // logmsgf_local("INFO", "Cached cert for %s", domain);
     return ctx;
 }
 
-// Callback chọn chứng chỉ động khi handshake
 static int sni_callback(SSL *ssl, int *ad, void *arg) {
     const char *servername = SSL_get_servername(ssl, TLSEXT_NAMETYPE_host_name);
     if (!servername) return SSL_TLSEXT_ERR_OK;
@@ -239,7 +229,6 @@ SSL_CTX* init_ssl_server_ctx() {
     return ctx;
 }
 
-// cleanup cache khi thoát chương trình
 void free_ssl_cert_cache() {
     CertCache *c = cert_list;
     while (c) {
