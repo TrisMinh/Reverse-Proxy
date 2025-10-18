@@ -1,12 +1,10 @@
 #include "../include/ssl_utils.h"
 #include "../include/config.h"
 #include "../include/logger.h"
-
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

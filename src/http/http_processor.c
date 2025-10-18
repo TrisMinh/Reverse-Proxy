@@ -6,6 +6,10 @@
 int validate_http_request(const char *request) {
     if (!request || strlen(request) < 10) return 0;
     if (!strstr(request, " HTTP/1.")) return 0;
+    const char *hdr_end = strstr(request, "\r\n\r\n");
+    if (!hdr_end) return 0;
+    for (const char *p = request; p < hdr_end; ++p)
+    if (*p == '\n' && (p == request || *(p-1) != '\r')) return 0;
     
     if (strncmp(request, "GET ", 4) == 0 ||
         strncmp(request, "POST ", 5) == 0 ||
@@ -66,7 +70,6 @@ int modify_request_headers(const char *original_req, char *modified_req, int max
                 "Host: %s\r\n"
                 "X-Forwarded-For: %s\r\n"
                 "X-Forwarded-Host: %s\r\n"
-                "X-Forwarded-Proto: http\r\n"
                 "Accept-Encoding: identity\r\n"
                 "Connection: close\r\n" 
                 "%.*s",
