@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Iinclude
-LDFLAGS = -lws2_32
-SRC = src/main.c src/utils/config.c src/utils/logger.c src/core/proxy.c src/core/server.c src/core/client.c src/http/http_processor.c src/core/threadpool.c
-OBJ = build/main.o build/utils/config.o build/utils/logger.o build/core/proxy.o build/core/server.o build/core/client.o build/http/http_processor.o build/core/threadpool.o
+LDFLAGS = -lws2_32 -lssl -lcrypto
+SRC = src/main.c src/utils/config.c src/utils/logger.c src/utils/proxy_routes.c src/utils/ssl_utils.c src/core/proxy.c src/core/server.c src/core/client.c src/http/http_processor.c src/http/acme_webroot.c src/core/threadpool.c src/security/filter_chain.c src/security/filters/rate_limit.c
+OBJ = build/main.o build/utils/config.o build/utils/logger.o build/utils/proxy_routes.o build/utils/ssl_utils.o build/core/proxy.o build/core/server.o build/core/client.o build/http/http_processor.o build/http/acme_webroot.o build/core/threadpool.o build/security/filter_chain.o build/security/filters/rate_limit.o
 OUT = main
 
 all: $(OUT)
@@ -25,6 +25,15 @@ build/utils/logger.o: src/utils/logger.c
 	@if not exist build\utils mkdir build\utils
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build/utils/proxy_routes.o: src/utils/proxy_routes.c
+	@if not exist build\utils mkdir build\utils
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/utils/ssl_utils.o: src/utils/ssl_utils.c
+	@if not exist build\utils mkdir build\utils
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
 build/core/proxy.o: src/core/proxy.c
 	@if not exist build\core mkdir build\core
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -45,5 +54,31 @@ build/http/http_processor.o: src/http/http_processor.c
 	@if not exist build\http mkdir build\http
 	$(CC) $(CFLAGS) -c $< -o $@	
 
+build/http/acme_webroot.o: src/http/acme_webroot.c
+	@if not exist build\http mkdir build\http
+	$(CC) $(CFLAGS) -c $< -o $@	
+
+build/security/filter_chain.o: src/security/filter_chain.c
+	@if not exist build\security mkdir build\security
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/security/filters/rate_limit.o: src/security/filters/rate_limit.c
+	@if not exist build\security\filters mkdir build\security\filters
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	del build\main.o build\utils\config.o build\utils\logger.o build\core\proxy.o build\core\server.o build\core\threadpool.o build\core\client.o build\http\http_processor.o build\$(OUT).exe
+	del 
+	build\main.o 
+	build\utils\config.o 
+	build\utils\logger.o 
+	build/utils/proxy_routes.o
+	build/utils/ssl_utils.o
+	build\core\proxy.o 
+	build\core\server.o 
+	build\core\threadpool.o 
+	build\core\client.o 
+	build\http\http_processor.o 
+	build/http/acme_webroot.o 
+	build/security/filter_chain.o 
+	build/security/filters/rate_limit.o 
+	build\$(OUT).exe
