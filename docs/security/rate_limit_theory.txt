@@ -19,15 +19,18 @@ Có 5 thuật toán chính:
    - Đếm request trong cửa sổ cố định (ví dụ: 1 phút).
    - Dễ cài đặt, nhưng có lỗi “burst” khi chuyển cửa sổ.
    - Không phù hợp cho proxy vì có thể tạo đột biến tải.
+=> Thành ra mỗi lần vậy 1 phút sau mới có thể tăng thêm request (chưa phù hợp lắm, dẫn đến gián đoạn cho người dùng)
 
 (2) Sliding Window Log
    - Lưu log thời gian từng request, loại bỏ request cũ.
    - Rất chính xác nhưng tốn nhiều bộ nhớ (RAM cao).
+=> Tốn nhiều ram để lưu lịch sử 
 
 (3) Sliding Window Counter
    - Giữ hai cửa sổ (hiện tại và trước) để tính toán trung bình mượt.
    - Mượt hơn Fixed Window, tiết kiệm hơn Sliding Log.
    - Thích hợp cho hệ thống lớn.
+=> Cảm giác không thích hợp vì không có độ chính xác cao khi tính toán số lượng rq
 
 (4) Token Bucket
    - Mỗi client có một "xô" chứa token.
