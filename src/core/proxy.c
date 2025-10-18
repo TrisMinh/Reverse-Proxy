@@ -3,7 +3,7 @@
 #include "../include/filter_chain.h"
 #include "../include/logger.h"
 #include "../include/config.h"
-
+#include <ws2tcpip.h>
 #include "../include/ssl_utils.h"
 #include "../include/acme_webroot.h"
 #include <openssl/ssl.h>
@@ -109,6 +109,22 @@ static void send_quick_error(SOCKET cfd, SSL *ssl, const char *status) {
     send_all(cfd, resp, n, ssl);
 }
 
+int get_client_ip(SOCKET fd, char *out, size_t out_len) {
+    if (!out || out_len == 0) return -1;
+    out[0] = '\0';
+
+    struct sockaddr_storage ss; int slen = sizeof(ss);
+    if (getpeername(fd, (struct sockaddr*)&ss, &slen) != 0) return -1;
+
+    void *addr = NULL; int family = ((struct sockaddr*)&ss)->sa_family;
+    if (family == AF_INET)      addr = &((struct sockaddr_in*)&ss)->sin_addr;
+    else if (family == AF_INET6) addr = &((struct sockaddr_in6*)&ss)->sin6_addr;
+    if (!addr) return -1;
+
+    if (!inet_ntop(family, addr, out, (socklen_t)out_len)) return -1;
+    return 0;
+}
+
 void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     // Flow như sau
     // Doc request tu client   (1)
@@ -122,7 +138,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     SOCKET backend_fd = INVALID_SOCKET;
     SSL *backend_ssl = NULL;
 
-    set_tcp_nodelay(client_fd); // giảm delay TCP
+    set_tcp_nodelay(client_fd);
 
     // Doc headers tu client
     total = read_request_headers(client_fd, ssl, recv_buffer, (int)sizeof(recv_buffer));
@@ -177,8 +193,13 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         log_message("INFO", log_buf);
     }
     
+    char cip[64];
+    if (get_client_ip(client_fd, cip, sizeof(cip)) != 0) {
+        strncpy(cip, "0.0.0.0", sizeof(cip)-1);
+    }
+
     // Modify request
-    if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, host_from_request) != 0) {
+    if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, cip) != 0) {
         log_message("WARN", "Failed to modify HTTP headers, forwarding original request");
         strncpy(send_buffer, recv_buffer, sizeof(send_buffer) - 1);
         send_buffer[sizeof(send_buffer) - 1] = '\0';
