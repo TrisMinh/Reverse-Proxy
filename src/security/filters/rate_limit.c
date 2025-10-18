@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "../include/rate_limit.h"
+#include "../include/acl_filter.h"
 
 /*
    Simple per-IP token bucket rate limiter
@@ -13,7 +14,7 @@
    Map: fixed-size hash table with chaining. Opportunistic eviction of idle entries (> 10 minutes).
 */
 
-#define RL_DEFAULT_RATE   10.0  /* tokens per second */
+#define RL_DEFAULT_RATE   2.0  /* tokens per second */
 #define RL_DEFAULT_BURST  20.0  /* max tokens */
 #define RL_IDLE_EVICT_MS  (10ULL * 60ULL * 1000ULL)
 #define RL_BUCKETS        1024
@@ -35,6 +36,7 @@ static unsigned hash_ip(const char *ip) {
         h ^= (unsigned char)(*ip++);
         h *= 16777619u;
     }
+    // Sài phép % thì tốn CPU còn sài & thì lệnh máy nên rất nhanh
     return h & (RL_BUCKETS - 1);
 }
 
@@ -130,7 +132,15 @@ FilterResult rate_limit_filter(FilterContext *ctx)
         LeaveCriticalSection(&g_rl_lock);
         return FILTER_OK;
     } else {
+        e->violate_count++;
+        int count = e->violate_count;
         LeaveCriticalSection(&g_rl_lock);
+
+        // Nếu vi phạm >= 5 lần => chặn 
+        if (count >= 5) {
+            acl_add(ctx->client_ip);
+            acl_reload("../src/security/lists/blacklist.txt");
+        }
         return FILTER_DENY;
     }
 }

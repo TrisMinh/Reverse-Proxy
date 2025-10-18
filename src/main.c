@@ -6,6 +6,7 @@
 #include "../include/filter_chain.h"
 #include "../include/proxy_routes.h"
 #include "../include/rate_limit.h"
+#include "../include/acl_filter.h"
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,6 +50,10 @@ int main(){
 
     // Khởi tạo filter chain (danh sách filter trống ban đầu)
     init_filter_chain();
+
+    acl_init("../src/security/lists/blacklist.txt");
+    register_filter(acl_filter);
+    
     rate_limit_init();
     register_filter(rate_limit_filter);
 

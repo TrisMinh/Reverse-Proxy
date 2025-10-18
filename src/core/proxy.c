@@ -232,7 +232,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     }
 
     // Modify request
-    if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, cip) != 0) {
+    if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, host_from_request) != 0) {
         log_message("WARN", "Failed to modify HTTP headers, forwarding original request");
         strncpy(send_buffer, recv_buffer, sizeof(send_buffer) - 1);
         send_buffer[sizeof(send_buffer) - 1] = '\0';

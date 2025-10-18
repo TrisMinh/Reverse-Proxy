@@ -7,6 +7,7 @@ typedef struct rl_entry_s {
     double tokens;
     double burst;
     uint64_t last_ms;
+    int violate_count;
     struct rl_entry_s *next;
 } rl_entry_t;
 
