@@ -231,8 +231,13 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         }
     }
 
+    char cip[64];
+    if (get_client_ip(client_fd, cip, sizeof(cip)) != 0) {
+        strncpy(cip, "0.0.0.0", sizeof(cip)-1);
+    }
+
     // Modify request
-    if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, host_from_request) != 0) {
+    if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, cip) != 0) {
         log_message("WARN", "Failed to modify HTTP headers, forwarding original request");
         strncpy(send_buffer, recv_buffer, sizeof(send_buffer) - 1);
         send_buffer[sizeof(send_buffer) - 1] = '\0';
@@ -249,6 +254,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
 
     if (send_all(backend_fd, send_buffer, send_len, use_ssl ? backend_ssl : NULL) != 0) {
         log_message("ERROR", "Failed to send request headers to backend");
+        goto cleanup;
     }
 
     // Gửi phần body còn lại
@@ -264,6 +270,13 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     long long bytes_sent_body = 0;
 
     while (1) {
+        int n;
+        if (use_ssl && backend_ssl && SSL_pending(backend_ssl) > 0) {
+            n = SSL_read(backend_ssl, recv_buffer, sizeof(recv_buffer));
+            if (n <= 0) break;
+            goto process_backend_chunk;
+        }
+
         FD_ZERO(&fds);
         FD_SET(client_fd, &fds);
         FD_SET(backend_fd, &fds);
@@ -274,20 +287,21 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
 
         // CLIENT → BACKEND
         if (FD_ISSET(client_fd, &fds)) {
-            int n = (ssl ? SSL_read(ssl, recv_buffer, sizeof(recv_buffer))
-                        : recv(client_fd, recv_buffer, sizeof(recv_buffer), 0));
-            if (n <= 0) break;
-            if (send_all(backend_fd, recv_buffer, n, use_ssl ? backend_ssl : NULL) != 0) break;
+            int ncli = (ssl ? SSL_read(ssl, recv_buffer, sizeof(recv_buffer)) : recv(client_fd, recv_buffer, sizeof(recv_buffer), 0));
+            if (ncli <= 0) break;
+            if (send_all(backend_fd, recv_buffer, ncli, use_ssl ? backend_ssl : NULL) != 0) break;
         }
 
         // BACKEND → CLIENT
         if (FD_ISSET(backend_fd, &fds)) {
-            int n = use_ssl
-                ? SSL_read(backend_ssl, recv_buffer, sizeof(recv_buffer))
-                : recv(backend_fd, recv_buffer, sizeof(recv_buffer), 0);
+            n = use_ssl ? SSL_read(backend_ssl, recv_buffer, sizeof(recv_buffer)) : recv(backend_fd, recv_buffer, sizeof(recv_buffer), 0);
             if (n <= 0) break;
-            recv_buffer[n] = '\0';
+            // recv_buffer[n] = '\0';
+        } else {
+            continue;
+        }
 
+        process_backend_chunk:
             if (!header_done) {
                 if (buffered + n > HEADER_BUFFER_SIZE) {
                     log_message("ERROR", "Header too large from backend");
@@ -344,7 +358,6 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                     }
                 }
             }
-        }
     }
 
 cleanup:
