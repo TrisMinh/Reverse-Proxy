@@ -6,6 +6,7 @@
 #include <ws2tcpip.h>
 #include "../include/ssl_utils.h"
 #include "../include/acme_webroot.h"
+#include "../include/validate_header.h"
 #include <openssl/ssl.h>
 #include <ws2tcpip.h>
 
@@ -152,11 +153,15 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         goto cleanup;
     }
 
-    if (!validate_http_request(recv_buffer)) { // kiểm tra tính hợp lệ của header
-        log_message("WARN", "Received invalid HTTP request from client");
-        send_quick_error(client_fd, ssl, "400 Bad Request");
+    int st = validate_http_request(recv_buffer);
+    if (st != 0) {
+        if (st == 431)
+            send_quick_error(client_fd, ssl, "431 Request Header Fields Too Large");
+        else
+            send_quick_error(client_fd, ssl, "400 Bad Request");
         goto cleanup;
     }
+
 
     if (!ssl && handle_acme_if_needed(client_fd, recv_buffer, config)) {
         goto cleanup;

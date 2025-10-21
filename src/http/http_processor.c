@@ -3,25 +3,25 @@
 #include <stdio.h>
 #include <string.h>
 
-int validate_http_request(const char *request) {
-    if (!request || strlen(request) < 10) return 0;
-    if (!strstr(request, " HTTP/1.")) return 0;
-    const char *hdr_end = strstr(request, "\r\n\r\n");
-    if (!hdr_end) return 0;
-    for (const char *p = request; p < hdr_end; ++p)
-    if (*p == '\n' && (p == request || *(p-1) != '\r')) return 0;
+// int validate_http_request(const char *request) {
+//     if (!request || strlen(request) < 10) return 0;
+//     if (!strstr(request, " HTTP/1.")) return 0;
+//     const char *hdr_end = strstr(request, "\r\n\r\n");
+//     if (!hdr_end) return 0;
+//     for (const char *p = request; p < hdr_end; ++p)
+//     if (*p == '\n' && (p == request || *(p-1) != '\r')) return 0;
     
-    if (strncmp(request, "GET ", 4) == 0 ||
-        strncmp(request, "POST ", 5) == 0 ||
-        strncmp(request, "PUT ", 4) == 0 ||
-        strncmp(request, "DELETE ", 7) == 0 ||
-        strncmp(request, "HEAD ", 5) == 0 ||
-        strncmp(request, "OPTIONS ", 8) == 0 ||
-        strncmp(request, "PATCH ", 6) == 0) {
-        return 1;
-    }
-    return 0;
-}
+//     if (strncmp(request, "GET ", 4) == 0 ||
+//         strncmp(request, "POST ", 5) == 0 ||
+//         strncmp(request, "PUT ", 4) == 0 ||
+//         strncmp(request, "DELETE ", 7) == 0 ||
+//         strncmp(request, "HEAD ", 5) == 0 ||
+//         strncmp(request, "OPTIONS ", 8) == 0 ||
+//         strncmp(request, "PATCH ", 6) == 0) {
+//         return 1;
+//     }
+//     return 0;
+// }
 
 int modify_request_headers(const char *original_req, char *modified_req, int max_len, const char *backend_host, int backend_port, const char *client_ip) {
     
