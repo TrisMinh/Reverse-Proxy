@@ -16,6 +16,8 @@ typedef struct {
     char log_level[MAX_HOST_LEN];
     char acme_webroot[260];
     char cert_dir[512];
+    long long header_limit;
+    long long body_limit;
 } Proxy_Config;
 
 int load_config(const char* filename);

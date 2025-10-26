@@ -105,20 +105,27 @@ static void strip_sql_comments(char *s)
    Ví dụ: "%2527" -> "%27" (double-encoding cho '\''; cần decode thêm vòng nữa mới ra '\'' ) */
 static int pct_decode_once(const char *in, char *out, int cap)
 {
+    if (!in || !out || cap <= 0) return 0;
     int oi = 0;
-    for (int i = 0; in[i] && oi < cap - 1;)
-    {
-        unsigned char a = (unsigned char)in[i + 1], b = (unsigned char)in[i + 2];
-        if (in[i] == '%' && isxdigit(a) && isxdigit(b))
-        {
+    for (int i = 0; in[i] && oi < cap - 1; ) {
+        unsigned char c = (unsigned char)in[i];
+        if (c == '+') {  /* form-url-encoded */
+            out[oi++] = ' ';
+            i++;
+            continue;
+        }
+        if (c == '%' && in[i+1] && in[i+2] &&
+            isxdigit((unsigned char)in[i+1]) &&
+            isxdigit((unsigned char)in[i+2])) {
+            unsigned char a = (unsigned char)in[i+1];
+            unsigned char b = (unsigned char)in[i+2];
             int v = (isdigit(a) ? a - '0' : 10 + (tolower(a) - 'a'));
             v = (v << 4) + (isdigit(b) ? b - '0' : 10 + (tolower(b) - 'a'));
             out[oi++] = (char)v;
             i += 3;
-        }
-        else
-        {
-            out[oi++] = in[i++];
+        } else {
+            out[oi++] = (char)c;
+            i++;
         }
     }
     out[oi] = 0;
@@ -157,12 +164,15 @@ static void normalize_and_dual_score(const char *in, int *score_out)
     to_lower_ascii(a);
     collapse_spaces(a);
 
-    *score_out += score_buf_padded(a);
+    int s1 = score_buf_padded(a);
 
     memcpy(b, a, strlen(a) + 1);
     strip_sql_comments(b);
-    *score_out += score_buf_padded(b);
+    int s2 = score_buf_padded(b);
+
+    *score_out += (s1 > s2 ? s1 : s2);
 }
+
 
 static const char *find_body_ptr(const char *req)
 {

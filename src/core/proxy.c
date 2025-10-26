@@ -6,7 +6,7 @@
 #include <ws2tcpip.h>
 #include "../include/ssl_utils.h"
 #include "../include/acme_webroot.h"
-#include "../include/validate_header.h"
+#include "../include/filter_request_guard.h"
 #include <openssl/ssl.h>
 #include <ws2tcpip.h>
 
@@ -19,7 +19,7 @@ extern SSL_CTX *global_ssl_ctx;
 #include <stdlib.h>
 #include <string.h>
 
-#define BUFFER_SIZE 8192
+#define BUFFER_SIZE 8192*2
 #define HEADER_BUFFER_SIZE (BUFFER_SIZE * 4)
 
 static int send_all(SOCKET s, const char *buf, int len, SSL *ssl) {
@@ -153,16 +153,6 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         goto cleanup;
     }
 
-    int st = validate_http_request(recv_buffer);
-    if (st != 0) {
-        if (st == 431)
-            send_quick_error(client_fd, ssl, "431 Request Header Fields Too Large");
-        else
-            send_quick_error(client_fd, ssl, "400 Bad Request");
-        goto cleanup;
-    }
-
-
     if (!ssl && handle_acme_if_needed(client_fd, recv_buffer, config)) {
         goto cleanup;
     }
@@ -262,6 +252,12 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         goto cleanup;
     }
 
+    frg_body_counter ctr;
+    int initial_inbuf = 0;
+    if (frg_body_counter_init(&ctr, 0, recv_buffer, total, &initial_inbuf) == 413) {
+        send_quick_error(client_fd, ssl, "413 Payload Too Large");
+        goto cleanup;
+    }
     // Gửi phần body còn lại
     forward_already_read_body(recv_buffer, total, backend_fd, use_ssl ? backend_ssl : NULL);
 
@@ -294,6 +290,10 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         if (FD_ISSET(client_fd, &fds)) {
             int ncli = (ssl ? SSL_read(ssl, recv_buffer, sizeof(recv_buffer)) : recv(client_fd, recv_buffer, sizeof(recv_buffer), 0));
             if (ncli <= 0) break;
+            if (frg_body_counter_add(&ctr, (size_t)ncli) == 413) {
+                send_quick_error(client_fd, ssl, "413 Payload Too Large");
+                goto cleanup;
+            }
             if (send_all(backend_fd, recv_buffer, ncli, use_ssl ? backend_ssl : NULL) != 0) break;
         }
 
