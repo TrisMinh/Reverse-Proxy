@@ -7,6 +7,7 @@
         "stdio.h": "c",
         "ssl.h": "c",
         "winsock2.h": "c",
-        "ssl_utils.h": "c"
+        "ssl_utils.h": "c",
+        "ipset.h": "c"
     },
 }

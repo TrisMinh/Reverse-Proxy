@@ -1,8 +1,48 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Iinclude
-LDFLAGS = -lws2_32 -lssl -lcrypto
-SRC = src/main.c src/utils/config.c src/utils/logger.c src/utils/proxy_routes.c src/utils/ssl_utils.c src/core/proxy.c src/core/server.c src/core/client.c src/http/http_processor.c src/http/acme_webroot.c src/core/threadpool.c src/security/filter_chain.c src/security/filters/rate_limit.c src/security/filters/acl_filter.c src/security/filters/ipset.c src/security/filters/waf_sql.c src/security/filters/filter_request_guard.c
-OBJ = build/main.o build/utils/config.o build/utils/logger.o build/utils/proxy_routes.o build/utils/ssl_utils.o build/core/proxy.o build/core/server.o build/core/client.o build/http/http_processor.o build/http/acme_webroot.o build/core/threadpool.o build/security/filter_chain.o build/security/filters/rate_limit.o build/security/filters/acl_filter.o build/security/filters/ipset.o build/security/filters/waf_sql.o build/security/filters/filter_request_guard.o
+
+# === MySQL Connector/C (local) ===
+MYSQL_INCLUDE = deps/mysql-c-connector/include
+MYSQL_LIB = deps/mysql-c-connector/lib
+
+CFLAGS = -Wall -Werror -Iinclude -I$(MYSQL_INCLUDE)
+LDFLAGS = -lws2_32 -lssl -lcrypto -L$(MYSQL_LIB) -llibmysql
+SRC = src/main.c \
+	src/utils/config.c \
+	src/utils/db_config.c \
+	src/utils/logger.c \
+	src/utils/proxy_routes.c \
+	src/utils/ssl_utils.c \
+	src/core/proxy.c \
+	src/core/server.c \
+	src/core/client.c \
+	src/http/http_processor.c \
+	src/http/acme_webroot.c \
+	src/core/threadpool.c \
+	src/security/filter_chain.c \
+	src/security/filters/rate_limit.c \
+	src/security/filters/acl_filter.c \
+	src/security/filters/ipset.c \
+	src/security/filters/waf_sql.c \
+	src/security/filters/filter_request_guard.c 
+OBJ = build/main.o \
+	build/utils/config.o \
+	build/utils/db_config.o \
+	build/utils/logger.o \
+	build/utils/proxy_routes.o \
+	build/utils/ssl_utils.o \
+	build/core/proxy.o \
+	build/core/server.o \
+	build/core/client.o \
+	build/http/http_processor.o \
+	build/http/acme_webroot.o \
+	build/core/threadpool.o \
+	build/security/filter_chain.o \
+	build/security/filters/rate_limit.o \
+	build/security/filters/acl_filter.o \
+	build/security/filters/ipset.o \
+	build/security/filters/waf_sql.o \ 
+	build/security/filters/filter_request_guard.o
+
 OUT = main
 
 all: $(OUT)
@@ -10,14 +50,20 @@ all: $(OUT)
 
 
 $(OUT): $(OBJ)
-	@if not exist tests mkdir tests
+	@if not exist build mkdir build
 	$(CC) -o build\$(OUT).exe $^ $(LDFLAGS)
+	@echo [COPY] libmysql.dll -> build\
+	@copy /Y deps\mysql-c-connector\bin\libmysql.dll build\ >nul
 
 build/main.o: src/main.c
 	@if not exist build mkdir build
 	$(CC) $(CFLAGS) -c $< -o $@
 
 build/utils/config.o: src/utils/config.c
+	@if not exist build\utils mkdir build\utils
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/utils/db_config.o: src/utils/db_config.c
 	@if not exist build\utils mkdir build\utils
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -86,6 +132,7 @@ clean:
 	del 
 	build\main.o 
 	build\utils\config.o 
+	build\utils\db_config.o 
 	build\utils\logger.o 
 	build/utils/proxy_routes.o
 	build/utils/ssl_utils.o

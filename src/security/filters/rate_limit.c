@@ -124,7 +124,7 @@ FilterResult rate_limit_filter(FilterContext *ctx)
     rl_entry_t *e = get_or_create(ctx->client_ip, t); 
     if (!e) {
         LeaveCriticalSection(&g_rl_lock);
-        return FILTER_OK; /* fail-open on alloc */
+        return FILTER_OK; 
     }
     refill(e, t);
     if (e->tokens >= 1.0) {
@@ -139,7 +139,6 @@ FilterResult rate_limit_filter(FilterContext *ctx)
         // Nếu vi phạm >= 5 lần => chặn 
         if (count >= 5) {
             acl_add(ctx->client_ip);
-            acl_reload("../src/security/lists/blacklist.txt");
         }
         return FILTER_DENY;
     }

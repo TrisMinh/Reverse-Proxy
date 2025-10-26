@@ -2473,3 +2473,373 @@
 [2025-10-18 22:03:30] [INFO] Domain routing: localhost -> 127.0.0.1:3000
 [2025-10-18 22:03:30] [INFO] Domain routing: localhost -> 127.0.0.1:3000
 [2025-10-18 22:03:30] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:12:48] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-20 13:12:48] [INFO] Config loaded successfully
+[2025-10-20 13:12:48] [INFO] SSL server context initialized (default cert)
+[2025-10-20 13:14:44] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:48] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:48] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:51] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:52] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:53] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:54] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:14:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:05] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:22] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:24] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:24] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:24] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:26] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:26] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:26] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:26] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:27] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:27] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:27] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:27] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:32] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:15:38] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:07] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-20 13:16:07] [INFO] Config loaded successfully
+[2025-10-20 13:16:07] [INFO] SSL server context initialized (default cert)
+[2025-10-20 13:16:08] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:20] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:33] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:33] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:34] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:34] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:34] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:34] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:35] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:36] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:52] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-20 13:16:52] [INFO] Config loaded successfully
+[2025-10-20 13:16:52] [INFO] SSL server context initialized (default cert)
+[2025-10-20 13:16:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:16:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:01] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:07] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:07] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:08] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:08] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:08] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:08] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:12] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:12] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:12] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:12] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:13] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:13] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:13] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:19] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:19] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:19] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:19] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:20] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:20] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:50] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:55] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:55] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:17:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:18:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:18:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-20 13:22:37] [ERROR] Failed to receive data from client
+[2025-10-20 13:22:37] [ERROR] Failed to receive data from client
+[2025-10-26 15:38:10] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 15:38:10] [INFO] Config loaded successfully
+[2025-10-26 15:38:10] [INFO] SSL server context initialized (default cert)
+[2025-10-26 15:41:04] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 15:41:04] [INFO] Config loaded successfully
+[2025-10-26 15:41:04] [INFO] SSL server context initialized (default cert)
+[2025-10-26 15:44:17] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 15:44:17] [INFO] Config loaded successfully
+[2025-10-26 15:44:17] [INFO] SSL server context initialized (default cert)
+[2025-10-26 15:48:23] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 15:48:23] [INFO] Config loaded successfully
+[2025-10-26 15:48:23] [INFO] SSL server context initialized (default cert)
+[2025-10-26 15:50:38] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 15:50:38] [INFO] Config loaded successfully
+[2025-10-26 15:50:38] [INFO] SSL server context initialized (default cert)
+[2025-10-26 15:50:45] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 15:50:45] [INFO] Config loaded successfully
+[2025-10-26 15:50:45] [INFO] SSL server context initialized (default cert)
+[2025-10-26 15:52:56] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 15:52:56] [INFO] Config loaded successfully
+[2025-10-26 15:52:56] [INFO] SSL server context initialized (default cert)
+[2025-10-26 15:53:56] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:58] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:53:59] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:00] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:02] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:06] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:23] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:24] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:26] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:27] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:27] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:33] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:34] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:35] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:35] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:36] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:36] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:36] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:37] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:37] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:54:40] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:55:02] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:55:42] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:56:06] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:56:06] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:56:06] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 15:56:07] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:03] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 16:19:03] [INFO] Config loaded successfully
+[2025-10-26 16:19:03] [INFO] SSL server context initialized (default cert)
+[2025-10-26 16:19:22] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 16:19:22] [INFO] Config loaded successfully
+[2025-10-26 16:19:22] [INFO] SSL server context initialized (default cert)
+[2025-10-26 16:19:44] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:44] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:44] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:44] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:44] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:44] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:45] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:46] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:46] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:46] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:48] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:49] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:53] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 16:19:57] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-10-26 20:24:31] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:24:31] [INFO] Config loaded successfully
+[2025-10-26 20:24:31] [WARN] Unknown config entry encountered
+[2025-10-26 20:24:31] [WARN] Unknown config entry encountered
+[2025-10-26 20:24:31] [WARN] Unknown config entry encountered
+[2025-10-26 20:24:31] [WARN] Unknown config entry encountered
+[2025-10-26 20:24:31] [WARN] Unknown config entry encountered
+[2025-10-26 20:24:31] [WARN] Unknown config entry encountered
+[2025-10-26 20:24:31] [WARN] Config loaded with warnings
+[2025-10-26 20:24:31] [FATAL] Missing default.crt / default.key : cannot start HTTPS
+[2025-10-26 20:25:23] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:25:23] [INFO] Config loaded successfully
+[2025-10-26 20:25:23] [WARN] Unknown config entry encountered
+[2025-10-26 20:25:23] [WARN] Unknown config entry encountered
+[2025-10-26 20:25:23] [WARN] Unknown config entry encountered
+[2025-10-26 20:25:23] [WARN] Unknown config entry encountered
+[2025-10-26 20:25:23] [WARN] Unknown config entry encountered
+[2025-10-26 20:25:23] [WARN] Unknown config entry encountered
+[2025-10-26 20:25:23] [WARN] Config loaded with warnings
+[2025-10-26 20:25:23] [FATAL] Missing default.crt / default.key : cannot start HTTPS
+[2025-10-26 20:26:47] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:26:47] [INFO] Config loaded successfully
+[2025-10-26 20:28:00] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:28:00] [INFO] Config loaded successfully
+[2025-10-26 20:28:22] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:28:22] [INFO] Config loaded successfully
+[2025-10-26 20:29:09] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:29:09] [INFO] Config loaded successfully
+[2025-10-26 20:29:12] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:29:12] [INFO] Config loaded successfully
+[2025-10-26 20:33:23] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:33:23] [INFO] Config loaded successfully
+[2025-10-26 20:33:23] [WARN] Unknown DB config entry encountered
+[2025-10-26 20:33:23] [WARN] DB config loaded with warnings
+[2025-10-26 20:33:23] [INFO] SSL server context initialized (default cert)
+[2025-10-26 20:33:43] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:33:43] [INFO] Config loaded successfully
+[2025-10-26 20:33:43] [WARN] Unknown DB config entry encountered
+[2025-10-26 20:33:43] [WARN] DB config loaded with warnings
+[2025-10-26 20:33:43] [INFO] SSL server context initialized (default cert)
+[2025-10-26 20:34:25] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:34:25] [INFO] Config loaded successfully
+[2025-10-26 20:34:25] [WARN] Unknown DB config entry encountered
+[2025-10-26 20:34:25] [WARN] DB config loaded with warnings
+[2025-10-26 20:34:25] [INFO] SSL server context initialized (default cert)
+[2025-10-26 20:35:50] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:35:50] [INFO] Config loaded successfully
+[2025-10-26 20:35:50] [WARN] Unknown DB config entry encountered
+[2025-10-26 20:35:50] [WARN] DB config loaded with warnings
+[2025-10-26 20:35:51] [INFO] SSL server context initialized (default cert)
+[2025-10-26 20:36:33] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:36:33] [INFO] Config loaded successfully
+[2025-10-26 20:36:33] [INFO] DB config loaded successfully
+[2025-10-26 20:36:33] [INFO] SSL server context initialized (default cert)
+[2025-10-26 20:39:24] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-10-26 20:39:24] [INFO] Config loaded successfully
+[2025-10-26 20:39:24] [INFO] DB config loaded successfully
+[2025-10-26 20:39:24] [INFO] SSL server context initialized (default cert)
