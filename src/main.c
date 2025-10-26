@@ -1,4 +1,5 @@
 #include "config.h"
+#include "db_config.h"
 #include "server.h"
 #include "logger.h"
 #include "threadpool.h"
@@ -18,6 +19,15 @@ SSL_CTX *global_ssl_server_ctx = NULL;
 
 ThreadPool pool;
 
+void __cdecl acl_reloader_thread(void *arg) {
+    while (1) {
+        Sleep(10000);
+        acl_reload();
+        printf("[ACL] Reloaded from database.");
+    }
+}
+
+
 unsigned __stdcall https_thread(void *arg) {
     start_https_server();
     return 0;
@@ -31,6 +41,12 @@ int main(){
     int config_rs = load_config("../config/proxy.conf");
     if (config_rs != 0) {
         fprintf(stderr, "Failed to load config\n");
+        return 1;
+    }
+
+    int db_config_rs = load_db_config("../config/db.conf");
+    if (db_config_rs != 0) {
+        fprintf(stderr, "Failed to load db config\n");
         return 1;
     }
 
@@ -51,11 +67,14 @@ int main(){
     // Khởi tạo filter chain (danh sách filter trống ban đầu)
     init_filter_chain();
 
-    acl_init("../src/security/lists/blacklist.txt");
+    acl_init();
     register_filter(acl_filter);
     
     rate_limit_init();
     register_filter(rate_limit_filter);
+
+    // Thread reload ACL mỗi 30 giây
+    _beginthread(acl_reloader_thread, 0, NULL);
 
     initThreadPool(&pool,MAX_THREADS);
     _beginthreadex(NULL, 0, https_thread, NULL, 0, NULL);
