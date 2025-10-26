@@ -23,7 +23,8 @@ SRC = src/main.c \
 	src/security/filters/acl_filter.c \
 	src/security/filters/ipset.c \
 	src/security/filters/waf_sql.c \
-	src/security/filters/filter_request_guard.c 
+	src/security/filters/filter_request_guard.c \
+	
 OBJ = build/main.o \
 	build/utils/config.o \
 	build/utils/db_config.o \
@@ -40,8 +41,8 @@ OBJ = build/main.o \
 	build/security/filters/rate_limit.o \
 	build/security/filters/acl_filter.o \
 	build/security/filters/ipset.o \
-	build/security/filters/waf_sql.o \ 
-	build/security/filters/filter_request_guard.o
+	build/security/filters/waf_sql.o \
+	build/security/filters/filter_request_guard.o \
 
 OUT = main
 
@@ -129,23 +130,11 @@ build/security/filters/filter_request_guard.o: src/security/filters/filter_reque
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	del 
-	build\main.o 
-	build\utils\config.o 
-	build\utils\db_config.o 
-	build\utils\logger.o 
-	build/utils/proxy_routes.o
-	build/utils/ssl_utils.o
-	build\core\proxy.o 
-	build\core\server.o 
-	build\core\threadpool.o 
-	build\core\client.o 
-	build\http\http_processor.o 
-	build/http/acme_webroot.o 
-	build/security/filter_chain.o 
-	build/security/filters/rate_limit.o 
-	build/security/filters/acl_filter.o
-	build/security/filters/ipset.o
-	build/security/filters/waf_sql.o
-	build/security/filters/filter_request_guard.o
-	build\$(OUT).exe
+	@del /Q build\*.o \
+	build\core\*.o \
+	build\utils\*.o \
+	build\http\*.o \
+	build\security\*.o \
+	build\security\filters\*.o \
+	build\$(OUT).exe 2>nul
+
