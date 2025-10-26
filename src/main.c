@@ -7,6 +7,8 @@
 #include "../include/proxy_routes.h"
 #include "../include/rate_limit.h"
 #include "../include/acl_filter.h"
+#include "../include/waf_sql.h"
+#include "../include/filter_request_guard.h"
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,6 +36,10 @@ int main(){
         return 1;
     }
 
+    const Proxy_Config *cfg = get_config();
+    frg_set_header_limit(cfg->header_limit);
+    frg_set_body_limit(cfg->body_limit);
+
     // OpenSSL client-side context (backend HTTPS)
     global_ssl_ctx = init_ssl_ctx();
     if (!global_ssl_ctx) {
@@ -51,11 +57,15 @@ int main(){
     // Khởi tạo filter chain (danh sách filter trống ban đầu)
     init_filter_chain();
 
+    register_filter(frg_chain_validate);
+
     acl_init("../src/security/lists/blacklist.txt");
     register_filter(acl_filter);
     
     rate_limit_init();
     register_filter(rate_limit_filter);
+
+    register_filter(waf_sql_filter);
 
     initThreadPool(&pool,MAX_THREADS);
     _beginthreadex(NULL, 0, https_thread, NULL, 0, NULL);

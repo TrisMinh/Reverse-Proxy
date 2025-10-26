@@ -23,6 +23,9 @@ static void set_default_config(Proxy_Config *config) {
     config->keep_alive = 1;
     config->connection_retries = 3;
 
+    config->header_limit = 131072;
+    config->body_limit   = 104857600;
+
     snprintf(config->log_file, MAX_HOST_LEN, "logs/proxy.log");
     snprintf(config->log_level, MAX_HOST_LEN, "info");
 }
@@ -40,6 +43,8 @@ static int parse_line(const char *line) {
     if (sscanf(line, "log_level = %63s", global_config.log_level) == 1) return 0;
     if (sscanf(line, "acme_webroot = %63s", global_config.acme_webroot) == 1) return 0;
     if (sscanf(line, "cert_dir = %63s", global_config.cert_dir) == 1) return 0;
+    if (sscanf(line, "header_limit = %lld", &global_config.header_limit) == 1) return 0;
+    if (sscanf(line, "body_limit = %lld",   &global_config.body_limit)   == 1) return 0;
 
     return -1;
 }

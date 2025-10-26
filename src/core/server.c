@@ -70,7 +70,6 @@ void start_https_server() {
         printf("HTTPS server init failed\n");
         return;
     }
-    printf("HTTPS server listening on port 443\n");
 
     while (1) {
         struct sockaddr_in client_addr;
