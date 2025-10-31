@@ -19,8 +19,8 @@ void acl_init(void) {
 }
 
 void acl_reload(void) {
-    int count = ipset_reload(&g_blacklist);
-    printf("[ACL] Reloaded blacklist: %d IP(s)\n", count);
+    // int count = ipset_reload(&g_blacklist);
+    // printf("[ACL] Reloaded blacklist: %d IP(s)\n", count);
 }
 
 void acl_add(const char *ip) {

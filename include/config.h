@@ -18,6 +18,12 @@ typedef struct {
     char cert_dir[512];
     long long header_limit;
     long long body_limit;
+    char captcha_center_url[512];
+    char captcha_secret_key[512];
+    char recaptcha_secret_key[512];
+    char captcha_callback_path[512];
+    int captcha_state_ttl_sec;
+    int captcha_pass_ttl_sec;
 } Proxy_Config;
 
 int load_config(const char* filename);

@@ -208,7 +208,7 @@ int ipset_reload(ipset_t *s) {
     ipset_global_lock_init();
     EnterCriticalSection(&ipset_lock);
     int count = ipdb_load_all(s);
-    printf("[ACL] Reload DB to cache: %d IP(s)\n", count);
+    // printf("[ACL] Reload DB to cache: %d IP(s)\n", count);
     LeaveCriticalSection(&ipset_lock);
 
     return count;
