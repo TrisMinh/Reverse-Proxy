@@ -10,6 +10,7 @@
 #include "../include/acl_filter.h"
 #include "../include/waf_sql.h"
 #include "../include/filter_request_guard.h"
+#include "../include/captcha_filter.h"
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +26,7 @@ void __cdecl acl_reloader_thread(void *arg) {
     while (1) {
         Sleep(10000);
         acl_reload();
-        printf("[ACL] Reloaded from database.");
+        // printf("[ACL] Reloaded from database.");
     }
 }
 
@@ -55,6 +56,7 @@ int main(){
     const Proxy_Config *cfg = get_config();
     frg_set_header_limit(cfg->header_limit);
     frg_set_body_limit(cfg->body_limit);
+    set_captcha_config(cfg->captcha_center_url, cfg->captcha_secret_key, cfg->recaptcha_secret_key, cfg->captcha_callback_path, cfg->captcha_state_ttl_sec, cfg->captcha_pass_ttl_sec);
 
     // OpenSSL client-side context (backend HTTPS)
     global_ssl_ctx = init_ssl_ctx();
@@ -82,6 +84,8 @@ int main(){
     register_filter(rate_limit_filter);
 
     register_filter(waf_sql_filter);
+
+    register_filter(captcha_filter);
     
     initThreadPool(&pool,MAX_THREADS);
     // Thread reload ACL mỗi 30 giây

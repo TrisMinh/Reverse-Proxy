@@ -4,8 +4,8 @@ CC = gcc
 MYSQL_INCLUDE = deps/mysql-c-connector/include
 MYSQL_LIB = deps/mysql-c-connector/lib
 
-CFLAGS = -Wall -Werror -Iinclude -I$(MYSQL_INCLUDE)
-LDFLAGS = -lws2_32 -lssl -lcrypto -L$(MYSQL_LIB) -llibmysql
+CFLAGS = -Wall -Werror -Iinclude -I$(MYSQL_INCLUDE) -Ideps/cjson
+LDFLAGS = -lws2_32 -lssl -lcrypto -L$(MYSQL_LIB) -llibmysql -lcurl -lz -lcrypt32 -lbcrypt -lwldap32
 SRC = src/main.c \
 	src/utils/config.c \
 	src/utils/db_config.c \
@@ -24,6 +24,9 @@ SRC = src/main.c \
 	src/security/filters/ipset.c \
 	src/security/filters/waf_sql.c \
 	src/security/filters/filter_request_guard.c \
+	src/security/filters/captcha_filter.c \
+	src/security/clearance_token.c \
+	deps/cjson/cJSON.c \
 	
 OBJ = build/main.o \
 	build/utils/config.o \
@@ -43,6 +46,9 @@ OBJ = build/main.o \
 	build/security/filters/ipset.o \
 	build/security/filters/waf_sql.o \
 	build/security/filters/filter_request_guard.o \
+	build/security/filters/captcha_filter.o \
+	build/security/clearance_token.o \
+	build/deps/cjson/cJSON.o \
 
 OUT = main
 
@@ -127,6 +133,19 @@ build/security/filters/waf_sql.o: src/security/filters/waf_sql.c
 
 build/security/filters/filter_request_guard.o: src/security/filters/filter_request_guard.c
 	@if not exist build\security\filters mkdir build\security\filters
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/security/filters/captcha_filter.o: src/security/filters/captcha_filter.c
+	@if not exist build\security\filters mkdir build\security\filters
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/security/clearance_token.o: src/security/clearance_token.c
+	@if not exist build\security mkdir build\security
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/deps/cjson/cJSON.o: deps/cjson/cJSON.c
+	@if not exist build\deps mkdir build\deps
+	@if not exist build\deps\cjson mkdir build\deps\cjson
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

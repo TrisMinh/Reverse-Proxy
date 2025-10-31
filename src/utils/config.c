@@ -45,6 +45,12 @@ static int parse_line(const char *line) {
     if (sscanf(line, "cert_dir = %63s", global_config.cert_dir) == 1) return 0;
     if (sscanf(line, "header_limit = %lld", &global_config.header_limit) == 1) return 0;
     if (sscanf(line, "body_limit = %lld",   &global_config.body_limit)   == 1) return 0;
+    if (sscanf(line, "captcha_center_url = \"%255[^\"]\"", global_config.captcha_center_url) == 1) return 0;
+    if (sscanf(line, "captcha_secret_key = \"%255[^\"]\"", global_config.captcha_secret_key) == 1) return 0;
+    if (sscanf(line, "recaptcha_secret_key = \"%255[^\"]\"", global_config.recaptcha_secret_key) == 1) return 0;
+    if (sscanf(line, "captcha_callback_path = \"%255[^\"]\"", global_config.captcha_callback_path) == 1) return 0;
+    if (sscanf(line, "captcha_state_ttl_sec = %d", &global_config.captcha_state_ttl_sec) == 1) return 0;
+    if (sscanf(line, "captcha_pass_ttl_sec = %d", &global_config.captcha_pass_ttl_sec) == 1) return 0;
 
     return -1;
 }
