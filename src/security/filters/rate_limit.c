@@ -6,14 +6,6 @@
 #include "../include/rate_limit.h"
 #include "../include/acl_filter.h"
 
-/*
-   Simple per-IP token bucket rate limiter
-   Defaults: rate = 10 req/s, burst = 20 tokens
-   Thread-safe with a single CRITICAL_SECTION protecting the map.
-
-   Map: fixed-size hash table with chaining. Opportunistic eviction of idle entries (> 10 minutes).
-*/
-
 #define RL_DEFAULT_RATE   2.0  /* tokens per second */
 #define RL_DEFAULT_BURST  20.0  /* max tokens */
 #define RL_IDLE_EVICT_MS  (10ULL * 60ULL * 1000ULL)

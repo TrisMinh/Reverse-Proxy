@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.dbclient-js": "javascript",
         "config.h": "c",
         "threadpool.h": "c",
         "windows.h": "c",
@@ -9,6 +10,7 @@
         "winsock2.h": "c",
         "ssl_utils.h": "c",
         "ipset.h": "c",
-        "filter_chain.h": "c"
+        "filter_chain.h": "c",
+        "hmac.h": "c"
     },
 }

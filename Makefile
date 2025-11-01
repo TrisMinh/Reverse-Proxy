@@ -26,6 +26,8 @@ SRC = src/main.c \
 	src/security/filters/filter_request_guard.c \
 	src/security/filters/captcha_filter.c \
 	src/security/clearance_token.c \
+	src/dao/dao_acl.c \
+	src/dao/dbhelper.c \
 	deps/cjson/cJSON.c \
 	
 OBJ = build/main.o \
@@ -48,6 +50,8 @@ OBJ = build/main.o \
 	build/security/filters/filter_request_guard.o \
 	build/security/filters/captcha_filter.o \
 	build/security/clearance_token.o \
+	build/dao/dao_acl.o \
+	build/dao/dbhelper.o \
 	build/deps/cjson/cJSON.o \
 
 OUT = main
@@ -143,6 +147,14 @@ build/security/clearance_token.o: src/security/clearance_token.c
 	@if not exist build\security mkdir build\security
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build/dao/dbhelper.o: src/dao/dbhelper.c
+	@if not exist build\dao mkdir build\dao
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/dao/dao_acl.o: src/dao/dao_acl.c
+	@if not exist build\dao mkdir build\dao
+	$(CC) $(CFLAGS) -c $< -o $@
+
 build/deps/cjson/cJSON.o: deps/cjson/cJSON.c
 	@if not exist build\deps mkdir build\deps
 	@if not exist build\deps\cjson mkdir build\deps\cjson
@@ -155,5 +167,6 @@ clean:
 	build\http\*.o \
 	build\security\*.o \
 	build\security\filters\*.o \
+	build\dao\*.o \
 	build\$(OUT).exe 2>nul
 
