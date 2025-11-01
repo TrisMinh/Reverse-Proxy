@@ -85,10 +85,10 @@ int main(){
 
     register_filter(waf_sql_filter);
 
-    register_filter(captcha_filter);
+    // register_filter(captcha_filter);
     
     initThreadPool(&pool,MAX_THREADS);
-    // Thread reload ACL mỗi 30 giây
+    // Thread reload ACL mỗi ... sec
     _beginthread(acl_reloader_thread, 0, NULL);
     _beginthreadex(NULL, 0, https_thread, NULL, 0, NULL);
     start_server();
