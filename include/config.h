@@ -24,6 +24,12 @@ typedef struct {
     char captcha_callback_path[512];
     int captcha_state_ttl_sec;
     int captcha_pass_ttl_sec;
+    // Cache settings
+    int cache_enabled;
+    unsigned long long cache_max_bytes;
+    unsigned int cache_default_ttl_sec;
+    unsigned int cache_max_object_bytes;
+    unsigned int cache_second_hit_window;
 } Proxy_Config;
 
 int load_config(const char* filename);
