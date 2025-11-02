@@ -12,7 +12,7 @@
 #include <time.h>
 #include "../include/clearance_token.h"
 
-static char *CAPTCHA_CENTER_URL = "http://localhost:5500/solve.html";
+static char *CAPTCHA_CENTER_URL = "http://ngosing:5500/solve.html";
 static char *CAPTCHA_SECRET_KEY = "qwerasdzxcrtyfghvbnuiojklnm01923456746839";
 static char *RECAPTCHA_SECRET_KEY = "6Ldi7PgrAAAAAHIqoT9bzydpM-ZFJGDPj09zSmZ2";
 static char *CAPTCHA_CALLBACK_PATH = "/__captcha/callback";
@@ -271,7 +271,7 @@ static int verify_recaptcha(const char *secret, const char *token, const char *c
     char *esc_secret = curl_easy_escape(curl, secret, 0);
     char *esc_token = curl_easy_escape(curl, token, 0);
     char *esc_ip = (client_ip && *client_ip) ? curl_easy_escape(curl, client_ip, 0) : NULL;
-    snprintf(post, sizeof(post), "secret=%s&response=%s", esc_secret, token);
+    snprintf(post, sizeof(post), "secret=%s&response=%s", esc_secret, esc_token);
 
     curl_free(esc_secret);
     curl_free(esc_token);
@@ -285,6 +285,7 @@ static int verify_recaptcha(const char *secret, const char *token, const char *c
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, 2000L);
     curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, 3000L);
+    curl_easy_setopt(curl, CURLOPT_CAINFO, "../resources/certs/ca-bundle.crt");
     int ok = 0;
     CURLcode res = curl_easy_perform(curl);
 
@@ -547,6 +548,18 @@ FilterResult captcha_filter(FilterContext *ctx)
 {
     const char *sp1 = strchr(ctx->request, ' ');
     const char *sp2 = sp1 ? strchr(sp1 + 1, ' ') : NULL;
+
+    if (sp1 && sp2) {
+        int n = (int)(sp2 - (sp1 + 1));
+        if (n < 0) n = 0;
+        char pathbuf[1024];
+        int m = n < (int)sizeof(pathbuf) - 1 ? n : (int)sizeof(pathbuf) - 1;
+        memcpy(pathbuf, sp1 + 1, m);
+        pathbuf[m] = 0;
+
+        if (strstr(pathbuf, "/solve.html")) return FILTER_OK;
+        if (strstr(pathbuf, CAPTCHA_CALLBACK_PATH)) { handle_captcha_callback(ctx); return FILTER_OK; }
+    }
 
     if (sp1 && sp2 && _strnicmp(sp1 + 1, CAPTCHA_CALLBACK_PATH, strlen(CAPTCHA_CALLBACK_PATH)) == 0)
     {
