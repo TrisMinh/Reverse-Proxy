@@ -27,6 +27,7 @@ SRC = src/main.c \
 	src/security/filters/captcha_filter.c \
 	src/security/clearance_token.c \
 	src/dao/dao_acl.c \
+	src/dao/dao_routes.c \
 	src/dao/dbhelper.c \
 	deps/cjson/cJSON.c \
 	
@@ -51,6 +52,7 @@ OBJ = build/main.o \
 	build/security/filters/captcha_filter.o \
 	build/security/clearance_token.o \
 	build/dao/dao_acl.o \
+	build/dao/dao_routes.o \
 	build/dao/dbhelper.o \
 	build/deps/cjson/cJSON.o \
 
@@ -152,6 +154,10 @@ build/dao/dbhelper.o: src/dao/dbhelper.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 build/dao/dao_acl.o: src/dao/dao_acl.c
+	@if not exist build\dao mkdir build\dao
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/dao/dao_routes.o: src/dao/dao_routes.c
 	@if not exist build\dao mkdir build\dao
 	$(CC) $(CFLAGS) -c $< -o $@
 
