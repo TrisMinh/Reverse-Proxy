@@ -26,10 +26,10 @@ void __cdecl acl_reloader_thread(void *arg) {
     while (1) {
         Sleep(10000);
         acl_reload();
+        load_proxy_routes();
         // printf("[ACL] Reloaded from database.");
     }
 }
-
 
 unsigned __stdcall https_thread(void *arg) {
     start_https_server();
@@ -38,9 +38,7 @@ unsigned __stdcall https_thread(void *arg) {
 
 int main(){
     create_log("../logs/proxy.log");
-    load_proxy_routes("../config/proxy_routes.conf");
-
-
+    
     int config_rs = load_config("../config/proxy.conf");
     if (config_rs != 0) {
         fprintf(stderr, "Failed to load config\n");
@@ -58,14 +56,12 @@ int main(){
     frg_set_body_limit(cfg->body_limit);
     set_captcha_config(cfg->captcha_center_url, cfg->captcha_secret_key, cfg->recaptcha_secret_key, cfg->captcha_callback_path, cfg->captcha_state_ttl_sec, cfg->captcha_pass_ttl_sec);
 
-    // OpenSSL client-side context (backend HTTPS)
     global_ssl_ctx = init_ssl_ctx();
     if (!global_ssl_ctx) {
         printf("Failed to initialize OpenSSL client context\n");
         return 1;
     }
 
-    // OpenSSL server-side context (frontend HTTPS)
     global_ssl_server_ctx = init_ssl_server_ctx();
     if (!global_ssl_server_ctx) {
         printf("Failed to initialize SSL server context\n");
@@ -85,8 +81,9 @@ int main(){
 
     register_filter(waf_sql_filter);
 
-    // register_filter(captcha_filter);
+    register_filter(captcha_filter);
     
+    load_proxy_routes();
     initThreadPool(&pool,MAX_THREADS);
     // Thread reload ACL mỗi ... sec
     _beginthread(acl_reloader_thread, 0, NULL);
