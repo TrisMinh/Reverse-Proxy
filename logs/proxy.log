@@ -106,3 +106,86 @@
 [2025-11-02 00:02:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
 [2025-11-02 00:02:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
 [2025-11-02 00:02:20] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-09 19:07:58] [INFO] Config loaded successfully
+[2025-11-09 19:07:58] [INFO] DB config loaded successfully
+[2025-11-09 19:08:02] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-09 19:08:02] [INFO] SSL server context initialized (default cert)
+[2025-11-09 19:08:06] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-09 19:08:06] [INFO] Cache initialized successfully
+[2025-11-09 19:08:06] [INFO] Request tracker initialized
+[2025-11-09 19:08:06] [INFO] Metrics flush thread started
+[2025-11-09 19:08:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690140
+[2025-11-09 19:09:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:09:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690200
+[2025-11-09 19:10:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:10:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690260
+[2025-11-09 19:11:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:11:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:37] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:47] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:57] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690320
+[2025-11-09 19:12:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:12:07] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:17] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:27] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:37] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:47] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:57] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690380
+[2025-11-09 19:13:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:13:07] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:17] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:28] [INFO] Config loaded successfully
+[2025-11-09 19:13:28] [INFO] DB config loaded successfully
+[2025-11-09 19:13:32] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-09 19:13:32] [INFO] SSL server context initialized (default cert)
+[2025-11-09 19:13:36] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-09 19:13:36] [INFO] Cache initialized successfully
+[2025-11-09 19:13:36] [INFO] Request tracker initialized
+[2025-11-09 19:13:36] [INFO] Metrics flush thread started
+[2025-11-09 19:13:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:35] [INFO] Config loaded successfully
+[2025-11-09 19:14:35] [INFO] DB config loaded successfully
+[2025-11-09 19:14:39] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-09 19:14:39] [INFO] SSL server context initialized (default cert)
+[2025-11-09 19:14:43] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-09 19:14:43] [INFO] Cache initialized successfully
+[2025-11-09 19:14:43] [INFO] Request tracker initialized
+[2025-11-09 19:14:43] [INFO] Metrics flush thread started
+[2025-11-09 19:14:43] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:53] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:03] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:13] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:23] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:33] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:43] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690500
+[2025-11-09 19:15:43] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:15:43] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:53] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:16:03] [INFO] [routes] loaded 0 row(s) from DAO

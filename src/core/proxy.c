@@ -114,8 +114,6 @@ static void send_quick_error(SOCKET cfd, SSL *ssl, const char *status) {
     send_all(cfd, resp, n, ssl);
 }
 
-
-
 int get_client_ip(SOCKET fd, char *out, size_t out_len) {
     if (!out || out_len == 0) return -1;
     out[0] = '\0';
@@ -282,6 +280,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         }
     }
 
+    // Modify request
     if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, cip) != 0) {
         log_message("WARN", "Failed to modify HTTP headers, forwarding original request");
         strncpy(send_buffer, recv_buffer, sizeof(send_buffer) - 1);
@@ -289,6 +288,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     }
     int send_len = (int)strlen(send_buffer);
 
+    //Ket noi den backend
     if (connect_backend_auto(rec, target_backend_host, target_backend_port, &backend_fd, &backend_ssl) != 0) {
         log_message("ERROR", "Failed to connect to backend");
         send_quick_error(client_fd, ssl, "502 Bad Gateway");
@@ -307,6 +307,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         send_quick_error(client_fd, ssl, "413 Payload Too Large");
         goto cleanup;
     }
+    // Gửi phần body còn lại
     forward_already_read_body(recv_buffer, total, backend_fd, use_ssl ? backend_ssl : NULL);
 
     fd_set fds;
@@ -335,6 +336,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         int rv = select(maxfd, &fds, NULL, NULL, NULL);
         if (rv <= 0) break;
 
+        // CLIENT → BACKEND
         if (FD_ISSET(client_fd, &fds)) {
             int ncli = (ssl ? SSL_read(ssl, recv_buffer, sizeof(recv_buffer)) : recv(client_fd, recv_buffer, sizeof(recv_buffer), 0));
             if (ncli <= 0) break;
@@ -345,9 +347,11 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
             if (send_all(backend_fd, recv_buffer, ncli, use_ssl ? backend_ssl : NULL) != 0) break;
         }
 
+        // BACKEND → CLIENT
         if (FD_ISSET(backend_fd, &fds)) {
             n = use_ssl ? SSL_read(backend_ssl, recv_buffer, sizeof(recv_buffer)) : recv(backend_fd, recv_buffer, sizeof(recv_buffer), 0);
             if (n <= 0) break;
+            // recv_buffer[n] = '\0';
         } else {
             continue;
         }

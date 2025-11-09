@@ -32,8 +32,8 @@ static void set_default_config(Proxy_Config *config) {
     // Cache defaults
     config->cache_enabled = 1;
     config->cache_max_bytes = 268435456ULL;  // 256MB
-    config->cache_default_ttl_sec = 3600;    // 1 hour
-    config->cache_max_object_bytes = 10485760; // 10MB
+    config->cache_default_ttl_sec = 120;     // 2 minutes
+    config->cache_max_object_bytes = 131072; // 128KB
     config->cache_second_hit_window = 10;    // 10 seconds
 }
 

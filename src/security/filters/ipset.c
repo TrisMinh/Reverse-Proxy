@@ -85,7 +85,7 @@ int ipset_reload(ipset_t *s) {
     ensure_lock();
     EnterCriticalSection(&ipset_lock);
     int count = dao_acl_load_all(s);
-    // printf("[ACL] Reloaded %d IPs from DB\n", count);
+    printf("[ACL] Reloaded %d IPs from DB\n", count);
     LeaveCriticalSection(&ipset_lock);
     return count;
 }

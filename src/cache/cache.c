@@ -786,3 +786,4 @@ static void log_cache_operation(const char *operation, const char *details) {
     snprintf(log_buf, sizeof(log_buf), "[CACHE %s] %s", operation, details);
     log_message("INFO", log_buf);
 }
+
