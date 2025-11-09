@@ -5,9 +5,7 @@ MYSQL_INCLUDE = deps/mysql-c-connector/include
 MYSQL_LIB = deps/mysql-c-connector/lib
 
 CFLAGS = -Wall -Werror -Iinclude -I$(MYSQL_INCLUDE) -Ideps/cjson
-# CURL include paths removed (captcha_filter disabled)
-LDFLAGS = -lws2_32 -lssl -lcrypto -L$(MYSQL_LIB) -llibmysql -lz -lcrypt32 -lbcrypt -lwldap32
-# -lcurl removed (captcha_filter disabled)
+LDFLAGS = -lws2_32 -lssl -lcrypto -L$(MYSQL_LIB) -llibmysql -lcurl -lz -lcrypt32 -lbcrypt -lwldap32
 SRC = src/main.c \
 	src/utils/config.c \
 	src/utils/db_config.c \
@@ -27,12 +25,14 @@ SRC = src/main.c \
 	src/security/filter_chain.c \
 	src/security/filters/rate_limit.c \
 	src/security/filters/acl_filter.c \
+	src/security/filters/captcha_filter.c \
 	src/security/filters/ipset.c \
 	src/security/filters/waf_sql.c \
 	src/security/filters/filter_request_guard.c \
 	src/security/clearance_token.c \
 	src/dao/dao_acl.c \
 	src/dao/dao_metrics.c \
+	src/dao/dao_routes.c \
 	src/dao/dbhelper.c \
 	deps/cjson/cJSON.c \
 	
@@ -55,12 +55,14 @@ OBJ = build/main.o \
 	build/security/filter_chain.o \
 	build/security/filters/rate_limit.o \
 	build/security/filters/acl_filter.o \
+	build/security/filters/captcha_filter.o \
 	build/security/filters/ipset.o \
 	build/security/filters/waf_sql.o \
 	build/security/filters/filter_request_guard.o \
 	build/security/clearance_token.o \
 	build/dao/dao_acl.o \
 	build/dao/dao_metrics.o \
+	build/dao/dao_routes.o \
 	build/dao/dbhelper.o \
 	build/deps/cjson/cJSON.o \
 
@@ -168,10 +170,9 @@ build/security/filters/filter_request_guard.o: src/security/filters/filter_reque
 	@if not exist build\security\filters mkdir build\security\filters
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# build/security/filters/captcha_filter.o: src/security/filters/captcha_filter.c
-#	@if not exist build\security\filters mkdir build\security\filters
-#	$(CC) $(CFLAGS) -c $< -o $@
-# Disabled: missing curl library
+build/security/filters/captcha_filter.o: src/security/filters/captcha_filter.c
+	@if not exist build\security\filters mkdir build\security\filters
+	$(CC) $(CFLAGS) -c $< -o $@
 
 build/security/clearance_token.o: src/security/clearance_token.c
 	@if not exist build\security mkdir build\security
@@ -186,6 +187,10 @@ build/dao/dao_acl.o: src/dao/dao_acl.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 build/dao/dao_metrics.o: src/dao/dao_metrics.c
+	@if not exist build\dao mkdir build\dao
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/dao/dao_routes.o: src/dao/dao_routes.c
 	@if not exist build\dao mkdir build\dao
 	$(CC) $(CFLAGS) -c $< -o $@
 

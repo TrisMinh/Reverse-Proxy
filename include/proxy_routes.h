@@ -6,10 +6,9 @@ typedef struct ProxyRoute {
     char backend_host[256];
     int  backend_port;
     int  is_https;
-    int  port_specified;
 } ProxyRoute;
 
-int load_proxy_routes(const char *filename);
+int load_proxy_routes();
 const ProxyRoute* find_proxy_routes(const char *domain);
 
 #endif

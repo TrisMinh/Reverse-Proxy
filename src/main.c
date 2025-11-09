@@ -10,7 +10,7 @@
 #include "../include/acl_filter.h"
 #include "../include/waf_sql.h"
 #include "../include/filter_request_guard.h"
-// #include "../include/captcha_filter.h"  // Disabled: missing curl library
+#include "../include/captcha_filter.h"  // Disabled: missing curl library
 #include "../include/cache.h"
 #include "../include/request_metrics.h"
 #include "../include/metrics_flush.h"
@@ -30,12 +30,12 @@ ThreadPool pool;
 
 void __cdecl acl_reloader_thread(void *arg) {
     while (1) {
-        Sleep(10000);
+        Sleep(30000);
         acl_reload();
-        // printf("[ACL] Reloaded from database.");
+        load_proxy_routes();
+        printf("[ACL] Reloaded from database.");
     }
 }
-
 
 unsigned __stdcall https_thread(void *arg) {
     start_https_server();
@@ -68,13 +68,12 @@ int main(){
     snprintf(log_path, sizeof(log_path), "%s/proxy.log", logs_prefix);
     create_log(log_path);
     
-    char routes_path[MAX_PATH];
-    snprintf(routes_path, sizeof(routes_path), "%s/proxy_routes.conf", config_prefix);
-    load_proxy_routes(routes_path);
+    load_proxy_routes();
 
     char proxy_conf_path[MAX_PATH];
     snprintf(proxy_conf_path, sizeof(proxy_conf_path), "%s/proxy.conf", config_prefix);
     int config_rs = load_config(proxy_conf_path);
+
     if (config_rs != 0) {
         fprintf(stderr, "Failed to load config from: %s\n", proxy_conf_path);
         fprintf(stderr, "Press any key to exit...\n");
@@ -107,7 +106,6 @@ int main(){
     frg_set_body_limit(cfg->body_limit);
     // set_captcha_config(cfg->captcha_center_url, cfg->captcha_secret_key, cfg->recaptcha_secret_key, cfg->captcha_callback_path, cfg->captcha_state_ttl_sec, cfg->captcha_pass_ttl_sec);  // Disabled: captcha_filter removed
 
-    // OpenSSL client-side context (backend HTTPS)
     global_ssl_ctx = init_ssl_ctx();
     if (!global_ssl_ctx) {
         fprintf(stderr, "Failed to initialize OpenSSL client context\n");
@@ -142,7 +140,7 @@ int main(){
 
     register_filter(waf_sql_filter);
 
-    // register_filter(captcha_filter);
+    register_filter(captcha_filter);
     
     // Initialize cache
     if (cfg->cache_enabled) {
