@@ -10,7 +10,7 @@
 #include "../include/acl_filter.h"
 #include "../include/waf_sql.h"
 #include "../include/filter_request_guard.h"
- #include "../include/captcha_filter.h" 
+// #include "../include/captcha_filter.h"  // Disabled: missing curl library
 #include "../include/cache.h"
 #include "../include/request_metrics.h"
 #include "../include/metrics_flush.h"
@@ -49,16 +49,18 @@ int main(){
         char *last_slash = strrchr(exe_path, '\\');
         if (last_slash) {
             *last_slash = '\0';
+            // Check if we're in build directory
             if (strstr(exe_path, "build") != NULL) {
                 is_in_build_dir = 1;
                 SetCurrentDirectoryA(exe_path);
-                SetCurrentDirectoryA(".."); 
+                SetCurrentDirectoryA("..");  // Go to project root
             } else {
                 SetCurrentDirectoryA(exe_path);
             }
         }
     }
-
+    
+    // Use relative paths based on whether we're in project root or build directory
     const char *config_prefix = is_in_build_dir ? "config" : "../config";
     const char *logs_prefix = is_in_build_dir ? "logs" : "../logs";
     
@@ -89,7 +91,8 @@ int main(){
         system("pause >nul");
         return 1;
     }
-
+    
+    // Connect to database for metrics
     DBConfig *db_conf = get_db_config();
     if (db_connect(db_conf->host, db_conf->username, db_conf->password, 
                    db_conf->database, db_conf->port) != 0) {
@@ -102,7 +105,9 @@ int main(){
     const Proxy_Config *cfg = get_config();
     frg_set_header_limit(cfg->header_limit);
     frg_set_body_limit(cfg->body_limit);
+    // set_captcha_config(cfg->captcha_center_url, cfg->captcha_secret_key, cfg->recaptcha_secret_key, cfg->captcha_callback_path, cfg->captcha_state_ttl_sec, cfg->captcha_pass_ttl_sec);  // Disabled: captcha_filter removed
 
+    // OpenSSL client-side context (backend HTTPS)
     global_ssl_ctx = init_ssl_ctx();
     if (!global_ssl_ctx) {
         fprintf(stderr, "Failed to initialize OpenSSL client context\n");
@@ -111,6 +116,7 @@ int main(){
         return 1;
     }
 
+    // OpenSSL server-side context (frontend HTTPS) - Optional
     global_ssl_server_ctx = init_ssl_server_ctx();
     if (!global_ssl_server_ctx) {
         fprintf(stderr, "WARNING: Failed to initialize SSL server context\n");
@@ -157,7 +163,8 @@ int main(){
     } else {
         log_message("INFO", "Request tracker initialized successfully");
     }
-
+    
+    // Start metrics flush thread
     if (metrics_flush_thread_start() != 0) {
         printf("Failed to start metrics flush thread\n");
         log_message("ERROR", "Failed to start metrics flush thread");
@@ -166,12 +173,15 @@ int main(){
     }
     
     initThreadPool(&pool,MAX_THREADS);
+    // Thread reload ACL mỗi ... sec
     _beginthread(acl_reloader_thread, 0, NULL);
+    // Only start HTTPS server if SSL context is available
     if (global_ssl_server_ctx) {
     _beginthreadex(NULL, 0, https_thread, NULL, 0, NULL);
     }
     start_server();
-
+    
+    // If we reach here, start_server() returned (server failed to start or exited)
     fprintf(stderr, "\n[INFO] Server stopped. Cleaning up...\n");
     
     shutdownThreadPool(&pool);
@@ -179,14 +189,18 @@ int main(){
     free_ssl_cert_cache();
     cleanup_ssl_ctx(global_ssl_server_ctx);
     cleanup_ssl_ctx(global_ssl_ctx);
+    // Shutdown cache
     if (cfg->cache_enabled) {
         cache_shutdown();
     }
-
+    
+    // Stop metrics flush thread
     metrics_flush_thread_stop();
-
+    
+    // Shutdown request tracker
     request_tracker_shutdown();
     
+    // Close database connection
     db_close();
     
     rate_limit_shutdown();

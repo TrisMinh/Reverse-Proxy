@@ -18,6 +18,7 @@ typedef struct request_counter_s {
     struct request_counter_s *next;  
 } request_counter_t;
 
+// Per-minute aggregated stats
 typedef struct request_minute_stats_s {
     uint64_t total_requests; 
     uint64_t requests_2xx; 
