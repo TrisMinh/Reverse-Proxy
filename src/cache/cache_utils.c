@@ -322,7 +322,7 @@ int cache_try_store(const cache_key_info_t *key_info,
     int result = cache_put(method, scheme, host, path, query, vary_header,
                           buf->status_code,
                           buf->buffer, (uint32_t)buf->size,
-                          buf->content_type[0] ? buf->content_type : "text/plain",
+                          buf->content_type[0] ? buf->content_type : "text/html",
                           ttl_seconds);
     
     if (result == 0) {
@@ -380,7 +380,7 @@ int cache_send_response(void *client_fd, void *ssl, cache_value_t *cached_value)
         cached_value->status_code == 200 ? "OK" : 
         cached_value->status_code == 404 ? "Not Found" :
         cached_value->status_code == 304 ? "Not Modified" : "OK",
-        cached_value->content_type[0] ? cached_value->content_type : "text/plain",
+        cached_value->content_type[0] ? cached_value->content_type : "text/html",
         cached_value->body_len,
         max_age,
         age);
@@ -598,7 +598,7 @@ int cache_process_response_headers(const char *header_buf, int header_len, int b
         memcpy(buf->content_type, ct_val, ct_len);
         buf->content_type[ct_len] = '\0';
     } else {
-        strncpy(buf->content_type, "text/plain", sizeof(buf->content_type) - 1);
+        strncpy(buf->content_type, "text/html", sizeof(buf->content_type) - 1);
         buf->content_type[sizeof(buf->content_type) - 1] = '\0';
     }
 
