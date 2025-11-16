@@ -781,6 +781,62 @@ void cache_track_byte_miss(uint64_t bytes) {
     ReleaseSRWLockExclusive(&shard->lock);
 }
 
+int cache_invalidate(const char *method, const char *scheme,
+                     const char *host, const char *path,
+                     const char *query, const char *vary_header) {
+    if (!g_cache_initialized || !g_cache.enabled) return -1;
+    if (!method || !scheme || !host || !path) return -1;
+    
+    char key_buf[2048];
+    if (build_cache_key(method, scheme, host, path, query, vary_header,
+                       key_buf, sizeof(key_buf)) != 0) {
+        return -1;
+    }
+    
+    uint64_t key_hash;
+    char fingerprint[16];
+    cache_key_hash(key_buf, &key_hash, fingerprint);
+    
+    uint32_t shard_idx = cache_key_to_shard(key_hash);
+    cache_shard_t *shard = &g_cache.shards[shard_idx];
+    
+    AcquireSRWLockExclusive(&shard->lock);
+    
+    cache_entry_t *entry = hash_table_find(shard, key_hash, fingerprint);
+    
+    if (entry) {
+        // Remove from hash table
+        hash_table_remove(shard, entry);
+        // Remove from LRU
+        lru_unlink(shard, entry);
+        
+        // Update metrics
+        uint64_t entry_size = sizeof(cache_entry_t) + sizeof(cache_value_t);
+        if (entry->val && entry->val->body) {
+            entry_size += entry->val->body_len;
+        }
+        
+        if (shard->bytes_used >= entry_size) {
+            shard->bytes_used -= entry_size;
+        } else {
+            shard->bytes_used = 0;
+        }
+        
+        // Free memory
+        if (entry->val) {
+            if (entry->val->body) free(entry->val->body);
+            free(entry->val);
+        }
+        free(entry);
+        
+        ReleaseSRWLockExclusive(&shard->lock);
+        return 0;
+    }
+    
+    ReleaseSRWLockExclusive(&shard->lock);
+    return -1; // Entry not found
+}
+
 static void log_cache_operation(const char *operation, const char *details) {
     char log_buf[256];
     snprintf(log_buf, sizeof(log_buf), "[CACHE %s] %s", operation, details);

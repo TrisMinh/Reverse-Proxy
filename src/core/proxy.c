@@ -245,6 +245,17 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         send_quick_error(client_fd, ssl, "400 Bad Request");
         goto cleanup;
     }
+    int has_authorization = cache_check_has_authorization(recv_buffer);
+    if (has_authorization) {
+        cache_debug_log_auth_detected(path);
+
+        if (config->cache_enabled && strcmp(method, "GET") == 0) {
+            cache_invalidate(method, ssl ? "https" : "http",
+                           host_from_request, path,
+                           query[0] ? query : NULL,
+                           vary_header[0] ? vary_header : NULL);
+        }
+    }
 
     cache_key_info_t cache_key_info = {0};
     cache_buffer_t cache_buf = {0};
@@ -253,7 +264,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     uint64_t bytes_in = (uint64_t)total; 
     uint64_t bytes_out = 0;
 
-    if (config->cache_enabled && strcmp(method, "GET") == 0) {
+    if (config->cache_enabled && strcmp(method, "GET") == 0 && !has_authorization) {
         cache_value_t *cached_value = NULL;
         cache_result_t cache_result = cache_get(method, ssl ? "https" : "http",
                                                 host_from_request, path, 
@@ -262,6 +273,8 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                                                 &cached_value);
         
         if (cache_result == CACHE_RESULT_HIT && cached_value) {
+            cache_debug_log_cache_hit(path, cached_value->status_code, cached_value->body_len);
+            
             if (cache_handle_hit((void *)(uintptr_t)client_fd, ssl, cached_value,
                                 path, query[0] ? query : NULL, method,
                                 host_from_request, bytes_in, &bytes_out)) {
@@ -269,6 +282,8 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                 final_status_code = cached_value->status_code;
                 goto cleanup;
             }
+        } else {
+            cache_debug_log_cache_miss(path, cache_result);
         }
 
         if (cache_prepare_key(method, ssl ? "https" : "http",
@@ -277,7 +292,13 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                              vary_header[0] ? vary_header : NULL,
                              &cache_key_info) != 0) {
             cache_key_info.should_cache = 0;
+            cache_debug_log_prepare_key_failed(path);
         }
+    } else {
+        if (has_authorization) {
+            cache_debug_log_cache_disabled(path);
+        }
+        cache_key_info.should_cache = 0;
     }
 
     // Modify request
@@ -436,12 +457,20 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     }
 
     if (cache_key_info.should_cache && cache_buf.complete && cache_buf.size > 0) {
-        cache_try_store(&cache_key_info, &cache_buf,
+        cache_debug_log_storing(path, cache_buf.status_code, cache_buf.size);
+        
+        int store_result = cache_try_store(&cache_key_info, &cache_buf,
                        method, ssl ? "https" : "http",
                        host_from_request, path,
                        query[0] ? query : NULL,
                        vary_header[0] ? vary_header : NULL,
                        config->cache_default_ttl_sec);
+        
+        if (store_result != 0) {
+            cache_debug_log_store_failed(path, store_result);
+        }
+    } else if (cache_key_info.should_cache) {
+        cache_debug_log_not_storing(path, cache_key_info.should_cache, cache_buf.complete, cache_buf.size);
     }
 
     if (!was_cache_hit) {

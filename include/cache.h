@@ -102,6 +102,11 @@ double cache_get_byte_hit_rate(void);
 double cache_get_offload_percent(uint64_t total_requests);
 void cache_track_byte_miss(uint64_t bytes);
 
+// Invalidate cache entry by key (used when Authorization header is present)
+int cache_invalidate(const char *method, const char *scheme,
+                     const char *host, const char *path,
+                     const char *query, const char *vary_header);
+
 int build_cache_key(const char *method, const char *scheme,
                    const char *host, const char *path, 
                    const char *query, const char *vary_header,
@@ -193,6 +198,19 @@ int cache_process_response_headers(const char *header_buf, int header_len, int b
 // Returns: bytes sent, or -1 on error
 int cache_forward_response_chunk(void *client_fd, void *ssl, const uint8_t *data, size_t len,
                                 cache_key_info_t *key_info, cache_buffer_t *buf);
+
+// Check if request has Authorization header (returns 1 if yes, 0 if no)
+int cache_check_has_authorization(const char *request_buffer);
+
+// Debug logging functions
+void cache_debug_log_auth_detected(const char *path);
+void cache_debug_log_cache_disabled(const char *path);
+void cache_debug_log_cache_hit(const char *path, uint32_t status_code, uint32_t body_len);
+void cache_debug_log_cache_miss(const char *path, int cache_result);
+void cache_debug_log_prepare_key_failed(const char *path);
+void cache_debug_log_storing(const char *path, uint32_t status_code, size_t size);
+void cache_debug_log_store_failed(const char *path, int result);
+void cache_debug_log_not_storing(const char *path, int should_cache, int complete, size_t size);
 
 #endif
 

@@ -299,9 +299,34 @@ int cache_try_store(const cache_key_info_t *key_info,
                    const char *host, const char *path,
                    const char *query, const char *vary_header,
                    uint32_t ttl_seconds) {
-    if (!key_info || !buf) return -1;
-    if (!key_info->should_cache) return -1;
-    if (!buf->complete || buf->size == 0) return -1;
+    if (!key_info || !buf) {
+        char debug_buf[256];
+        snprintf(debug_buf, sizeof(debug_buf), 
+                "[CACHE_DEBUG] cache_try_store: Invalid parameters (key_info=%p, buf=%p)", 
+                (void*)key_info, (void*)buf);
+        log_message("WARN", debug_buf);
+        return -1;
+    }
+    if (!key_info->should_cache) {
+        char debug_buf[512];
+        size_t path_len = strlen(path ? path : "");
+        if (path_len > 150) path_len = 150;
+        snprintf(debug_buf, sizeof(debug_buf), 
+                "[CACHE_DEBUG] NOT cached: path=%.*s (should_cache=0)", 
+                (int)path_len, path ? path : "");
+        log_message("INFO", debug_buf);
+        return -1;
+    }
+    if (!buf->complete || buf->size == 0) {
+        char debug_buf[512];
+        size_t path_len = strlen(path ? path : "");
+        if (path_len > 150) path_len = 150;
+        snprintf(debug_buf, sizeof(debug_buf), 
+                "[CACHE_DEBUG] NOT cached: path=%.*s (buffer incomplete: complete=%d, size=%zu)", 
+                (int)path_len, path ? path : "", buf->complete, buf->size);
+        log_message("INFO", debug_buf);
+        return -1;
+    }
 
     int should_cache = cache_check_admission(key_info->key_hash, key_info->key_fingerprint);
     if (!should_cache) {
@@ -319,6 +344,14 @@ int cache_try_store(const cache_key_info_t *key_info,
         return -1;
     }
 
+    char debug_buf[512];
+    size_t path_len = strlen(path ? path : "");
+    if (path_len > 150) path_len = 150;
+    snprintf(debug_buf, sizeof(debug_buf), 
+            "[CACHE_DEBUG] Attempting to store: path=%.*s, status=%u, size=%zu, ttl=%u", 
+            (int)path_len, path ? path : "", buf->status_code, buf->size, ttl_seconds);
+    log_message("INFO", debug_buf);
+
     int result = cache_put(method, scheme, host, path, query, vary_header,
                           buf->status_code,
                           buf->buffer, (uint32_t)buf->size,
@@ -327,15 +360,20 @@ int cache_try_store(const cache_key_info_t *key_info,
     
     if (result == 0) {
         char log_buf[512];
-        size_t path_len = strlen(path ? path : "");
         size_t query_len = query ? strlen(query) : 0;
-        if (path_len > 150) path_len = 150;
         if (query_len > 50) query_len = 50;
-        snprintf(log_buf, sizeof(log_buf), "[CACHE] Cached: %.*s%.*s (size=%llu)", 
+        snprintf(log_buf, sizeof(log_buf), "[CACHE_DEBUG] Successfully cached: path=%.*s%.*s (status=%u, size=%llu, ttl=%u)", 
                 (int)path_len, path ? path : "", 
                 (int)query_len, query ? query : "",
-                (unsigned long long)buf->size);
+                buf->status_code,
+                (unsigned long long)buf->size, ttl_seconds);
         log_message("INFO", log_buf);
+    } else {
+        char log_buf[512];
+        snprintf(log_buf, sizeof(log_buf), 
+                "[CACHE_DEBUG] Failed to cache: path=%.*s (cache_put returned %d)", 
+                (int)path_len, path ? path : "", result);
+        log_message("WARN", log_buf);
     }
     
     return result;
