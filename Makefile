@@ -12,12 +12,16 @@ SRC = src/main.c \
 	src/utils/logger.c \
 	src/utils/proxy_routes.c \
 	src/utils/ssl_utils.c \
+	src/utils/request_tracker.c \
+	src/utils/metrics_flush.c \
 	src/core/proxy.c \
 	src/core/server.c \
 	src/core/client.c \
 	src/http/http_processor.c \
 	src/http/acme_webroot.c \
 	src/core/threadpool.c \
+	src/cache/cache.c \
+	src/cache/cache_utils.c \
 	src/security/filter_chain.c \
 	src/security/filters/rate_limit.c \
 	src/security/filters/acl_filter.c \
@@ -28,6 +32,7 @@ SRC = src/main.c \
 	src/security/clearance_token.c \
 	src/dao/dao_acl.c \
 	src/dao/dao_routes.c \
+	src/dao/dao_metrics.c \
 	src/dao/dbhelper.c \
 	deps/cjson/cJSON.c \
 	
@@ -37,12 +42,16 @@ OBJ = build/main.o \
 	build/utils/logger.o \
 	build/utils/proxy_routes.o \
 	build/utils/ssl_utils.o \
+	build/utils/request_tracker.o \
+	build/utils/metrics_flush.o \
 	build/core/proxy.o \
 	build/core/server.o \
 	build/core/client.o \
 	build/http/http_processor.o \
 	build/http/acme_webroot.o \
 	build/core/threadpool.o \
+	build/cache/cache.o \
+	build/cache/cache_utils.o \
 	build/security/filter_chain.o \
 	build/security/filters/rate_limit.o \
 	build/security/filters/acl_filter.o \
@@ -53,13 +62,14 @@ OBJ = build/main.o \
 	build/security/clearance_token.o \
 	build/dao/dao_acl.o \
 	build/dao/dao_routes.o \
+	build/dao/dao_metrics.o \
 	build/dao/dbhelper.o \
 	build/deps/cjson/cJSON.o \
 
 OUT = main
 
 all: $(OUT)
-	@cd build && $(OUT).exe
+	@echo Build completed: build\$(OUT).exe
 
 
 $(OUT): $(OBJ)
@@ -92,6 +102,14 @@ build/utils/ssl_utils.o: src/utils/ssl_utils.c
 	@if not exist build\utils mkdir build\utils
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build/utils/request_tracker.o: src/utils/request_tracker.c
+	@if not exist build\utils mkdir build\utils
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/utils/metrics_flush.o: src/utils/metrics_flush.c
+	@if not exist build\utils mkdir build\utils
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 build/core/proxy.o: src/core/proxy.c
 	@if not exist build\core mkdir build\core
@@ -117,6 +135,14 @@ build/http/acme_webroot.o: src/http/acme_webroot.c
 	@if not exist build\http mkdir build\http
 	$(CC) $(CFLAGS) -c $< -o $@	
 
+build/cache/cache.o: src/cache/cache.c
+	@if not exist build\cache mkdir build\cache
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/cache/cache_utils.o: src/cache/cache_utils.c
+	@if not exist build\cache mkdir build\cache
+	$(CC) $(CFLAGS) -c $< -o $@
+	
 build/security/filter_chain.o: src/security/filter_chain.c
 	@if not exist build\security mkdir build\security
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -161,6 +187,10 @@ build/dao/dao_routes.o: src/dao/dao_routes.c
 	@if not exist build\dao mkdir build\dao
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build/dao/dao_metrics.o: src/dao/dao_metrics.c
+	@if not exist build\dao mkdir build\dao
+	$(CC) $(CFLAGS) -c $< -o $@
+
 build/deps/cjson/cJSON.o: deps/cjson/cJSON.c
 	@if not exist build\deps mkdir build\deps
 	@if not exist build\deps\cjson mkdir build\deps\cjson
@@ -171,6 +201,7 @@ clean:
 	build\core\*.o \
 	build\utils\*.o \
 	build\http\*.o \
+	build\cache\*.o \
 	build\security\*.o \
 	build\security\filters\*.o \
 	build\dao\*.o \

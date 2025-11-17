@@ -11,9 +11,15 @@
 #include "../include/waf_sql.h"
 #include "../include/filter_request_guard.h"
 #include "../include/captcha_filter.h"
+#include "../include/cache.h"
+#include "../include/request_metrics.h"
+#include "../include/metrics_flush.h"
+#include "../include/dbhelper.h"
+#include "../include/db_config.h"
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 SSL_CTX *global_ssl_ctx = NULL;
 SSL_CTX *global_ssl_server_ctx = NULL;
@@ -51,6 +57,16 @@ int main(){
         return 1;
     }
 
+    // Connect to database for metrics
+    DBConfig *db_conf = get_db_config();
+    if (db_connect(db_conf->host, db_conf->username, db_conf->password, 
+                   db_conf->database, db_conf->port) != 0) {
+        fprintf(stderr, "Failed to connect to database\n");
+        log_message("WARN", "Database connection failed, metrics flushing may not work");
+    } else {
+        log_message("INFO", "Database connected successfully");
+    }
+
     const Proxy_Config *cfg = get_config();
     frg_set_header_limit(cfg->header_limit);
     frg_set_body_limit(cfg->body_limit);
@@ -83,6 +99,28 @@ int main(){
 
     register_filter(captcha_filter);
     
+    // Initialize cache
+    if (cfg->cache_enabled) {
+        if (cache_init(cfg->cache_max_bytes, cfg->cache_default_ttl_sec, cfg->cache_second_hit_window) != 0) {
+            fprintf(stderr, "Failed to initialize cache\n");
+            log_message("ERROR", "Cache initialization failed");
+        } else {
+            log_message("INFO", "Cache initialized successfully");
+        }
+    }
+
+    // Initialize request tracker
+    if (request_tracker_init() != 0) {
+        fprintf(stderr, "Failed to initialize request tracker\n");
+        log_message("ERROR", "Request tracker initialization failed");
+    }
+
+    // Start metrics flush thread
+    if (metrics_flush_thread_start() != 0) {
+        fprintf(stderr, "Failed to start metrics flush thread\n");
+        log_message("ERROR", "Metrics flush thread failed to start");
+    }
+    
     load_proxy_routes();
     initThreadPool(&pool,MAX_THREADS);
     // Thread reload ACL mỗi ... sec
@@ -91,11 +129,23 @@ int main(){
     start_server();
     shutdownThreadPool(&pool);
 
+    // Stop metrics flush thread
+    metrics_flush_thread_stop();
+    
+    // Shutdown request tracker
+    request_tracker_shutdown();
+    
+    // Shutdown cache
+    if (cfg->cache_enabled) {
+        cache_shutdown();
+    }
+
     free_ssl_cert_cache();
     cleanup_ssl_ctx(global_ssl_server_ctx);
     cleanup_ssl_ctx(global_ssl_ctx);
     rate_limit_shutdown();
     shutdown_filter_chain();
+    db_close();
     close_log();
     return 0;
 }

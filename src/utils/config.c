@@ -28,6 +28,13 @@ static void set_default_config(Proxy_Config *config) {
 
     snprintf(config->log_file, MAX_HOST_LEN, "logs/proxy.log");
     snprintf(config->log_level, MAX_HOST_LEN, "info");
+    
+    // Cache defaults
+    config->cache_enabled = 1;
+    config->cache_max_bytes = 268435456ULL;  // 256MB
+    config->cache_default_ttl_sec = 120;     // 2 minutes
+    config->cache_max_object_bytes = 131072; // 128KB
+    config->cache_second_hit_window = 10;    // 10 seconds
 }
 
 static int parse_line(const char *line) {
@@ -51,6 +58,13 @@ static int parse_line(const char *line) {
     if (sscanf(line, "captcha_callback_path = \"%255[^\"]\"", global_config.captcha_callback_path) == 1) return 0;
     if (sscanf(line, "captcha_state_ttl_sec = %d", &global_config.captcha_state_ttl_sec) == 1) return 0;
     if (sscanf(line, "captcha_pass_ttl_sec = %d", &global_config.captcha_pass_ttl_sec) == 1) return 0;
+    
+    // Cache settings
+    if (sscanf(line, "cache_enabled = %d", &global_config.cache_enabled) == 1) return 0;
+    if (sscanf(line, "cache_max_bytes = %llu", &global_config.cache_max_bytes) == 1) return 0;
+    if (sscanf(line, "cache_default_ttl_sec = %u", &global_config.cache_default_ttl_sec) == 1) return 0;
+    if (sscanf(line, "cache_max_object_bytes = %u", &global_config.cache_max_object_bytes) == 1) return 0;
+    if (sscanf(line, "cache_second_hit_window = %u", &global_config.cache_second_hit_window) == 1) return 0;
 
     return -1;
 }

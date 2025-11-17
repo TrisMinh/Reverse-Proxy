@@ -3,12 +3,15 @@
 #include "../include/filter_chain.h"
 #include "../include/logger.h"
 #include "../include/config.h"
+#include "../include/cache.h"
+#include "../include/request_metrics.h"
 #include <ws2tcpip.h>
 #include "../include/ssl_utils.h"
 #include "../include/acme_webroot.h"
 #include "../include/filter_request_guard.h"
 #include <openssl/ssl.h>
 #include <ws2tcpip.h>
+#include <time.h>
 
 #define CLIENT_READ(buf, len)   ((ssl) ? SSL_read(ssl, buf, len) : recv(client_fd, buf, len, 0))
 #define CLIENT_WRITE(buf, len)  ((ssl) ? SSL_write(ssl, buf, len) : send(client_fd, buf, len, 0))
@@ -231,6 +234,73 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         strncpy(cip, "0.0.0.0", sizeof(cip)-1);
     }
 
+    char method[16] = {0};
+    char path[512] = {0};
+    char query[512] = {0};
+    char vary_header[256] = {0};
+    if (cache_extract_request_info(recv_buffer, method, sizeof(method), path, sizeof(path),
+                                  query, sizeof(query), vary_header, sizeof(vary_header),
+                                  ssl != NULL) != 0) {
+        log_message("ERROR", "Failed to extract request info");
+        send_quick_error(client_fd, ssl, "400 Bad Request");
+        goto cleanup;
+    }
+    int has_authorization = cache_check_has_authorization(recv_buffer);
+    if (has_authorization) {
+        cache_debug_log_auth_detected(path);
+
+        if (config->cache_enabled && strcmp(method, "GET") == 0) {
+            cache_invalidate(method, ssl ? "https" : "http",
+                           host_from_request, path,
+                           query[0] ? query : NULL,
+                           vary_header[0] ? vary_header : NULL);
+        }
+    }
+
+    cache_key_info_t cache_key_info = {0};
+    cache_buffer_t cache_buf = {0};
+    int was_cache_hit = 0;
+    uint32_t final_status_code = 0; 
+    uint64_t bytes_in = (uint64_t)total; 
+    uint64_t bytes_out = 0;
+
+    if (config->cache_enabled && strcmp(method, "GET") == 0 && !has_authorization) {
+        cache_value_t *cached_value = NULL;
+        cache_result_t cache_result = cache_get(method, ssl ? "https" : "http",
+                                                host_from_request, path, 
+                                                query[0] ? query : NULL, 
+                                                vary_header[0] ? vary_header : NULL,
+                                                &cached_value);
+        
+        if (cache_result == CACHE_RESULT_HIT && cached_value) {
+            cache_debug_log_cache_hit(path, cached_value->status_code, cached_value->body_len);
+            
+            if (cache_handle_hit((void *)(uintptr_t)client_fd, ssl, cached_value,
+                                path, query[0] ? query : NULL, method,
+                                host_from_request, bytes_in, &bytes_out)) {
+                was_cache_hit = 1;
+                final_status_code = cached_value->status_code;
+                goto cleanup;
+            }
+        } else {
+            cache_debug_log_cache_miss(path, cache_result);
+        }
+
+        if (cache_prepare_key(method, ssl ? "https" : "http",
+                             host_from_request, path,
+                             query[0] ? query : NULL,
+                             vary_header[0] ? vary_header : NULL,
+                             &cache_key_info) != 0) {
+            cache_key_info.should_cache = 0;
+            cache_debug_log_prepare_key_failed(path);
+        }
+    } else {
+        if (has_authorization) {
+            cache_debug_log_cache_disabled(path);
+        }
+        cache_key_info.should_cache = 0;
+    }
+
     // Modify request
     if (modify_request_headers(recv_buffer, send_buffer, sizeof(send_buffer), target_backend_host, target_backend_port, cip) != 0) {
         log_message("WARN", "Failed to modify HTTP headers, forwarding original request");
@@ -269,6 +339,7 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
     long long content_length = -1;
     int is_chunked = 0;
     long long bytes_sent_body = 0;
+    final_status_code = 200;
 
     while (1) {
         int n;
@@ -322,15 +393,13 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                     int header_len = (int)(hdr_end - header_buf) + 4;
                     int body_len   = buffered - header_len;
 
-                    char *cl = strstr(header_buf, "Content-Length:");
-                    if (!cl) cl = strstr(header_buf, "content-length:");
-                    if (cl && cl < hdr_end)
-                        content_length = atoll(cl + 15);
-
-                    char *te = strstr(header_buf, "Transfer-Encoding:");
-                    if (!te) te = strstr(header_buf, "transfer-encoding:");
-                    if (te && te < hdr_end && strstr(te, "chunked"))
-                        is_chunked = 1;
+                    uint32_t parsed_status = 0;
+                    if (cache_process_response_headers(header_buf, header_len, body_len,
+                                                     method, &cache_key_info, &cache_buf,
+                                                     config->cache_max_object_bytes,
+                                                     &parsed_status, &content_length, &is_chunked) == 0) {
+                        final_status_code = parsed_status;
+                    }
 
                     char modified[HEADER_BUFFER_SIZE];
                     int new_len = modify_response_headers(header_buf, header_len, modified, sizeof(modified), target_backend_host, target_backend_port, config->listen_host, config->listen_port);
@@ -339,33 +408,84 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
                     else
                         send_all(client_fd, header_buf, header_len, ssl);
 
-                    if (body_len > 0)
-                        send_all(client_fd, header_buf + header_len, body_len, ssl);
+                    if (body_len > 0) {
+                        cache_forward_response_chunk((void *)(uintptr_t)client_fd, ssl,
+                                                     (const uint8_t *)(header_buf + header_len),
+                                                     (size_t)body_len, &cache_key_info, &cache_buf);
+                    }
 
                     header_done = 1;
                     buffered = 0;
-
                     bytes_sent_body = body_len;
+
+                    if (content_length >= 0 && bytes_sent_body >= content_length) {
+                        if (cache_key_info.should_cache && cache_buf.buffer) {
+                            if (!cache_buffer_is_complete(&cache_buf, content_length)) {
+                                cache_key_info.should_cache = 0;
+                            }
+                        }
+                        break;
+                    }
                 }
             } else {
-                if (send_all(client_fd, recv_buffer, n, ssl) != 0)
-                    break;
+                int sent = cache_forward_response_chunk((void *)(uintptr_t)client_fd, ssl,
+                                                        (const uint8_t *)recv_buffer, (size_t)n,
+                                                        &cache_key_info, &cache_buf);
+                if (sent < 0) break;
 
                 bytes_sent_body += n;
+                bytes_out = (uint64_t)bytes_sent_body; 
 
                 if (content_length >= 0) {
                     if (bytes_sent_body >= content_length) {
+                        if (cache_key_info.should_cache && cache_buf.buffer) {
+                            if (!cache_buffer_is_complete(&cache_buf, content_length)) {
+                                cache_key_info.should_cache = 0;
+                            }
+                        }
                         break;
                     }
                 } else if (is_chunked) {
                     if (strstr(recv_buffer, "\r\n0\r\n\r\n")) {
+                        bytes_out = (uint64_t)bytes_sent_body; 
                         break;
                     }
+                } else {
+                    cache_key_info.should_cache = 0;
                 }
             }
     }
 
+    if (cache_key_info.should_cache && cache_buf.complete && cache_buf.size > 0) {
+        cache_debug_log_storing(path, cache_buf.status_code, cache_buf.size);
+        
+        int store_result = cache_try_store(&cache_key_info, &cache_buf,
+                       method, ssl ? "https" : "http",
+                       host_from_request, path,
+                       query[0] ? query : NULL,
+                       vary_header[0] ? vary_header : NULL,
+                       config->cache_default_ttl_sec);
+        
+        if (store_result != 0) {
+            cache_debug_log_store_failed(path, store_result);
+        }
+    } else if (cache_key_info.should_cache) {
+        cache_debug_log_not_storing(path, cache_key_info.should_cache, cache_buf.complete, cache_buf.size);
+    }
+
+    if (!was_cache_hit) {
+        if (final_status_code == 0) {
+            final_status_code = 200;
+        }
+        cache_record_metrics(path, query[0] ? query : NULL, method,
+                           final_status_code, host_from_request,
+                           bytes_in, bytes_out, was_cache_hit,
+                           config->cache_enabled);
+    }
+
 cleanup:
+
+    cache_buffer_free(&cache_buf);
     if (backend_ssl) {
         SSL_shutdown(backend_ssl);
         SSL_free(backend_ssl);
