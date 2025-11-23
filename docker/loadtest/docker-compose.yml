@@ -1,0 +1,29 @@
+services:
+  loadtest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: reverse-proxy-loadtest:latest
+    container_name: reverse-proxy-loadtest
+    networks:
+      - loadtest-network
+    environment:
+      - TARGET_URL=http://host.docker.internal:8080/api/domains
+      - THREADS=4
+      - CONNECTIONS=100
+      - DURATION=30s
+      - REQUESTS=1000
+      - CONCURRENT=10
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    working_dir: /loadtest
+    command: /bin/sh -c "echo 'Load testing tools ready. Run:' && echo '  docker-compose run --rm loadtest ./wrk_test.sh' && echo '  docker-compose run --rm loadtest ./ab_test.sh' && echo '  docker-compose run --rm loadtest ./hey_test.sh' && echo '  docker-compose run --rm loadtest ./cache_test.sh' && tail -f /dev/null"
+
+networks:
+  loadtest-network:
+    driver: bridge
+
+
+
+
+

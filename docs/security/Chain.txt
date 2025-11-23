@@ -1,0 +1,13 @@
+🔒 1. Filter chain điển hình (trình tự hợp lý):
+Thứ tự	Filter	Mục đích
+1️⃣	Auth / ACL filter	Kiểm tra IP trong whitelist/blacklist, xác thực token, v.v.
+=> Có nên sài db không, lợi ích/ hại - hay hash map, ...
+=> Sài db mà cứ query thì khá là tốn làm chậm, có thể cho 60s reload 1 lần kiểu vậy
+2️⃣	Rate limit filter	Hạn chế request mỗi IP (bạn đang có)
+Capcha ngay đây (xác minh xong có thể cho vào whitelist hoặc reset bucket)
+3️⃣	Request size filter	Từ chối body > X MB (tránh upload/DoS)
+4️⃣	Method filter	Chỉ cho phép GET/POST (chặn DELETE, PUT nếu không dùng)
+5️⃣	Header validation filter	Kiểm tra Host, Content-Type hợp lệ
+6️⃣	Cache filter (optional)	Trả response nhanh nếu có cache
+7️⃣	Backend routing / forwarding	Gửi request qua backend server
+8️⃣	Response filter	Ghi log, chỉnh header, thêm security header (CSP, X-Frame-Options, v.v.)

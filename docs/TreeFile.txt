@@ -1,0 +1,45 @@
+Reverse-Proxy/
+├── build/           # Chứa file sau khi biên dịch (sản phẩm, file tạm)
+├── config/          # Chứa các file cấu hình cho dự án
+├── docs/            # Chứa tài liệu hướng dẫn, mô tả dự án
+│   └── TreeFile.txt # Sơ đồ cấu trúc thư mục
+├── include/         # Chứa file header (.h) dùng chung cho mã nguồn
+├── src/             # Chứa mã nguồn chính của dự án
+│   ├── core/        # Thành phần cốt lõi, chức năng chính
+│   ├── middleware/  # Phần trung gian, kết nối các module
+│   ├── security/    # Chức năng bảo mật (mã hóa, xác thực,...)
+│   ├── utils/       # Hàm tiện ích hỗ trợ dự án
+│   └── main.c       # File mã nguồn chính, điểm bắt đầu chương trình
+└── tests/           # Chứa các file kiểm thử chức năng
+
+----------------------------------------------------------
+Giải thích chi tiết từng thư mục:
+
+1. build/
+   - Đây là nơi lưu các file được tạo ra sau khi bạn biên dịch (build) dự án, ví dụ như file chạy chương trình (.exe), thư viện (.dll), hoặc các file tạm thời.
+   - Thư mục này giúp bạn tách biệt giữa mã nguồn và sản phẩm cuối cùng, tránh làm rối mã nguồn.
+
+2. config/
+   - Chứa các file cấu hình, ví dụ như thông số hệ thống, cài đặt môi trường, hoặc các file thiết lập cho từng module/phần mềm.
+   - Khi muốn thay đổi cách chương trình hoạt động (ví dụ đổi cổng kết nối, đổi chế độ bảo mật), bạn chỉ cần sửa file trong đây mà không phải sửa mã nguồn.
+
+3. docs/
+   - Lưu các tài liệu hướng dẫn sử dụng, mô tả dự án, hoặc ghi chú cho người phát triển.
+   - Giúp người mới dễ dàng hiểu cách sử dụng, cách cài đặt, hoặc cách phát triển tiếp dự án.
+
+4. include/
+   - Chứa các file header (.h) trong C/C++, nơi khai báo các hàm, biến, kiểu dữ liệu dùng chung cho nhiều file mã nguồn.
+   - Giúp chia sẻ các khai báo giữa các phần khác nhau của dự án, tránh lặp lại mã.
+
+5. src/
+   - Đây là nơi chứa toàn bộ mã nguồn chính của dự án, là phần quan trọng nhất.
+   - Bên trong có các thư mục nhỏ:
+     + core/: Chứa các chức năng cốt lõi, xử lý chính của chương trình (ví dụ: xử lý dữ liệu, thuật toán chính).
+     + middleware/: Chứa các phần trung gian, giúp kết nối giữa các module hoặc giữa phần mềm với phần cứng.
+     + security/: Chứa các chức năng bảo mật như mã hóa dữ liệu, xác thực người dùng, đảm bảo an toàn cho chương trình.
+     + utils/: Chứa các hàm tiện ích, hỗ trợ cho các phần khác (ví dụ: hàm kiểm tra dữ liệu, hàm chuyển đổi kiểu dữ liệu).
+     + main.c: File mã nguồn chính, là nơi chương trình bắt đầu chạy. Nếu bạn muốn chạy chương trình, đây là file sẽ được thực thi đầu tiên.
+
+6. tests/
+   - Chứa các file kiểm thử, dùng để kiểm tra xem các chức năng của dự án có hoạt động đúng như mong muốn hay không.
+   - Giúp phát hiện lỗi sớm, đảm bảo chương trình hoạt động ổn định.

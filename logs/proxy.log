@@ -1,0 +1,430 @@
+[2025-11-01 23:39:22] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-11-01 23:39:22] [INFO] Config loaded successfully
+[2025-11-01 23:39:22] [INFO] DB config loaded successfully
+[2025-11-01 23:39:22] [INFO] SSL server context initialized (default cert)
+[2025-11-01 23:39:34] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:39:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:42:10] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-11-01 23:42:10] [INFO] Config loaded successfully
+[2025-11-01 23:42:10] [INFO] DB config loaded successfully
+[2025-11-01 23:42:10] [INFO] SSL server context initialized (default cert)
+[2025-11-01 23:43:01] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-11-01 23:43:01] [INFO] Config loaded successfully
+[2025-11-01 23:43:01] [INFO] DB config loaded successfully
+[2025-11-01 23:43:01] [INFO] SSL server context initialized (default cert)
+[2025-11-01 23:43:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:16] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:18] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:19] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:21] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:43:26] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:58:07] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-11-01 23:58:07] [INFO] Config loaded successfully
+[2025-11-01 23:58:07] [INFO] DB config loaded successfully
+[2025-11-01 23:58:07] [INFO] SSL server context initialized (default cert)
+[2025-11-01 23:59:18] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-11-01 23:59:18] [INFO] Config loaded successfully
+[2025-11-01 23:59:18] [INFO] DB config loaded successfully
+[2025-11-01 23:59:18] [INFO] SSL server context initialized (default cert)
+[2025-11-01 23:59:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:28] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:29] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:30] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:30] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:30] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:31] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:32] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:32] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:32] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:36] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:41] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-01 23:59:47] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-02 00:02:09] [INFO] Loaded 4 proxy routes from ../config/proxy_routes.conf
+[2025-11-02 00:02:09] [INFO] Config loaded successfully
+[2025-11-02 00:02:09] [INFO] DB config loaded successfully
+[2025-11-02 00:02:09] [INFO] SSL server context initialized (default cert)
+[2025-11-02 00:02:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-02 00:02:15] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-02 00:02:20] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-09 19:07:58] [INFO] Config loaded successfully
+[2025-11-09 19:07:58] [INFO] DB config loaded successfully
+[2025-11-09 19:08:02] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-09 19:08:02] [INFO] SSL server context initialized (default cert)
+[2025-11-09 19:08:06] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-09 19:08:06] [INFO] Cache initialized successfully
+[2025-11-09 19:08:06] [INFO] Request tracker initialized
+[2025-11-09 19:08:06] [INFO] Metrics flush thread started
+[2025-11-09 19:08:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:08:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690140
+[2025-11-09 19:09:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:09:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:09:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690200
+[2025-11-09 19:10:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:10:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:10:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690260
+[2025-11-09 19:11:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:11:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:37] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:47] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:11:57] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690320
+[2025-11-09 19:12:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:12:07] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:17] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:27] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:37] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:47] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:12:57] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:06] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690380
+[2025-11-09 19:13:06] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:13:07] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:17] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:28] [INFO] Config loaded successfully
+[2025-11-09 19:13:28] [INFO] DB config loaded successfully
+[2025-11-09 19:13:32] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-09 19:13:32] [INFO] SSL server context initialized (default cert)
+[2025-11-09 19:13:36] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-09 19:13:36] [INFO] Cache initialized successfully
+[2025-11-09 19:13:36] [INFO] Request tracker initialized
+[2025-11-09 19:13:36] [INFO] Metrics flush thread started
+[2025-11-09 19:13:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:13:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:35] [INFO] Config loaded successfully
+[2025-11-09 19:14:35] [INFO] DB config loaded successfully
+[2025-11-09 19:14:39] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-09 19:14:39] [INFO] SSL server context initialized (default cert)
+[2025-11-09 19:14:43] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-09 19:14:43] [INFO] Cache initialized successfully
+[2025-11-09 19:14:43] [INFO] Request tracker initialized
+[2025-11-09 19:14:43] [INFO] Metrics flush thread started
+[2025-11-09 19:14:43] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:14:53] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:03] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:13] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:23] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:33] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:43] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1762690500
+[2025-11-09 19:15:43] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-09 19:15:43] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:15:53] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-09 19:16:03] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:12:16] [INFO] Config loaded successfully
+[2025-11-23 11:12:16] [INFO] DB config loaded successfully
+[2025-11-23 11:12:16] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-23 11:12:16] [INFO] SSL server context initialized (default cert)
+[2025-11-23 11:12:16] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-23 11:12:16] [INFO] Cache initialized successfully
+[2025-11-23 11:12:16] [INFO] Request tracker initialized
+[2025-11-23 11:12:16] [INFO] Metrics flush thread started
+[2025-11-23 11:12:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:12:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:12:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:12:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:12:53] [ERROR] No backend found for: localhost
+[2025-11-23 11:12:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:13:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:13:16] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1763871180
+[2025-11-23 11:13:16] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-23 11:13:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:13:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:13:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:13:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:13:54] [ERROR] Failed to receive data from client
+[2025-11-23 11:13:54] [ERROR] Failed to receive data from client
+[2025-11-23 11:13:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:14:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:14:16] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1763871240
+[2025-11-23 11:14:16] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-23 11:14:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:14:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:14:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:14:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:14:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:15:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:15:16] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1763871300
+[2025-11-23 11:15:16] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-23 11:15:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:15:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:15:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:15:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:15:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:16:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:16:16] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1763871360
+[2025-11-23 11:16:16] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-23 11:16:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:16:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:16:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:16:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:16:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:17:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:17:16] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1763871420
+[2025-11-23 11:17:16] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-23 11:17:16] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:17:26] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:17:36] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:17:46] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:17:56] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:18:06] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:18:23] [INFO] Config loaded successfully
+[2025-11-23 11:18:23] [INFO] DB config loaded successfully
+[2025-11-23 11:18:23] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-23 11:18:23] [INFO] SSL server context initialized (default cert)
+[2025-11-23 11:18:23] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-23 11:18:23] [INFO] Cache initialized successfully
+[2025-11-23 11:18:23] [INFO] Request tracker initialized
+[2025-11-23 11:18:23] [INFO] Metrics flush thread started
+[2025-11-23 11:18:24] [INFO] [routes] loaded 0 row(s) from DAO
+[2025-11-23 11:18:34] [INFO] Config loaded successfully
+[2025-11-23 11:18:34] [INFO] DB config loaded successfully
+[2025-11-23 11:18:34] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-23 11:18:34] [INFO] SSL server context initialized (default cert)
+[2025-11-23 11:18:34] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-23 11:18:34] [INFO] Cache initialized successfully
+[2025-11-23 11:18:34] [INFO] Request tracker initialized
+[2025-11-23 11:18:34] [INFO] Metrics flush thread started
+[2025-11-23 11:18:35] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 11:18:45] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 11:18:55] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 11:19:05] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 11:19:15] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 11:19:25] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:17:40] [INFO] Config loaded successfully
+[2025-11-23 12:17:40] [INFO] DB config loaded successfully
+[2025-11-23 12:17:40] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-23 12:17:40] [INFO] SSL server context initialized (default cert)
+[2025-11-23 12:17:40] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-23 12:17:40] [INFO] Cache initialized successfully
+[2025-11-23 12:17:40] [INFO] Request tracker initialized
+[2025-11-23 12:17:40] [INFO] Metrics flush thread started
+[2025-11-23 12:17:40] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:17:50] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:18:00] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:18:10] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:18:20] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:18:30] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:18:37] [INFO] Config loaded successfully
+[2025-11-23 12:18:37] [INFO] DB config loaded successfully
+[2025-11-23 12:18:37] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-23 12:18:37] [INFO] SSL server context initialized (default cert)
+[2025-11-23 12:18:37] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-23 12:18:37] [INFO] Cache initialized successfully
+[2025-11-23 12:18:37] [INFO] Request tracker initialized
+[2025-11-23 12:18:37] [INFO] Metrics flush thread started
+[2025-11-23 12:18:37] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:18:47] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:18:57] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:19:07] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:19:17] [INFO] [routes] loaded 1 row(s) from DAO
+[2025-11-23 12:19:27] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:19:37] [INFO] [METRICS_FLUSH] Flushing: total_requests=0, counters=0, timestamp=1763875140
+[2025-11-23 12:19:37] [INFO] [METRICS_FLUSH] No data to flush, skipping
+[2025-11-23 12:19:37] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:19:47] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:19:57] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:20:07] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:20:17] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:20:17] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:20:46] [INFO] Config loaded successfully
+[2025-11-23 12:20:46] [INFO] DB config loaded successfully
+[2025-11-23 12:20:46] [WARN] Database connection failed, metrics flushing may not work
+[2025-11-23 12:20:46] [INFO] SSL server context initialized (default cert)
+[2025-11-23 12:20:46] [INFO] Cache initialized: max_bytes=268435456, ttl=120, second_hit_window=10
+[2025-11-23 12:20:46] [INFO] Cache initialized successfully
+[2025-11-23 12:20:46] [INFO] Request tracker initialized
+[2025-11-23 12:20:46] [INFO] Metrics flush thread started
+[2025-11-23 12:20:46] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:20:56] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:21:05] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:06] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:21:08] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/__captcha/callback (result=0)
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] NOT storing in cache: path=/__captcha/callback (should_cache=1, complete=0, size=0)
+[2025-11-23 12:21:09] [INFO] [TRACKER] Recording: route=/__captcha/callback, method=GET, status=200, host=localhost, bytes_in=2563, bytes_out=0, cache_hit=0
+[2025-11-23 12:21:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/ (result=0)
+[2025-11-23 12:21:09] [INFO] [TRACKER] Recording: route=/, method=GET, status=200, host=localhost, bytes_in=928, bytes_out=8997, cache_hit=0
+[2025-11-23 12:21:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/runtime.js (result=0)
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/polyfills.js (result=0)
+[2025-11-23 12:21:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/vendor.js (result=0)
+[2025-11-23 12:21:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/main.js (result=0)
+[2025-11-23 12:21:09] [INFO] [TRACKER] Recording: route=/runtime.js, method=GET, status=200, host=localhost, bytes_in=793, bytes_out=1741, cache_hit=0
+[2025-11-23 12:21:09] [INFO] [TRACKER] Recording: route=/polyfills.js, method=GET, status=200, host=localhost, bytes_in=795, bytes_out=12993, cache_hit=0
+[2025-11-23 12:21:09] [INFO] [TRACKER] Recording: route=/main.js, method=GET, status=200, host=localhost, bytes_in=790, bytes_out=98387, cache_hit=0
+[2025-11-23 12:21:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/styles.css (result=0)
+[2025-11-23 12:21:09] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:09] [INFO] [CACHE_DEBUG] Cache MISS for path=/assets/i18n/en.json (result=0)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/MaterialIcons-Regular.woff2 (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Storing response in cache: path=/MaterialIcons-Regular.woff2, status=0, size=60840
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] NOT cached: path=/MaterialIcons-Regular.woff2, admission=0 (need 2nd hit in window)
+[2025-11-23 12:21:10] [WARN] [CACHE_DEBUG] Failed to store in cache: path=/MaterialIcons-Regular.woff2 (result=-1)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/socket.io/ (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Storing response in cache: path=/socket.io/, status=0, size=96
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] NOT cached: path=/socket.io/, admission=0 (need 2nd hit in window)
+[2025-11-23 12:21:10] [WARN] [CACHE_DEBUG] Failed to store in cache: path=/socket.io/ (result=-1)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/rest/admin/application-version (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/rest/admin/application-configuration (result=0)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/api/Challenges/ (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Storing response in cache: path=/rest/admin/application-version, status=0, size=20
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] NOT cached: path=/rest/admin/application-version, admission=0 (need 2nd hit in window)
+[2025-11-23 12:21:10] [WARN] [CACHE_DEBUG] Failed to store in cache: path=/rest/admin/application-version (result=-1)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/rest/languages (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Storing response in cache: path=/api/Challenges/, status=0, size=449
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] NOT cached: path=/api/Challenges/, admission=0 (need 2nd hit in window)
+[2025-11-23 12:21:10] [WARN] [CACHE_DEBUG] Failed to store in cache: path=/api/Challenges/ (result=-1)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/api/Quantitys/ (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/rest/products/search (result=0)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/assets/public/images/JuiceShop_Logo.png (result=0)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/socket.io/ (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Storing response in cache: path=/assets/public/images/JuiceShop_Logo.png, status=0, size=75029
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] NOT cached: path=/assets/public/images/JuiceShop_Logo.png, admission=0 (need 2nd hit in window)
+[2025-11-23 12:21:10] [WARN] [CACHE_DEBUG] Failed to store in cache: path=/assets/public/images/JuiceShop_Logo.png (result=-1)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/rest/admin/application-version (result=0)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/socket.io/ (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Storing response in cache: path=/socket.io/, status=0, size=32
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] NOT cached: path=/socket.io/, admission=0 (need 2nd hit in window)
+[2025-11-23 12:21:10] [WARN] [CACHE_DEBUG] Failed to store in cache: path=/socket.io/ (result=-1)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/rest/admin/application-configuration (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/api/Challenges/ (result=0)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Cache MISS for path=/assets/public/images/products/carrot_juice.jpeg (result=0)
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] Storing response in cache: path=/assets/public/images/products/carrot_juice.jpeg, status=0, size=19001
+[2025-11-23 12:21:10] [INFO] [CACHE_DEBUG] NOT cached: path=/assets/public/images/products/carrot_juice.jpeg, admission=0 (need 2nd hit in window)
+[2025-11-23 12:21:10] [WARN] [CACHE_DEBUG] Failed to store in cache: path=/assets/public/images/products/carrot_juice.jpeg (result=-1)
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:10] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:11] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:14] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:16] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:21:19] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:25] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:26] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:21:30] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:36] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:36] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:21:42] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:46] [INFO] [METRICS_FLUSH] Flushing: total_requests=24, counters=24, timestamp=1763875260
+[2025-11-23 12:21:46] [INFO] [DAO_METRICS] Lookup domain_id for host='localhost' (escaped='localhost')
+[2025-11-23 12:21:46] [INFO] [DAO_METRICS] Query: SELECT id FROM domains WHERE domain = 'localhost' AND status = 'active' LIMIT 1
+[2025-11-23 12:21:46] [INFO] [DAO_METRICS] Found domain_id=4 for host='localhost'
+[2025-11-23 12:21:46] [INFO] [DAO_METRICS] Inserted summary: requests=24, 2xx=20, 4xx=1, 5xx=0
+[2025-11-23 12:21:46] [INFO] metrics_flush: flushed 26 operations successfully
+[2025-11-23 12:21:46] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:21:48] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:53] [INFO] Domain routing: localhost -> 127.0.0.1:3000
+[2025-11-23 12:21:56] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:22:06] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:22:16] [INFO] [routes] loaded 2 row(s) from DAO
+[2025-11-23 12:22:27] [INFO] [routes] loaded 2 row(s) from DAO

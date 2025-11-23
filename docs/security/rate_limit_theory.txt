@@ -1,0 +1,106 @@
+Rate Limiting trong Reverse Proxy
+---------------------------------------------
+Ngày tạo: 2025-10-11
+---------------------------------------------
+
+1. Mục tiêu của Rate Limiting
+-----------------------------
+Rate limiting giúp bảo vệ server backend khỏi tình trạng quá tải, spam request hoặc tấn công DDoS.
+Đặc biệt trong môi trường reverse proxy, việc giới hạn tốc độ request giúp:
+- Giữ cho backend ổn định.
+- Ngăn người dùng hoặc bot gửi quá nhiều yêu cầu.
+- Phân bổ tài nguyên công bằng cho tất cả client.
+
+2. Các thuật toán Rate Limit phổ biến
+--------------------------------------
+Có 5 thuật toán chính:
+
+(1) Fixed Window Counter
+   - Đếm request trong cửa sổ cố định (ví dụ: 1 phút).
+   - Dễ cài đặt, nhưng có lỗi “burst” khi chuyển cửa sổ.
+   - Không phù hợp cho proxy vì có thể tạo đột biến tải.
+=> Thành ra mỗi lần vậy 1 phút sau mới có thể tăng thêm request (chưa phù hợp lắm, dẫn đến gián đoạn cho người dùng)
+
+(2) Sliding Window Log
+   - Lưu log thời gian từng request, loại bỏ request cũ.
+   - Rất chính xác nhưng tốn nhiều bộ nhớ (RAM cao).
+=> Tốn nhiều ram để lưu lịch sử 
+
+(3) Sliding Window Counter
+   - Giữ hai cửa sổ (hiện tại và trước) để tính toán trung bình mượt.
+   - Mượt hơn Fixed Window, tiết kiệm hơn Sliding Log.
+   - Thích hợp cho hệ thống lớn.
+=> Cảm giác không thích hợp vì không có độ chính xác cao khi tính toán số lượng rq
+
+(4) Token Bucket
+   - Mỗi client có một "xô" chứa token.
+   - Token được thêm đều theo thời gian (refill rate).
+   - Mỗi request cần một token; nếu hết token thì từ chối.
+   - Cho phép burst ngắn hạn, nhưng giới hạn tốc độ dài hạn.
+   - Cực kỳ phù hợp cho reverse proxy hoặc API gateway.
+
+(5) Leaky Bucket
+   - Giống Token Bucket nhưng xử lý request với tốc độ cố định.
+   - Request vượt quá sẽ bị xếp hàng hoặc loại bỏ.
+   - Phù hợp cho điều tiết throughput chứ không phải chống DDoS.
+
+3. Vì sao chọn Token Bucket cho Reverse Proxy
+----------------------------------------------
+Lý do chọn Token Bucket:
+
+Hiệu quả chống DDoS:
+   - Hạn chế tốc độ dài hạn, nhưng cho phép burst ngắn hạn hợp lý.
+   - Giúp tránh chặn người dùng thật gửi nhiều request trong vài giây.
+
+Hiệu năng cao:
+   - Chỉ cần vài phép tính thời gian và 3 biến (tokens, capacity, last_refill).
+   - Không cần lưu log từng request.
+
+Mượt và ổn định:
+   - Cho phép request “bùng” nhẹ nhưng vẫn giữ tốc độ tổng thể ổn định.
+   - Không tạo đột biến tải ở backend.
+
+Triển khai dễ dàng:
+   - Có thể cài đặt bằng shared memory, Redis, hoặc bảng hash nội bộ.
+   - Dễ mở rộng sang nhiều tiến trình hoặc server (phân tán).
+
+4. Mô hình Token Bucket đơn giản
+---------------------------------
+Biến cần lưu cho mỗi client (IP):
+   - capacity: số token tối đa (VD: 100)
+   - tokens: token hiện tại (VD: 85)
+   - refill_rate: số token được thêm mỗi giây (VD: 10)
+   - last_refill: thời điểm lần cuối refill
+
+Logic xử lý:
+   1. Tính số token mới dựa trên thời gian trôi qua.
+   2. Cộng token mới, giới hạn không vượt quá capacity.
+   3. Nếu còn token ≥ 1 → cho phép request và trừ token.
+   4. Nếu hết token → từ chối request (HTTP 429).
+
+Pseudo-code (C style):
+------------------------------------------------------------
+now = current_time();
+elapsed = now - last_refill;
+tokens = min(capacity, tokens + elapsed * refill_rate);
+last_refill = now;
+
+if (tokens >= 1) {
+    tokens--;
+    allow_request();
+} else {
+    reject_request(429);
+}
+------------------------------------------------------------
+
+5. Kết luận
+-----------
+Trong môi trường reverse proxy (như Nginx, Envoy, HAProxy hoặc proxy tự viết),
+Token Bucket là thuật toán tối ưu nhất vì:
+
+- Cân bằng giữa hiệu năng và độ chính xác.
+- Cho phép burst hợp lý.
+- Dễ triển khai và mở rộng.
+- Được hầu hết hệ thống lớn (Google, AWS, Nginx) sử dụng.
+
+Kết luận: Token Bucket là thuật toán rate limiting phù hợp nhất cho reverse proxy.
