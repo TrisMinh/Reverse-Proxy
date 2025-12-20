@@ -20,7 +20,8 @@ typedef enum {
     FILTER_OK = 0,
     FILTER_DENY = 1,
     FILTER_BLOCK = 2,
-    FILTER_ERROR = -1
+    FILTER_ERROR = -1,
+    FILTER_HANDLED = -2
 } FilterResult;
 
 /*
