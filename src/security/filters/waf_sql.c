@@ -13,11 +13,11 @@ typedef struct
     int w;
 } sig_t;
 
-// https://developers.cloudflare.com/waf/managed-rules/reference/owasp-core-ruleset/concepts/?utm_source=chatgpt.com
+// https://developers.cloudflare.com/waf/managed-rules/reference/owasp-core-ruleset/concepts/
+// https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules?tabs=drs21%2Cowasp32
 //    High = 25, Medium = 40 , Low = 60.
 static const int OWASP_THRESHOLD_DEFAULT = 40;
 
-// https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules?utm_source=chatgpt.com&tabs=drs21%2Cowasp32
 static const sig_t PATS[] = {
     {"union select", 5},
     {"sleep(", 5},
