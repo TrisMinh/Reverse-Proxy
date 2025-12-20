@@ -223,6 +223,10 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
         strncpy(fctx.client_ip, cip, sizeof(fctx.client_ip)-1);
 
         FilterResult fr = run_filters(&fctx);
+        if (fr == FILTER_BLOCK) {
+            send_quick_error(client_fd, ssl, "403 Forbidden");
+            goto cleanup;
+        }
         if (fr != FILTER_OK) {
             send_quick_error(client_fd, ssl, "429 Too Many Requests");
             goto cleanup;

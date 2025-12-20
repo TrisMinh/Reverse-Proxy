@@ -326,7 +326,7 @@ FilterResult waf_sql_filter(FilterContext *ctx)
         snprintf(lb, sizeof(lb), "WAF_SQL block ip=%.48s score=%d path=%.128s", ip, score, pp);
 
         log_message("WARN", lb);
-        return FILTER_DENY;
+        return FILTER_BLOCK;
     }
 
     return FILTER_OK;
