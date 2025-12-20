@@ -395,7 +395,7 @@ FilterResult captcha_filter(FilterContext *ctx) {
 
     if (suspect_ip(ctx->client_ip)) {
         redirect_to_captcha_center(ctx);
-        return FILTER_DENY;
+        return FILTER_HANDLED;
     }
     return FILTER_OK;
 }
