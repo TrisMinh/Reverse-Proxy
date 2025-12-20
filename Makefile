@@ -22,6 +22,7 @@ SRC = src/main.c \
 	src/core/threadpool.c \
 	src/cache/cache.c \
 	src/cache/cache_utils.c \
+	src/cache/cache_debug.c \
 	src/security/filter_chain.c \
 	src/security/filters/rate_limit.c \
 	src/security/filters/acl_filter.c \
@@ -52,6 +53,7 @@ OBJ = build/main.o \
 	build/core/threadpool.o \
 	build/cache/cache.o \
 	build/cache/cache_utils.o \
+	build/cache/cache_debug.o \
 	build/security/filter_chain.o \
 	build/security/filters/rate_limit.o \
 	build/security/filters/acl_filter.o \
@@ -140,6 +142,10 @@ build/cache/cache.o: src/cache/cache.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 build/cache/cache_utils.o: src/cache/cache_utils.c
+	@if not exist build\cache mkdir build\cache
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/cache/cache_debug.o: src/cache/cache_debug.c
 	@if not exist build\cache mkdir build\cache
 	$(CC) $(CFLAGS) -c $< -o $@
 	

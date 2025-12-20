@@ -109,7 +109,7 @@ static int pct_decode_once(const char *in, char *out, int cap)
     int oi = 0;
     for (int i = 0; in[i] && oi < cap - 1; ) {
         unsigned char c = (unsigned char)in[i];
-        if (c == '+') {  /* form-url-encoded */
+        if (c == '+') { 
             out[oi++] = ' ';
             i++;
             continue;
@@ -137,8 +137,13 @@ static int score_buf(const char *buf)
     int sc = 0;
     for (const sig_t *p = PATS; p->pat; ++p)
     {
-        if (strstr(buf, p->pat))
+        const char *ptr = buf;
+        while ((ptr = strstr(ptr, p->pat)) != NULL) 
+        {
             sc += p->w;
+            ptr++; 
+            if (sc >= 100) return sc; 
+        }
     }
     return sc;
 }
@@ -254,11 +259,7 @@ FilterResult waf_sql_filter(FilterContext *ctx)
     char path[1024] = {0};
     if (extract_path_query(ctx->request, path, sizeof(path)))
     {
-        if (strncmp(path, "/login", 6) == 0 || strncmp(path, "/search", 7) == 0 || strncmp(path, "/graphql", 8) == 0)
-        {
-            threshold = 25;
-        }
-        else if (strncmp(path, "/api/", 5) == 0)
+        if (strstr(path, "login") != NULL || strstr(path, "admin") != NULL || strstr(path, "auth")  != NULL || strstr(path, "search") != NULL ||  strstr(path, "graphql") != NULL || strncmp(path, "/api/", 5) == 0)
         {
             threshold = 25;
         }
@@ -287,16 +288,16 @@ FilterResult waf_sql_filter(FilterContext *ctx)
             tmp[n] = 0;
             normalize_and_dual_score(tmp, &score);
         }
-        const char *rf = get_header_ci(ctx->request, "Referer");
-        if (rf)
-        {
-            size_t n = strlen(rf);
-            if (n >= sizeof(tmp))
-                n = sizeof(tmp) - 1;
-            memcpy(tmp, rf, n);
-            tmp[n] = 0;
-            normalize_and_dual_score(tmp, &score);
-        }
+        // const char *rf = get_header_ci(ctx->request, "Referer");
+        // if (rf)
+        // {
+        //     size_t n = strlen(rf);
+        //     if (n >= sizeof(tmp))
+        //         n = sizeof(tmp) - 1;
+        //     memcpy(tmp, rf, n);
+        //     tmp[n] = 0;
+        //     normalize_and_dual_score(tmp, &score);
+        // }
     }
 
     // body
