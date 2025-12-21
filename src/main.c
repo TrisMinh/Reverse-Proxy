@@ -97,7 +97,7 @@ int main(){
 
     register_filter(waf_sql_filter);
 
-    register_filter(captcha_filter);
+    // register_filter(captcha_filter);
     
     // Initialize cache
     if (cfg->cache_enabled) {

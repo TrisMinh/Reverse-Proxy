@@ -221,6 +221,10 @@ void handle_client(SOCKET client_fd, SSL *ssl, const Proxy_Config *config) {
             strncpy(cip, "0.0.0.0", sizeof(cip)-1);
         }
         strncpy(fctx.client_ip, cip, sizeof(fctx.client_ip)-1);
+        
+        // Lưu tên miền vào FilterContext
+        strncpy(fctx.client_domain, host_from_request, sizeof(fctx.client_domain)-1);
+        fctx.client_domain[sizeof(fctx.client_domain)-1] = '\0';
 
         FilterResult fr = run_filters(&fctx);
         if (fr == FILTER_BLOCK) {

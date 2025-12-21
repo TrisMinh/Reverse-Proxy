@@ -16,13 +16,21 @@ void ipset_init(ipset_t *s) {
     s->count = 0;
 }
 
-int ipset_add(ipset_t *s, const char *ip) {
+int ipset_add(ipset_t *s, const char *ip, const char *domain) {
     if (s->count >= MAX_IPS) return -1;
     for (int i = 0; i < s->count; i++) {
         if (strcmp(s->list[i].ip, ip) == 0)
             return 0;
     }
     strncpy(s->list[s->count].ip, ip, sizeof(s->list[s->count].ip) - 1);
+    s->list[s->count].ip[sizeof(s->list[s->count].ip) - 1] = '\0';
+    
+    if (domain && domain[0] != '\0') {
+        strncpy(s->list[s->count].domain, domain, sizeof(s->list[s->count].domain) - 1);
+        s->list[s->count].domain[sizeof(s->list[s->count].domain) - 1] = '\0';
+    } else {
+        s->list[s->count].domain[0] = '\0';
+    }
     s->count++;
     return 1;
 }
@@ -46,7 +54,7 @@ int ipset_contains(ipset_t *s, const char *ip) {
     return 0;
 }
 
-int ipset_save(ipset_t *s, const char *ip) {
+int ipset_save(ipset_t *s, const char *ip, const char *domain) {
     if (!s || !ip) return -1;
     ensure_lock();
     EnterCriticalSection(&ipset_lock);
@@ -57,11 +65,16 @@ int ipset_save(ipset_t *s, const char *ip) {
         return 0;
     }
 
-    ipset_add(s, ip);
-    if (dao_acl_add(ip) == 0)
-        printf("[ACL] Da them '%s' vao DB blacklist\n", ip);
-    else
+    ipset_add(s, ip, domain);
+    if (dao_acl_add(ip, domain) == 0) {
+        if (domain && domain[0] != '\0') {
+            printf("[ACL] Da them '%s' (domain: %s) vao DB blacklist\n", ip, domain);
+        } else {
+            printf("[ACL] Da them '%s' vao DB blacklist\n", ip);
+        }
+    } else {
         printf("[ACL] Loi khi them '%s'\n", ip);
+    }
 
     LeaveCriticalSection(&ipset_lock);
     return 1;
@@ -72,10 +85,23 @@ int ipset_delete(ipset_t *s, const char *ip) {
     ensure_lock();
     EnterCriticalSection(&ipset_lock);
 
+    // Tìm domain trước khi xóa
+    char domain[256] = {0};
+    for (int i = 0; i < s->count; i++) {
+        if (strcmp(s->list[i].ip, ip) == 0) {
+            strncpy(domain, s->list[i].domain, sizeof(domain) - 1);
+            break;
+        }
+    }
+
     ipset_remove(s, ip);
     dao_acl_remove(ip);
 
-    printf("[ACL] Xoa '%s' khoi cache va DB\n", ip);
+    if (domain[0] != '\0') {
+        printf("[ACL] Xoa '%s' (domain: %s) khoi cache va DB\n", ip, domain);
+    } else {
+        printf("[ACL] Xoa '%s' khoi cache va DB\n", ip);
+    }
 
     LeaveCriticalSection(&ipset_lock);
     return 1;
