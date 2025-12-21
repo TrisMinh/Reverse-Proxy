@@ -36,6 +36,7 @@ typedef struct {
     const char *request;           /* Con trỏ trỏ tới vùng dữ liệu request */
     int request_len;               /* Độ dài request */
     char client_ip[64];            /* Địa chỉ IP của client (dạng chuỗi) */
+    char client_domain[256];       /* Tên miền mà client đang truy cập */
     const ProxyRoute *route;       /* Thông tin route mà request đi qua */
     const Proxy_Config *config;    /* Cấu hình chung của proxy */
 } FilterContext;

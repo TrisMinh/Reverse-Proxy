@@ -7,6 +7,7 @@
 
 typedef struct {
     char ip[64];
+    char domain[256];
 } ip_entry_t;
 
 typedef struct {
@@ -15,10 +16,10 @@ typedef struct {
 } ipset_t;
 
 void ipset_init(ipset_t *s);
-int ipset_add(ipset_t *s, const char *ip);
+int ipset_add(ipset_t *s, const char *ip, const char *domain);
 int ipset_remove(ipset_t *s, const char *ip);
 int ipset_contains(ipset_t *s, const char *ip);
-int ipset_save(ipset_t *s, const char *ip);
+int ipset_save(ipset_t *s, const char *ip, const char *domain);
 int ipset_delete(ipset_t *s, const char *ip);
 int ipset_reload(ipset_t *s);
 

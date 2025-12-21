@@ -2,10 +2,15 @@
 #include "dbhelper.h"
 #include <stdio.h>
 
-int dao_acl_add(const char *ip) {
-    char query[256];
-    snprintf(query, sizeof(query),
-             "INSERT IGNORE INTO blacklist (ip, created_at) VALUES ('%s', NOW())", ip);
+int dao_acl_add(const char *ip, const char *domain) {
+    char query[512];
+    if (domain && domain[0] != '\0') {
+        snprintf(query, sizeof(query),
+                 "INSERT IGNORE INTO blacklist (ip, domain, created_at) VALUES ('%s', '%s', NOW())", ip, domain);
+    } else {
+        snprintf(query, sizeof(query),
+                 "INSERT IGNORE INTO blacklist (ip, created_at) VALUES ('%s', NOW())", ip);
+    }
     return db_execute(query);
 }
 
@@ -30,7 +35,7 @@ int dao_acl_remove(const char *ip) {
 }
 
 int dao_acl_load_all(ipset_t *s) {
-    MYSQL_RES *res = db_query("SELECT ip FROM blacklist");
+    MYSQL_RES *res = db_query("SELECT ip, domain FROM blacklist");
     if (!res) return -1;
 
     MYSQL_ROW row;
@@ -39,7 +44,8 @@ int dao_acl_load_all(ipset_t *s) {
 
     while ((row = mysql_fetch_row(res))) {
         if (row[0]) {
-            ipset_add(s, row[0]);
+            const char *domain = (row[1] && row[1][0] != '\0') ? row[1] : NULL;
+            ipset_add(s, row[0], domain);
             count++;
         }
     }

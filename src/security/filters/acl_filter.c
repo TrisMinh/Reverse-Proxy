@@ -24,10 +24,14 @@ void acl_reload(void) {
     printf("[ACL] Reloaded blacklist: %d IP(s)\n", count);
 }
 
-void acl_add(const char *ip) {
+void acl_add(const char *ip, const char *domain) {
     if (!ip || strlen(ip) == 0) return;
-    ipset_save(&g_blacklist, ip);
-    printf("[ACL] Added to blacklist: %s\n", ip);
+    ipset_save(&g_blacklist, ip, domain);
+    if (domain && domain[0] != '\0') {
+        printf("[ACL] Added to blacklist: %s (domain: %s)\n", ip, domain);
+    } else {
+        printf("[ACL] Added to blacklist: %s\n", ip);
+    }
 }
 
 void acl_remove(const char *ip) {

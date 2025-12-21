@@ -6,8 +6,8 @@
 #include "../include/rate_limit.h"
 #include "../include/acl_filter.h"
 
-#define RL_DEFAULT_RATE   2.0  /* tokens per second */
-#define RL_DEFAULT_BURST  20.0  /* max tokens */
+#define RL_DEFAULT_RATE   20.0  /* tokens per second */
+#define RL_DEFAULT_BURST  200.0  /* max tokens */
 #define RL_IDLE_EVICT_MS  (10ULL * 60ULL * 1000ULL)
 #define RL_BUCKETS        1024
 
@@ -130,7 +130,8 @@ FilterResult rate_limit_filter(FilterContext *ctx)
 
         // Nếu vi phạm >= 5 lần => chặn 
         if (count >= 5) {
-            acl_add(ctx->client_ip);
+            const char *domain = (ctx->client_domain[0] != '\0') ? ctx->client_domain : NULL;
+            acl_add(ctx->client_ip, domain);
         }
         return FILTER_DENY;
     }
