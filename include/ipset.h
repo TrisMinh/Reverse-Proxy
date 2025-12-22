@@ -19,6 +19,7 @@ void ipset_init(ipset_t *s);
 int ipset_add(ipset_t *s, const char *ip, const char *domain);
 int ipset_remove(ipset_t *s, const char *ip);
 int ipset_contains(ipset_t *s, const char *ip);
+int ipset_contains_with_domain(ipset_t *s, const char *ip, const char *domain);
 int ipset_save(ipset_t *s, const char *ip, const char *domain);
 int ipset_delete(ipset_t *s, const char *ip);
 int ipset_reload(ipset_t *s);

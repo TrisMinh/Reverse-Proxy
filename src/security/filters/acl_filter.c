@@ -44,8 +44,9 @@ FilterResult acl_filter(FilterContext *ctx) {
     if (!ctx || ctx->client_ip[0] == '\0')
         return FILTER_OK;
 
-    if (ipset_contains(&g_blacklist, ctx->client_ip)) {
-        printf("[ACL] Denied IP: %s\n", ctx->client_ip);
+    // Kiểm tra IP + Domain
+    if (ipset_contains_with_domain(&g_blacklist, ctx->client_ip, ctx->client_domain)) {
+        printf("[ACL] Denied IP: %s (domain: %s)\n", ctx->client_ip, ctx->client_domain);
         return FILTER_DENY;
     }
 

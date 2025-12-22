@@ -30,7 +30,7 @@ static void set_default_config(Proxy_Config *config) {
     snprintf(config->log_level, MAX_HOST_LEN, "info");
     
     // Cache defaults
-    config->cache_enabled = 1;
+    config->cache_enabled = 0;
     config->cache_max_bytes = 268435456ULL;  // 256MB
     config->cache_default_ttl_sec = 120;     // 2 minutes
     config->cache_max_object_bytes = 131072; // 128KB

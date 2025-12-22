@@ -37,7 +37,7 @@ void start_server(){
     Proxy_Config *config = get_config();
     if(server_init(config->listen_host,config->listen_port,&server_fd)<0) return;
 
-    printf("Proxy running %s:%d -> %s:%d\n",config->listen_host,config->listen_port,config->backend_host,config->backend_port);
+    printf("Proxy running!!!");
 
     while(1){
         struct sockaddr_in client_addr;
