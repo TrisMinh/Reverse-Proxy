@@ -18,10 +18,26 @@ void ipset_init(ipset_t *s) {
 
 int ipset_add(ipset_t *s, const char *ip, const char *domain) {
     if (s->count >= MAX_IPS) return -1;
+    
+    // Kiểm tra IP + Domain đã tồn tại chưa
     for (int i = 0; i < s->count; i++) {
-        if (strcmp(s->list[i].ip, ip) == 0)
-            return 0;
+        if (strcmp(s->list[i].ip, ip) == 0) {
+            // IP khớp, kiểm tra domain
+            if (domain && domain[0] != '\0') {
+                // Có domain: phải khớp cả domain
+                if (strcmp(s->list[i].domain, domain) == 0) {
+                    return 0;  // Đã tồn tại IP + domain này
+                }
+            } else {
+                // Không có domain: phải entry cũng không có domain
+                if (s->list[i].domain[0] == '\0') {
+                    return 0;  // Đã tồn tại IP không có domain
+                }
+            }
+        }
     }
+    
+    // Thêm mới
     strncpy(s->list[s->count].ip, ip, sizeof(s->list[s->count].ip) - 1);
     s->list[s->count].ip[sizeof(s->list[s->count].ip) - 1] = '\0';
     
@@ -76,8 +92,13 @@ int ipset_save(ipset_t *s, const char *ip, const char *domain) {
     ensure_lock();
     EnterCriticalSection(&ipset_lock);
 
-    if (dao_acl_exists(ip)) {
-        printf("[ACL] %s da ton tai trong DB\n", ip);
+    // Kiểm tra IP + domain đã tồn tại chưa
+    if (dao_acl_exists(ip, domain)) {
+        if (domain && domain[0] != '\0') {
+            printf("[ACL] %s (domain: %s) da ton tai trong DB\n", ip, domain);
+        } else {
+            printf("[ACL] %s da ton tai trong DB\n", ip);
+        }
         LeaveCriticalSection(&ipset_lock);
         return 0;
     }

@@ -139,6 +139,7 @@ FilterResult rate_limit_filter(FilterContext *ctx)
     const char *domain = (ctx->client_domain[0] != '\0') ? ctx->client_domain : NULL;
     if (!domain) {
         // Không có domain thì không rate limit
+        printf("[Rate Limit] No domain, skipping rate limit\n");
         return FILTER_OK;
     }
 
@@ -148,6 +149,7 @@ FilterResult rate_limit_filter(FilterContext *ctx)
     // Tạo bucket riêng cho từng cặp (IP, Domain)
     rl_entry_t *e = get_or_create(ctx->client_ip, domain, t); 
     if (!e) {
+        printf("[Rate Limit] Failed to create entry\n");
         LeaveCriticalSection(&g_rl_lock);
         return FILTER_OK; 
     }
@@ -163,10 +165,10 @@ FilterResult rate_limit_filter(FilterContext *ctx)
         int count = e->violate_count;
         LeaveCriticalSection(&g_rl_lock);
 
-        // Nếu vi phạm >= 5 lần => chặn IP trên domain cụ thể này
-        if (count >= 5) {
-            printf("[Rate Limit] IP %s exceeded limit on domain %s, adding to blacklist\n",
-                   ctx->client_ip, domain);
+        // Chỉ add to blacklist 1 lần khi vi phạm đúng 5 lần
+        if (count == 5) {
+            printf("[Rate Limit] IP %s exceeded limit on domain %s (violate=%d), adding to blacklist\n",
+                   ctx->client_ip, domain, count);
             acl_add(ctx->client_ip, domain);
         }
         return FILTER_DENY;

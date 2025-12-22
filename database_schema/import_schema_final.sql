@@ -31,13 +31,13 @@ CREATE TABLE IF NOT EXISTS domain_origins (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Multiple backend origin IPs per domain';
 CREATE TABLE IF NOT EXISTS blacklist (
   ip            VARCHAR(45) NOT NULL,
-  domain        VARCHAR(253) DEFAULT NULL,
+  domain        VARCHAR(253) NOT NULL,
   created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (ip),
+  PRIMARY KEY (ip, domain),
   INDEX idx_created_at (created_at),
   INDEX idx_domain (domain)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci 
-COMMENT='IP blacklist for ACL filter';
+COMMENT='IP blacklist for ACL filter (per IP+domain combination)';
 CREATE TABLE IF NOT EXISTS metrics_minute (
   ts_minute     DATETIME NOT NULL,
   domain_id     BIGINT UNSIGNED NOT NULL,
