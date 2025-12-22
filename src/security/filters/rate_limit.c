@@ -21,14 +21,21 @@ static uint64_t now_ms(void) {
     return GetTickCount64();
 }
 
-// đọc thêm phần này hiểu rõ hash
-static unsigned hash_ip(const char *ip) {
+// Hash IP + Domain để phân bucket
+static unsigned hash_ip_domain(const char *ip, const char *domain) {
     unsigned h = 2166136261u;
+    // Hash IP
     while (*ip) {
         h ^= (unsigned char)(*ip++);
         h *= 16777619u;
     }
-    // Sài phép % thì tốn CPU còn sài & thì lệnh máy nên rất nhanh
+    // Hash Domain
+    if (domain && domain[0] != '\0') {
+        while (*domain) {
+            h ^= (unsigned char)(*domain++);
+            h *= 16777619u;
+        }
+    }
     return h & (RL_BUCKETS - 1);
 }
 
@@ -59,15 +66,26 @@ void rate_limit_shutdown(void)
     g_rl_initialized = 0;
 }
 
-static rl_entry_t *get_or_create(const char *ip, uint64_t now)
+static rl_entry_t *get_or_create(const char *ip, const char *domain, uint64_t now)
 {
-    unsigned idx = hash_ip(ip);
+    unsigned idx = hash_ip_domain(ip, domain);
     rl_entry_t *prev = NULL, *e = g_buckets[idx];
 
     while (e) {
-        if (strncmp(e->ip, ip, sizeof(e->ip)) == 0) {
+        // So sánh cả IP và Domain
+        int ip_match = (strncmp(e->ip, ip, sizeof(e->ip)) == 0);
+        int domain_match = 0;
+        
+        if (domain && domain[0] != '\0') {
+            domain_match = (strncmp(e->domain, domain, sizeof(e->domain)) == 0);
+        } else {
+            domain_match = (e->domain[0] == '\0');
+        }
+        
+        if (ip_match && domain_match) {
             return e;
         }
+        
         // Xóa entry quá hạn
         if (now - e->last_ms > RL_IDLE_EVICT_MS) {
             rl_entry_t *victim = e;
@@ -81,10 +99,17 @@ static rl_entry_t *get_or_create(const char *ip, uint64_t now)
         e = e->next;
     }
 
-    // chọn LIFO vì nó nhanh gọn tiện
+    // Tạo entry mới cho IP + Domain
     rl_entry_t *ne = (rl_entry_t*)calloc(1, sizeof(rl_entry_t));
     if (!ne) return NULL;
+    
     strncpy(ne->ip, ip, sizeof(ne->ip) - 1);
+    if (domain && domain[0] != '\0') {
+        strncpy(ne->domain, domain, sizeof(ne->domain) - 1);
+    } else {
+        ne->domain[0] = '\0';
+    }
+    
     ne->burst = g_burst;
     ne->tokens = g_burst; /* start full */
     ne->last_ms = now;
@@ -110,15 +135,25 @@ FilterResult rate_limit_filter(FilterContext *ctx)
     if (!g_rl_initialized) rate_limit_init();
     if (ctx->client_ip[0] == '\0') return FILTER_OK;
 
+    // Lấy domain từ context (bắt buộc phải có domain)
+    const char *domain = (ctx->client_domain[0] != '\0') ? ctx->client_domain : NULL;
+    if (!domain) {
+        // Không có domain thì không rate limit
+        return FILTER_OK;
+    }
+
     uint64_t t = now_ms();
     EnterCriticalSection(&g_rl_lock);
-    // phần này nếu k cấp phát được thì xảy ra lỗ hổng lớn làm cho hệ thống k quản lý được token => ip này ddos thì chết
-    rl_entry_t *e = get_or_create(ctx->client_ip, t); 
+    
+    // Tạo bucket riêng cho từng cặp (IP, Domain)
+    rl_entry_t *e = get_or_create(ctx->client_ip, domain, t); 
     if (!e) {
         LeaveCriticalSection(&g_rl_lock);
         return FILTER_OK; 
     }
+    
     refill(e, t);
+    
     if (e->tokens >= 1.0) {
         e->tokens -= 1.0;
         LeaveCriticalSection(&g_rl_lock);
@@ -128,9 +163,10 @@ FilterResult rate_limit_filter(FilterContext *ctx)
         int count = e->violate_count;
         LeaveCriticalSection(&g_rl_lock);
 
-        // Nếu vi phạm >= 5 lần => chặn 
+        // Nếu vi phạm >= 5 lần => chặn IP trên domain cụ thể này
         if (count >= 5) {
-            const char *domain = (ctx->client_domain[0] != '\0') ? ctx->client_domain : NULL;
+            printf("[Rate Limit] IP %s exceeded limit on domain %s, adding to blacklist\n",
+                   ctx->client_ip, domain);
             acl_add(ctx->client_ip, domain);
         }
         return FILTER_DENY;

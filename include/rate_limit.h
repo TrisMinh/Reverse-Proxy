@@ -4,6 +4,7 @@
 
 typedef struct rl_entry_s {
     char ip[64];
+    char domain[256];
     double tokens;
     double burst;
     uint64_t last_ms;
