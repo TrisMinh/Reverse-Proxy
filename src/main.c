@@ -92,12 +92,12 @@ int main(){
     acl_init();
     register_filter(acl_filter);
     
+    register_filter(captcha_filter);
     rate_limit_init();
     register_filter(rate_limit_filter);
 
     register_filter(waf_sql_filter);
 
-    // register_filter(captcha_filter);
     
     // Initialize cache
     if (cfg->cache_enabled) {

@@ -54,6 +54,23 @@ int ipset_contains(ipset_t *s, const char *ip) {
     return 0;
 }
 
+// Kiểm tra IP + Domain cụ thể
+int ipset_contains_with_domain(ipset_t *s, const char *ip, const char *domain) {
+    for (int i = 0; i < s->count; i++) {
+        if (strcmp(s->list[i].ip, ip) == 0) {
+            // Nếu entry KHÔNG có domain → Chặn toàn bộ IP
+            if (s->list[i].domain[0] == '\0') {
+                return 1;  // Chặn tất cả domains
+            }
+            // Nếu entry CÓ domain → Chỉ chặn domain cụ thể
+            if (domain && strcmp(s->list[i].domain, domain) == 0) {
+                return 1;  // Chặn domain này
+            }
+        }
+    }
+    return 0;  // Không chặn
+}
+
 int ipset_save(ipset_t *s, const char *ip, const char *domain) {
     if (!s || !ip) return -1;
     ensure_lock();
